@@ -1,24 +1,24 @@
-import { GiClothes } from 'react-icons/gi'
-import { MdOutlineSmartToy } from 'react-icons/md'
-import { FaBaby } from 'react-icons/fa'
+import { GiClothes } from 'react-icons/gi';
+import { MdOutlineSmartToy } from 'react-icons/md';
+import { FaBaby } from 'react-icons/fa';
 
 export const links = [
   {
     id: 1,
-    text: 'home',
+    text: 'דף הבית',
     url: '/',
   },
   {
     id: 2,
-    text: 'shipping',
+    text: 'משלוח',
     url: '/shipping',
   },
   {
     id: 3,
-    text: 'products',
+    text: 'מוצרים',
     url: '/products',
   },
-]
+];
 
 export const services = [
   {
@@ -39,10 +39,10 @@ export const services = [
     title: 'accessories',
     text: 'accessories text',
   },
-]
+];
 
 export const API_ENDPOINT =
-  'https://bqk6gkzk.api.sanity.io/v1/graphql/production/default'
+  'https://bqk6gkzk.api.sanity.io/v1/graphql/production/default';
 
 export const QUERY = `
 {
@@ -82,4 +82,4 @@ export const QUERY = `
   }
 }
 
-`
+`;

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Hero, Services, Contact, FeaturedProducts } from '../components'
+import React from 'react';
+import { Hero, Services, Contact, FeaturedProducts } from '../components';
 
 const HomePage = () => {
   return (
@@ -9,7 +9,7 @@ const HomePage = () => {
       <Services />
       <Contact />
     </main>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

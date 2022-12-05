@@ -1,32 +1,28 @@
-import React from 'react'
-import styled from 'styled-components'
-import { PageHero } from '../components'
-import shopLogo from '../assets/shop_logo.jpg'
+import React from 'react';
+import styled from 'styled-components';
+import { PageHero } from '../components';
+import shopLogo from '../assets/shop_logo.jpg';
 
 const ShippingPage = () => {
   return (
     <main>
-      <PageHero title='shipping' />
-      <Wrapper className='page section section-center'>
+      {/* <PageHero title="shipping" /> */}
+      <Wrapper className="page section section-center">
         {/* insert about page image here */}
-        <img src={shopLogo} alt='square logo' />
-        <article className='title'>
-          <h2>Free Shipping!!!</h2>
-          <div className='underline'></div>
-          <p>
-            We currently offer free shipping for any places within Thailand.
-          </p>
-          <p>
-            You will also receive a free gift from us if you spend more than
-            1500B with us.
-          </p>
+        {/* <img src={shopLogo} alt="square logo" /> */}
+        <article className="title">
+          <h2>משלוח חינם לנקודות חלוקה בכל רחבי הארץ</h2>
+          <div className="underline"></div>
+          <p>לרשימת נקודות החלוקה</p>
+          <p>מעוניינת לפתוח נקודת חלוקה באזורך? - צרי איתנו קשר</p>
         </article>
       </Wrapper>
     </main>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
+  min-height: 81vh;
   display: grid;
   gap: 4rem;
   img {
@@ -44,13 +40,13 @@ const Wrapper = styled.section`
     color: var(--clr-grey-5);
   }
   .title {
-    text-align: left;
+    text-align: right;
   }
   .underline {
-    margin-left: 0;
+    margin-right: 0;
   }
   @media (min-width: 992px) {
     grid-template-columns: 1fr 1fr;
   }
-`
-export default ShippingPage
+`;
+export default ShippingPage;

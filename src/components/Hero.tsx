@@ -1,56 +1,50 @@
-import React from 'react'
-import styled from 'styled-components'
-import hero from '../assets/hero.jpg'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import styled from 'styled-components';
+import hero from '../assets/hero.jpg';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <Wrapper className='section-center'>
-      <article className='content'>
+    <Wrapper className="section-center">
+      <article className="content">
         <HeroWords />
         <ShopNowButton />
       </article>
       <HeroImage />
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;
 
 const HeroWords = () => {
   return (
     <>
-      <h1>
-        high quality <br />
-        product for your little ones
-      </h1>
-      <p>
-        Quality products imported from Japan, Europe and USA for baby boys and
-        girls, also for mummy.
-      </p>
+      <h1>טייץ השומרון</h1>
+      <p>טייצים, גרביון ותחרה איכותיים במגוון מידות וצבעים</p>
     </>
-  )
-}
+  );
+};
 
 const ShopNowButton = () => {
   return (
-    <Link to='/products' className='btn hero-btn'>
-      shop now
+    <Link to="/products" className="btn hero-btn">
+      להזמנה
     </Link>
-  )
-}
+  );
+};
 
 const HeroImage = () => {
   return (
-    <article className='img-container'>
-      <img src={hero} alt='hero' className='main-img' />
+    <article className="img-container">
+      <img src={hero} alt="hero" className="main-img" />
       {/* insert one more image here */}
     </article>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
-  min-height: 60vh;
+  min-height: 30vh;
   display: grid;
   place-items: center;
   .img-container {
@@ -64,6 +58,11 @@ const Wrapper = styled.section`
     color: var(--clr-grey-5);
     font-size: 1rem;
   }
+
+  .hero-btn {
+    margin: 0 auto;
+  }
+
   @media (min-width: 992px) {
     height: calc(100vh - 5rem);
     grid-template-columns: 1fr 1fr;
@@ -109,4 +108,4 @@ const Wrapper = styled.section`
       border-radius: var(--radius);
     }
   }
-`
+`;
