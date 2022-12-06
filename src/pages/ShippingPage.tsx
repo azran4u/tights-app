@@ -7,7 +7,7 @@ const ShippingPage = () => {
   return (
     <main>
       {/* <PageHero title="shipping" /> */}
-      <Wrapper className="page section section-center">
+      <Wrapper className="page">
         {/* insert about page image here */}
         {/* <img src={shopLogo} alt="square logo" /> */}
         <article className="title">
@@ -21,8 +21,7 @@ const ShippingPage = () => {
   );
 };
 
-const Wrapper = styled.section`
-  min-height: 81vh;
+const Wrapper = styled.div`
   display: grid;
   gap: 4rem;
   img {

@@ -1,13 +1,13 @@
-import React from 'react';
-import { Hero, Services, Contact, FeaturedProducts } from '../components';
+import { Services, Contact, FeaturedProducts } from '../components';
+import Title from '../components/Title';
 
 const HomePage = () => {
   return (
     <main>
-      <Hero />
+      <Title />
       <FeaturedProducts />
-      <Services />
-      <Contact />
+      {/* <Services /> */}
+      {/* <Contact /> */}
     </main>
   );
 };

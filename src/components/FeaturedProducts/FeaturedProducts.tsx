@@ -1,21 +1,17 @@
-import React from 'react'
-import styled from 'styled-components'
-// import Loading from './Loading'
-import { FeaturedProductsHeader } from './FeaturedProductsHeader'
-import { FeaturedProductsCards } from './FeaturedProductsCards'
-import { FeaturedProductsButton } from './FeaturedProductsButton'
+import styled from 'styled-components';
+import { FeaturedProductsHeader } from './FeaturedProductsHeader';
+import { FeaturedProductsCards } from './FeaturedProductsCards';
 
 const FeaturedProducts = () => {
   return (
-    <Wrapper className='section'>
+    <Wrapper className="section">
       <FeaturedProductsHeader />
       <FeaturedProductsCards />
-      <FeaturedProductsButton />
     </Wrapper>
-  )
-}
+  );
+};
 
-export default FeaturedProducts
+export default FeaturedProducts;
 
 const Wrapper = styled.section`
   background: var(--clr-grey-10);
@@ -38,4 +34,4 @@ const Wrapper = styled.section`
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     }
   }
-`
+`;

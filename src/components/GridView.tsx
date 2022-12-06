@@ -1,21 +1,21 @@
-import React from 'react'
-import styled from 'styled-components'
-import Product from './Product'
-import { productDataType } from '../utils/productData'
+import React from 'react';
+import styled from 'styled-components';
+import Product from './Product';
+import { productDataType } from '../utils/productData';
 
 const GridView: React.FC<{ filteredProducts: productDataType[] }> = ({
   filteredProducts,
 }) => {
   return (
     <Wrapper>
-      <div className='products-container'>
-        {filteredProducts.map(product => {
-          return <Product key={product.id} product={product} />
+      <div className="products-container">
+        {filteredProducts.map((product) => {
+          return <Product key={product.id} product={product} />;
         })}
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
   img {
@@ -34,9 +34,9 @@ const Wrapper = styled.section`
   }
   @media (min-width: 1170px) {
     .products-container {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr);
     }
   }
-`
+`;
 
-export default GridView
+export default GridView;

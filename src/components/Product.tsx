@@ -1,19 +1,20 @@
-import React from 'react'
-import styled from 'styled-components'
-import { formatPrice } from '../utils/helpers'
-import { FaSearch } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import { productDataType } from '../utils/productData'
-
+import React from 'react';
+import styled from 'styled-components';
+import { formatPrice } from '../utils/helpers';
+import { FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { productDataType } from '../utils/productData';
+import im from '../assets/legging-bordeaux.jpg';
 const Product: React.FC<{ product: productDataType }> = ({ product }) => {
-  const { images, name, price, slug } = product
-  const image = images[0]
+  const { images, name, price, slug } = product;
+  const image = images[0];
   return (
     <Wrapper>
-      <div className='container'>
+      <div className="container">
         <Link to={`/products/${slug}`}>
-          <img src={image} alt={name} />
-          <div className='link'>
+          {/* <img src={image} alt={name} /> */}
+          <img src={'/assets/legging-bordeaux.jpg'} alt={name} />
+          <div className="link">
             <FaSearch />
           </div>
         </Link>
@@ -23,8 +24,8 @@ const Product: React.FC<{ product: productDataType }> = ({ product }) => {
         <p>{formatPrice(price)}</p>
       </footer>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.article`
   .container {
@@ -81,5 +82,5 @@ const Wrapper = styled.article`
     color: var(--clr-primary-5);
     letter-spacing: var(--spacing);
   }
-`
-export default Product
+`;
+export default Product;

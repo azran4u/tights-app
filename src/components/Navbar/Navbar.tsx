@@ -23,9 +23,8 @@ const Nav = () => {
 export default Nav;
 
 const NavContainer = styled.nav`
-  height: 5rem;
+  height: 10vh;
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -57,7 +56,8 @@ const NavContainer = styled.nav`
   }
   @media (min-width: 992px) {
     img {
-      margin-left: 15px;
+      margin-right: 2rem;
+      margin-top: 1rem;
     }
     .nav-toggle {
       display: none;

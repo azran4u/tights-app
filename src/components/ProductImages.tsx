@@ -1,31 +1,36 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const ProductImages: React.FC<{ images: string[] | undefined }> = ({
   images = [],
 }) => {
-  const [imageIndex, setImageIndex] = useState(0)
+  const [imageIndex, setImageIndex] = useState(0);
 
   return (
     <Wrapper>
-      <img src={images[imageIndex]} alt='main' className='main' />
-      <div className='gallery'>
-        {images.map((image, index) => {
-          return (
-            <img
-              key={image}
-              src={image}
-              alt=''
-              onClick={() => setImageIndex(index)}
-              className={index===imageIndex? 'active': undefined}
-            />
-          )
-        })}
-      </div>
+      <img src={imagePath(images[imageIndex])} alt="main" className="main" />
+      {images.length > 1 ?? (
+        <div className="gallery">
+          {images.map((image, index) => {
+            return (
+              <img
+                key={image}
+                src={imagePath(image)}
+                alt={image}
+                onClick={() => setImageIndex(index)}
+                className={index === imageIndex ? 'active' : undefined}
+              />
+            );
+          })}
+        </div>
+      )}
     </Wrapper>
-  )
-}
+  );
+};
 
+function imagePath(image: string): string {
+  return `../assets/${image}`;
+}
 const Wrapper = styled.section`
   .main {
     height: 600px;
@@ -69,6 +74,6 @@ const Wrapper = styled.section`
       }
     }
   }
-`
+`;
 
-export default ProductImages
+export default ProductImages;

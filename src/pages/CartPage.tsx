@@ -8,7 +8,7 @@ const CartPage = () => {
   const { cart } = useCartContext();
   if (cart.length < 1) {
     return (
-      <Wrapper className="page-100">
+      <Wrapper className="page">
         <div className="empty">
           <h2>העגלה שלך ריקה</h2>
           <Link to="/products" className="btn">

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 const ErrorPage = () => {
   return (
-    <Wrapper className="page-100">
+    <Wrapper className="page">
       <section>
         <h1>מצטערים</h1>
         <h3>הדף שחיפשת אינו קיים...</h3>
