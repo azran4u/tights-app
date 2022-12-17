@@ -33,7 +33,9 @@ function imagePath(image: string): string {
 }
 const Wrapper = styled.section`
   .main {
-    height: 600px;
+    height: 10rem;
+    width: 10rem;
+    margin: 0 auto;
   }
   img {
     width: 100%;
@@ -55,22 +57,9 @@ const Wrapper = styled.section`
     box-shadow: 0px 0px 0px 2px var(--clr-primary-5);
   }
   @media (max-width: 576px) {
-    .main {
-      height: 300px;
-    }
     .gallery {
       img {
-        height: 50px;
-      }
-    }
-  }
-  @media (min-width: 992px) {
-    .main {
-      height: 500px;
-    }
-    .gallery {
-      img {
-        height: 75px;
+        height: 5rem;
       }
     }
   }

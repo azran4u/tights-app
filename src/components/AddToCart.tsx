@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { productDataType } from '../utils/productData';
 import { useCartContext } from '../context/cart_context';
 import AmountButtons from './AmountButtons';
+import Button from './Button';
 
 const AddToCart: React.FC<{ singleProduct: productDataType | {} }> = ({
   singleProduct,
@@ -23,72 +23,27 @@ const AddToCart: React.FC<{ singleProduct: productDataType | {} }> = ({
   };
 
   return (
-    <Wrapper>
-      <div className="btn-container">
+    <>
+      <Center>
         <AmountButtons
           amount={amount}
           increase={increaseAmount}
           decrease={decreaseAmount}
         />
-        <Link
-          to="/cart"
-          className="btn"
+      </Center>
+
+      <Center>
+        <Button
+          text="הוסף לעגלה"
           onClick={() => addToCart(id, slug, amount, singleProduct)}
-        >
-          הוסף לעגלה
-        </Link>
-      </div>
-    </Wrapper>
+        />
+      </Center>
+    </>
   );
 };
 
 export default AddToCart;
 
-const Wrapper = styled.section`
-  margin-top: 2rem;
-  .colors {
-    display: grid;
-    grid-template-columns: 125px 1fr;
-    align-items: center;
-    margin-bottom: 1rem;
-    span {
-      text-transform: capitalize;
-      font-weight: 700;
-    }
-    div {
-      display: flex;
-    }
-  }
-  .color-btn {
-    display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background: #222;
-    margin-right: 0.5rem;
-    /* border: none; */
-    border: 1px solid black;
-    cursor: pointer;
-    opacity: 0.5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    svg {
-      font-size: 0.75rem;
-      color: var(--clr-white);
-    }
-  }
-
-  .active {
-    opacity: 1;
-  }
-  .btn-container {
-    margin-top: 2rem;
-  }
-
-  .btn {
-    margin-top: 1rem;
-    width: 140px;
-    text-align: center;
-  }
+const Center = styled.div`
+  margin: 0 auto;
 `;

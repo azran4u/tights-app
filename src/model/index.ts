@@ -1,9 +1,14 @@
+import { flatten, isNil, uniq } from 'lodash';
+import { stringify } from 'querystring';
+
 export interface ValueLabel<V = string, L = string> {
   value: V;
   label: L;
 }
 
-export interface Color extends ValueLabel<AvailableColor> {}
+export interface Color extends ValueLabel<AvailableColor> {
+  cssColor: string;
+}
 
 export interface Size extends ValueLabel<AvailableSize> {}
 
@@ -199,26 +204,32 @@ export const colors: Color[] = [
   {
     value: 'black',
     label: 'שחור',
+    cssColor: ' #000000',
   },
   {
     value: 'body',
     label: 'גוף',
+    cssColor: ' #ffcc99',
   },
   {
     value: 'cream',
     label: 'שמנת',
+    cssColor: '#fff2e6',
   },
   {
     value: 'silver-very-light-gray-not-shimmery',
     label: 'כסף - אפור בהיר מאד (לא מנצנץ)',
+    cssColor: '#e6e6e6',
   },
   {
     value: 'gray-light',
     label: 'אפור בהיר',
+    cssColor: '#b3b3b3',
   },
   {
     value: 'white',
     label: 'לבן',
+    cssColor: '#ffffff',
   },
 ];
 
@@ -550,18 +561,127 @@ export function selectLace(lace: LaceOptions): Lace {
   return laces.find((v) => v.value === lace)!;
 }
 
-export const products: Product[] = [
+export const productsDenierLegSize: ProductDenierLegSize[] = [
   TIGHTS_OR_STOCKING_200_DENIER,
   TIGHTS_OR_STOCKING_GIRLS_120_DENIER,
   TIGHTS_OR_STOCKING_20_OR_40_DENIER,
-  LACE_FAN_TIGHTS,
 ];
 
-// export function productLegOptions(productKind: ProductKind): LegOption[] {
-//   const product = products.find((product) => product.kind === productKind);
-//   if (!product) {
+export const productsLace: ProductLace[] = [LACE_FAN_TIGHTS];
+export const products: Product[] = [...productsDenierLegSize, ...productsLace];
 
-//     return []
+export function ProductDenierLegSizeAvailableDenier(
+  product: ProductDenierLegSize
+): ProductPropertyDenier[] {
+  return product.denier;
+}
+
+export function useProductDenierLegSizeAvailableDenier(
+  product: ProductDenierLegSize
+): Denier[] {
+  return ProductDenierLegSizeAvailableDenier(product);
+}
+
+export function ProductDenierLegSizeAvailableLegs(
+  product: ProductDenierLegSize,
+  denier: Denier
+): ProductPropertyLeg[] {
+  const foundDenier = ProductDenierLegSizeAvailableDenier(product).find(
+    (d) => d.value === denier.value
+  );
+  if (isNil(foundDenier)) return [];
+
+  return foundDenier.legOptions;
+}
+
+export function useProductDenierLegSizeAvailableLegs(
+  product: ProductDenierLegSize,
+  denier: Denier
+): Leg[] {
+  return ProductDenierLegSizeAvailableLegs(product, denier);
+}
+
+export function ProductDenierLegSizeAvailableSizes(
+  product: ProductDenierLegSize,
+  denier: Denier,
+  leg: Leg
+): ProductPropertySize[] {
+  const foundLeg = ProductDenierLegSizeAvailableLegs(product, denier).find(
+    (x) => x.value === leg.value
+  );
+  if (isNil(foundLeg)) return [];
+
+  return foundLeg.sizes;
+}
+
+export function useProductDenierLegSizeAvailableSizes(
+  product: ProductDenierLegSize,
+  denier: Denier,
+  leg: Leg
+): Size[] {
+  return ProductDenierLegSizeAvailableSizes(product, denier, leg);
+}
+
+export function ProductDenierLegSizeAttributes(
+  product: ProductDenierLegSize,
+  denier: Denier,
+  leg: Leg,
+  size: Size
+): ProductBaseAttributes | undefined {
+  const foundSize = ProductDenierLegSizeAvailableSizes(
+    product,
+    denier,
+    leg
+  ).find((x) => x.value === size.value);
+  if (isNil(foundSize)) return undefined;
+
+  return foundSize.attributes;
+}
+
+export function useProductDenierLegSizeAttributes(
+  product: ProductDenierLegSize,
+  denier: Denier,
+  leg: Leg,
+  size: Size
+): ProductBaseAttributes | undefined {
+  return ProductDenierLegSizeAttributes(product, denier, leg, size);
+  // ?? {
+  //   colors: [],
+  //   discount: {
+  //     kind: DiscountKind.NO_DISCOUNT,
+  //   },
+  //   images: (color, size) => [],
+  //   price: 0,
+  //   supplier: 'filo',
+  // }
+}
+
+// export function ProductDenierLegSizeAttributes(
+//   product: ProductDenierLegSize,
+//   denier: Denier,
+//   leg: Leg,
+//   size: Size
+// ): ProductBaseAttributes {
+//   const foundDenier = product.denier.find((d) => d.value === denier.value);
+//   if (isNil(foundDenier))
+//     throw new Error(
+//       ProductDenierLegSizeAttributesErrorMessage(denier, 'denier')
+//     );
+
+//   const foundLeg = foundDenier.legOptions.find((l) => l.value === leg.value);
+//   if (isNil(foundLeg))
+//     throw new Error(ProductDenierLegSizeAttributesErrorMessage(leg, 'leg'));
+
+//   const foundSize = foundLeg.sizes.find((s) => s.value === size.value);
+//   if (isNil(foundSize))
+//     throw new Error(ProductDenierLegSizeAttributesErrorMessage(size, 'size'));
+
+//   return foundSize.attributes;
+
+//   function ProductDenierLegSizeAttributesErrorMessage(
+//     value: Denier | Leg | Size,
+//     text: string
+//   ): string {
+//     return `ProductDenierLegSizeAvailableColors ${text} ${value.label} not found`;
 //   }
-//   return [];
 // }

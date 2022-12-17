@@ -4,9 +4,14 @@ import { useProductsContext } from '../../context/products_context';
 import { ProductImages, Loading, PageHero } from '../../components';
 import styled from 'styled-components';
 import { BackToProductsButtonNew } from './BackToProductsButtonNew';
-import { SingleProductContentNew } from './SingleProductContentNew';
 import ErrorPage from '../ErrorPage';
-import { Product, products, ProductSchema } from '../../model';
+import {
+  Product,
+  products,
+  ProductSchema,
+  productsDenierLegSize,
+} from '../../model';
+import SingleProductContentByDenierLegSize from './SingleProductContentByDenierLegSize';
 
 const SingleProductPageNew = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -21,7 +26,7 @@ const SingleProductPageNew = () => {
         )
       );
     }
-  });
+  }, []);
 
   return (
     <Wrapper>
@@ -30,7 +35,9 @@ const SingleProductPageNew = () => {
         <BackToProductsButtonNew />
         <div className="product-center">
           <ProductImages images={images} />
-          <SingleProductContentNew />
+          <SingleProductContentByDenierLegSize
+            product={productsDenierLegSize[2]}
+          />
         </div>
       </div>
     </Wrapper>
@@ -41,8 +48,8 @@ export default SingleProductPageNew;
 const Wrapper = styled.main`
   .product-center {
     display: grid;
-    gap: 4rem;
-    margin-top: 2rem;
+    gap: 1rem;
+    margin-top: 1rem;
   }
   .price {
     color: var(--clr-primary-5);
