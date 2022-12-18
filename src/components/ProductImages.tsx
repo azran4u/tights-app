@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { imagePath } from '../utils/imagePath';
 
 const ProductImages: React.FC<{ images: string[] | undefined }> = ({
   images = [],
@@ -28,9 +29,6 @@ const ProductImages: React.FC<{ images: string[] | undefined }> = ({
   );
 };
 
-function imagePath(image: string): string {
-  return `../assets/${image}`;
-}
 const Wrapper = styled.section`
   .main {
     height: 10rem;

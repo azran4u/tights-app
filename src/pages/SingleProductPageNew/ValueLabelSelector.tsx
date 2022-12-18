@@ -19,13 +19,13 @@ const ValueLabelSelector = <T extends ValueLabel>(
     `value-selector-${Math.random()}`
   );
 
-  const name = `denier-selector ${Math.random()}`;
   return (
     <>
       {props.values && (
-        <div className="values-selector">
+        <div>
           <select
             name={selectOptionsGroupName}
+            key={selectOptionsGroupName}
             value={selectedValue.label}
             onChange={(e) => {
               const label = e.target.value;

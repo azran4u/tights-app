@@ -46,7 +46,7 @@ export interface ProductBaseAttributes {
   price: Price;
   supplier: Supplier;
   discount: Discount;
-  images: ImageUrlFn;
+  images: string[];
 }
 
 export type LegOptions = 'with-leg' | 'without-leg';
@@ -109,6 +109,7 @@ export interface ProductBase {
   schema: ProductSchema;
   kind: ProductKind;
   description: string;
+  image: string;
 }
 
 export interface ProductLace extends ProductBase {
@@ -237,6 +238,7 @@ export const TIGHTS_OR_STOCKING_200_DENIER: Product = {
   schema: ProductSchema.BY_DENIER_LEG_SIZE,
   kind: ProductKind.TIGHTS_OR_STOCKING_200_DENIER,
   description: 'טייץ / גרביון 200 דניר',
+  image: 'legging-bordeaux.jpg',
   denier: [
     {
       ...selectDenier('200'),
@@ -256,7 +258,7 @@ export const TIGHTS_OR_STOCKING_200_DENIER: Product = {
                   displayText: undefined,
                 },
                 supplier: 'filo',
-                images: (color, size) => ['legging-bordeaux.jpg'],
+                images: ['legging-bordeaux.jpg'],
               },
             },
           ],
@@ -273,7 +275,7 @@ export const TIGHTS_OR_STOCKING_200_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'filo',
-                images: (color, size) => [],
+                images: [],
               },
             },
           ],
@@ -287,6 +289,7 @@ export const TIGHTS_OR_STOCKING_GIRLS_120_DENIER: Product = {
   schema: ProductSchema.BY_DENIER_LEG_SIZE,
   kind: ProductKind.TIGHTS_OR_STOCKING_GIRLS_120_DENIER,
   description: 'טייץ / גרביון ילדות 120 דניר לגיל גן חובה עד א-ב',
+  image: 'legging-bordeaux.jpg',
   denier: [
     {
       ...selectDenier('120'),
@@ -306,7 +309,7 @@ export const TIGHTS_OR_STOCKING_GIRLS_120_DENIER: Product = {
                   displayText: undefined,
                 },
                 supplier: 'filo',
-                images: (color, size) => [],
+                images: [],
               },
             },
           ],
@@ -326,7 +329,7 @@ export const TIGHTS_OR_STOCKING_GIRLS_120_DENIER: Product = {
                   displayText: undefined,
                 },
                 supplier: 'filo',
-                images: (color, size) => [],
+                images: [],
               },
             },
           ],
@@ -340,6 +343,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
   schema: ProductSchema.BY_DENIER_LEG_SIZE,
   kind: ProductKind.TIGHTS_OR_STOCKING_20_OR_40_DENIER,
   description: 'טייץ / גרביון 20 / 40 דניר',
+  image: 'legging-bordeaux.jpg',
   denier: [
     {
       ...selectDenier('20'),
@@ -356,7 +360,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
             {
@@ -368,7 +372,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
             {
@@ -380,7 +384,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
           ],
@@ -400,7 +404,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   displayText: '',
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
             {
@@ -412,7 +416,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
           ],
@@ -434,7 +438,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
             {
@@ -446,7 +450,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
             {
@@ -458,7 +462,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'filo',
-                images: (color, size) => [],
+                images: [],
               },
             },
           ],
@@ -475,7 +479,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
             {
@@ -487,7 +491,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
             {
@@ -499,7 +503,7 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
                   kind: DiscountKind.NO_DISCOUNT,
                 },
                 supplier: 'sharon',
-                images: (color, size) => [],
+                images: [],
               },
             },
           ],
@@ -513,6 +517,7 @@ export const LACE_FAN_TIGHTS: Product = {
   schema: ProductSchema.BY_LACE,
   kind: ProductKind.LACE_FAN_TIGHTS,
   description: 'תחרה מניפה טייץ onesize',
+  image: 'legging-bordeaux.jpg',
   lace: [
     {
       ...selectLace('fan'),
@@ -523,7 +528,7 @@ export const LACE_FAN_TIGHTS: Product = {
           kind: DiscountKind.NO_DISCOUNT,
         },
         supplier: 'sharon',
-        images: (color, size) => [],
+        images: [],
       },
     },
     {
@@ -535,7 +540,7 @@ export const LACE_FAN_TIGHTS: Product = {
           kind: DiscountKind.NO_DISCOUNT,
         },
         supplier: 'sharon',
-        images: (color, size) => [],
+        images: [],
       },
     },
   ],
@@ -674,4 +679,19 @@ export function useProductDenierLegSizeAttributes(
   size: Size
 ): ProductBaseAttributes | undefined {
   return ProductDenierLegSizeAttributes(product, denier, leg, size);
+}
+
+export function useProductByKind(kind: ProductKind): Product | undefined {
+  return products.find((product) => product.kind === kind);
+}
+
+export function useProductByKindString(
+  kindString: string
+): Product | undefined {
+  const kind: ProductKind = ProductKind[kindString as keyof typeof ProductKind];
+  return useProductByKind(kind);
+}
+
+export function useProducts(): Product[] {
+  return products;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AddToCart } from '../../components';
+import { AddToCart, ProductImages } from '../../components';
 import {
   Color,
   Lace,
@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import ColorSelector from './ColorSelector';
 import Price from './Price';
 import ProductDescription from './ProductDescription';
+import LaceSelector from './LaceSelector';
 
 interface SingleProductContentByLaceProps {
   product: ProductLace;
@@ -22,7 +23,7 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
   const availableLaces = useProductLaceAvailableLaces(props.product);
 
   const [selectedLace, setSelectedLace] = useState<Lace>(
-    availableLaces?.find((x) => (x.value = 'lengthwise')) ?? availableLaces[0]
+    availableLaces?.find((x) => x.value === 'lengthwise') ?? availableLaces[0]
   );
 
   const attributes = useProductLaceAttributes(props.product, selectedLace);
@@ -51,17 +52,18 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
 
       {shouldRender && (
         <>
+          <ProductImages images={attributes.images} />
           <ProductDescription description={props.product.description} />
           <Price price={attributes.price} />
 
-          {/* <DenierSelector
-            deniers={availableDeniers}
-            initialDenier={selectedDenier}
-            selectedDenier={(denier: Denier) => {
-              setSelectedDenier(denier);
+          <LaceSelector
+            laces={availableLaces}
+            initialLace={selectedLace}
+            selectedLace={(denier: Lace) => {
+              setSelectedLace(denier);
               console.log(`selected denier ${denier.label}`);
             }}
-          />           */}
+          />
 
           <ColorSelector
             colors={attributes.colors}

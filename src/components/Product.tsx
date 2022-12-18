@@ -1,27 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
-import { formatPrice } from '../utils/helpers';
-import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { productDataType } from '../utils/productData';
-import im from '../assets/legging-bordeaux.jpg';
-const Product: React.FC<{ product: productDataType }> = ({ product }) => {
-  const { images, name, price, slug } = product;
-  const image = images[0];
+import { Product } from '../model';
+
+interface ProductProps {
+  product: Product;
+}
+
+const SingleProduct: React.FC<ProductProps> = ({ product }) => {
+  const { kind, description } = product;
   return (
     <Wrapper>
       <div className="container">
-        <Link to={`/products/${slug}`}>
+        <Link to={`/products/${kind}`}>
           {/* <img src={image} alt={name} /> */}
-          <img src={'/assets/legging-bordeaux.jpg'} alt={name} />
-          <div className="link">
+          <img src={'/assets/legging-bordeaux.jpg'} alt={description} />
+          {/* <div className="link">
             <FaSearch />
-          </div>
+          </div> */}
         </Link>
       </div>
       <footer>
-        <h5>{name}</h5>
-        <p>{formatPrice(price)}</p>
+        <h5>{description}</h5>
+        {/* <p>{formatPrice(price)}</p> */}
       </footer>
     </Wrapper>
   );
@@ -83,4 +84,4 @@ const Wrapper = styled.article`
     letter-spacing: var(--spacing);
   }
 `;
-export default Product;
+export default SingleProduct;

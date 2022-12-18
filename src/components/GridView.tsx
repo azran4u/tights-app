@@ -10,7 +10,7 @@ const GridView: React.FC<{ filteredProducts: productDataType[] }> = ({
     <Wrapper>
       <div className="products-container">
         {filteredProducts.map((product) => {
-          return <Product key={product.id} product={product} />;
+          // return <Product key={product.id} product={product} />;
         })}
       </div>
     </Wrapper>

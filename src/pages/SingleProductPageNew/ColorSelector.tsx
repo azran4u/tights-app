@@ -9,13 +9,17 @@ interface ColorSelectorProps {
 }
 const ColorSelector: React.FC<ColorSelectorProps> = (props) => {
   const [selectedColor, setSelectedColor] = useState<Color>(props.initialColor);
-  const [radioButtonGroupName] = useState<string>(
-    `color-selector-${Math.random()}`
-  );
+  const [radioButtonGroupName] = useState<string>(`color-selector`);
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const color = props.colors.find((color) => color.value === e.target.value)!;
+    if (color !== selectedColor) setSelectedColor(color);
+  }
 
   useEffect(() => {
     props.selectedColor(selectedColor);
   }, [props, selectedColor]);
+
   return (
     <Wrapper>
       <>
@@ -24,22 +28,16 @@ const ColorSelector: React.FC<ColorSelectorProps> = (props) => {
           {props.colors.length > 0 &&
             props.colors.map((color, index) => {
               return (
-                <>
-                  <Input
-                    id={`color-selector-input-${index}`}
-                    colorObj={color}
-                    type="radio"
-                    checked={color.value === selectedColor.value}
-                    name={radioButtonGroupName}
-                    value={color.value}
-                    onChange={(e) => {
-                      const color = props.colors.find(
-                        (color) => color.value === e.target.value
-                      )!;
-                      if (color !== selectedColor) setSelectedColor(color);
-                    }}
-                  />
-                </>
+                <Input
+                  // id={`color-selector-input-${index}`}
+                  key={color.value}
+                  colorObj={color}
+                  type="radio"
+                  checked={color.value === selectedColor.value}
+                  name={radioButtonGroupName}
+                  value={color.value}
+                  onChange={handleInputChange}
+                />
               );
             })}
         </div>

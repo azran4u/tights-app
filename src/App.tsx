@@ -1,13 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navbar, Sidebar, Footer, ScrollToTop } from './components';
-// import {} from 'styled-components/cssprop';
 
 import {
   Home,
   Error,
   Shipping,
-  SingleProduct,
   Checkout,
   Products,
   Cart,
@@ -34,7 +32,7 @@ function App() {
           </Route>
           <Route
             exact
-            path="/products/:slug"
+            path="/products/:kind"
             children={<SingleProductPageNew />}
           />
           <Route exact path="/checkout">

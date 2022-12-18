@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AddToCart } from '../../components';
+import { AddToCart, ProductImages } from '../../components';
 import {
   Color,
   Denier,
@@ -89,32 +89,36 @@ const SingleProductContentByDenierLegSize: React.FC<
         <>
           <ProductDescription description={props.product.description} />
           <Price price={attributes.price} />
-          <DenierSelector
-            deniers={availableDeniers}
-            initialDenier={selectedDenier}
-            selectedDenier={(denier: Denier) => {
-              setSelectedDenier(denier);
-              console.log(`selected denier ${denier.label}`);
-            }}
-          />
-          <LegSelector
-            legs={availableLegs}
-            initialLeg={selectedLeg}
-            selectedLeg={(leg: Leg) => {
-              setSelectedLeg(leg);
-              console.log(`selected leg ${leg.label}`);
-            }}
-          />
+          <div className="side-by-side">
+            <ProductImages images={attributes.images} />
+            <div>
+              <DenierSelector
+                deniers={availableDeniers}
+                initialDenier={selectedDenier}
+                selectedDenier={(denier: Denier) => {
+                  setSelectedDenier(denier);
+                  console.log(`selected denier ${denier.label}`);
+                }}
+              />
+              <LegSelector
+                legs={availableLegs}
+                initialLeg={selectedLeg}
+                selectedLeg={(leg: Leg) => {
+                  setSelectedLeg(leg);
+                  console.log(`selected leg ${leg.label}`);
+                }}
+              />
 
-          <SizeSelector
-            sizes={availableSizes}
-            initialSize={selectedSize}
-            selectedSize={(size: Size) => {
-              setSelectedSize(size);
-              console.log(`selected size is ${size.label}`);
-            }}
-          />
-
+              <SizeSelector
+                sizes={availableSizes}
+                initialSize={selectedSize}
+                selectedSize={(size: Size) => {
+                  setSelectedSize(size);
+                  console.log(`selected size is ${size.label}`);
+                }}
+              />
+            </div>
+          </div>
           <ColorSelector
             colors={attributes.colors}
             initialColor={selectedColor}
@@ -138,6 +142,12 @@ const Wrapper = styled.div`
   .center {
     margin-top: 1rem;
     margin: 0 auto;
+  }
+
+  .side-by-side {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 `;
 
