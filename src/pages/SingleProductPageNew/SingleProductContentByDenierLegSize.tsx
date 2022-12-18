@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddToCart } from '../../components';
 import {
   Color,
   Denier,
   Leg,
   ProductDenierLegSize,
-  ProductDenierLegSizeAvailableDenier,
   Size,
   useProductDenierLegSizeAttributes,
   useProductDenierLegSizeAvailableDenier,
@@ -27,23 +26,14 @@ interface SingleProductContentByDenierLegSizeProps {
 const SingleProductContentByDenierLegSize: React.FC<
   SingleProductContentByDenierLegSizeProps
 > = (props) => {
-  const availableDeniers = useMemo(
-    () => ProductDenierLegSizeAvailableDenier(props.product),
-    [props]
+  const availableDeniers = useProductDenierLegSizeAvailableDenier(
+    props.product
   );
-
-  useEffect(() => {
-    console.log(`availableDeniers changed`);
-  }, [availableDeniers]);
 
   const [selectedDenier, setSelectedDenier] = useState<Denier>(
     availableDeniers.find((denier) => denier.value === '200') ??
       availableDeniers[0]
   );
-
-  useEffect(() => {
-    console.log(`selectedDenier changed`);
-  }, [selectedDenier]);
 
   const availableLegs = useProductDenierLegSizeAvailableLegs(
     props.product,
@@ -74,16 +64,18 @@ const SingleProductContentByDenierLegSize: React.FC<
       attributes?.colors[0]
   );
 
-  useEffect(() => {
-    console.log('render');
-  });
-
   const shouldRender =
     availableDeniers &&
     availableLegs &&
     availableSizes &&
+    selectedDenier &&
+    selectedLeg &&
+    selectedSize &&
     selectedColor &&
-    attributes;
+    attributes &&
+    attributes.price &&
+    attributes?.colors.length > 1;
+
   return (
     <Wrapper className="content">
       {!shouldRender && (

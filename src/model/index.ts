@@ -570,6 +570,35 @@ export const productsDenierLegSize: ProductDenierLegSize[] = [
 export const productsLace: ProductLace[] = [LACE_FAN_TIGHTS];
 export const products: Product[] = [...productsDenierLegSize, ...productsLace];
 
+export function ProductLaceAvailableLaces(
+  product: ProductLace
+): ProductPropertyLace[] {
+  return product.lace;
+}
+
+export function useProductLaceAvailableLaces(product: ProductLace): Lace[] {
+  return ProductLaceAvailableLaces(product);
+}
+
+export function ProductLaceAttributes(
+  product: ProductLace,
+  lace: Lace
+): ProductBaseAttributes | undefined {
+  const foundLace = ProductLaceAvailableLaces(product).find(
+    (x) => x.value === lace.value
+  );
+  if (isNil(foundLace)) return undefined;
+
+  return foundLace.attributes;
+}
+
+export function useProductLaceAttributes(
+  product: ProductLace,
+  lace: Lace
+): ProductBaseAttributes | undefined {
+  return ProductLaceAttributes(product, lace);
+}
+
 export function ProductDenierLegSizeAvailableDenier(
   product: ProductDenierLegSize
 ): ProductPropertyDenier[] {
@@ -645,43 +674,4 @@ export function useProductDenierLegSizeAttributes(
   size: Size
 ): ProductBaseAttributes | undefined {
   return ProductDenierLegSizeAttributes(product, denier, leg, size);
-  // ?? {
-  //   colors: [],
-  //   discount: {
-  //     kind: DiscountKind.NO_DISCOUNT,
-  //   },
-  //   images: (color, size) => [],
-  //   price: 0,
-  //   supplier: 'filo',
-  // }
 }
-
-// export function ProductDenierLegSizeAttributes(
-//   product: ProductDenierLegSize,
-//   denier: Denier,
-//   leg: Leg,
-//   size: Size
-// ): ProductBaseAttributes {
-//   const foundDenier = product.denier.find((d) => d.value === denier.value);
-//   if (isNil(foundDenier))
-//     throw new Error(
-//       ProductDenierLegSizeAttributesErrorMessage(denier, 'denier')
-//     );
-
-//   const foundLeg = foundDenier.legOptions.find((l) => l.value === leg.value);
-//   if (isNil(foundLeg))
-//     throw new Error(ProductDenierLegSizeAttributesErrorMessage(leg, 'leg'));
-
-//   const foundSize = foundLeg.sizes.find((s) => s.value === size.value);
-//   if (isNil(foundSize))
-//     throw new Error(ProductDenierLegSizeAttributesErrorMessage(size, 'size'));
-
-//   return foundSize.attributes;
-
-//   function ProductDenierLegSizeAttributesErrorMessage(
-//     value: Denier | Leg | Size,
-//     text: string
-//   ): string {
-//     return `ProductDenierLegSizeAvailableColors ${text} ${value.label} not found`;
-//   }
-// }
