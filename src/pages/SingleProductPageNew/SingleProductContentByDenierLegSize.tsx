@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { AddToCart, ProductImages } from '../../components';
+import { AddToCart, AmountButtons, ProductImages } from '../../components';
 import {
+  CartItem,
   Color,
   Denier,
   Leg,
   ProductDenierLegSize,
+  ProductSchema,
   Size,
   useProductDenierLegSizeAttributes,
   useProductDenierLegSizeAvailableDenier,
@@ -18,6 +20,9 @@ import SizeSelector from './SizeSelector';
 import DenierSelector from './DenierSelector';
 import Price from './Price';
 import ProductDescription from './ProductDescription';
+import Button from '../../components/Button';
+import { useCartContext } from '../../context/cart_context';
+import { imageSrc } from '../../utils/images';
 
 interface SingleProductContentByDenierLegSizeProps {
   product: ProductDenierLegSize;
@@ -40,7 +45,7 @@ const SingleProductContentByDenierLegSize: React.FC<
     selectedDenier
   );
   const [selectedLeg, setSelectedLeg] = useState<Leg>(
-    availableLegs.find((leg) => leg.value === 'with-leg') ?? availableLegs[0]
+    availableLegs.find((leg) => leg.value === 'without-leg') ?? availableLegs[0]
   );
 
   const availableSizes = useProductDenierLegSizeAvailableSizes(
@@ -63,6 +68,34 @@ const SingleProductContentByDenierLegSize: React.FC<
     attributes?.colors.find((color) => (color.value = 'black')) ??
       attributes?.colors[0]
   );
+
+  const [amount, setAmount] = useState(1);
+
+  const increaseAmount = () => setAmount(amount + 1);
+  const decreaseAmount = () => {
+    if (amount > 1) {
+      setAmount(amount - 1);
+    }
+  };
+
+  const { items, addToCart } = useCartContext();
+
+  useEffect(() => {
+    console.log(
+      `cart changed ${JSON.stringify(Array.from(items.entries()), null, 4)}`
+    );
+  }, [items]);
+
+  function cartItem(): CartItem {
+    return {
+      schema: props.product.schema,
+      denier: selectedDenier.value,
+      leg: selectedLeg.value,
+      size: selectedSize.value,
+      color: selectedColor?.value!,
+      amount,
+    };
+  }
 
   const shouldRender =
     availableDeniers &&
@@ -90,16 +123,25 @@ const SingleProductContentByDenierLegSize: React.FC<
           <ProductDescription description={props.product.description} />
           <Price price={attributes.price} />
           <div className="side-by-side">
-            <ProductImages images={attributes.images} />
+            <ProductImages
+              images={imageSrc({
+                schema: ProductSchema.BY_DENIER_LEG_SIZE,
+                denier: selectedDenier.value,
+                color: selectedColor.value,
+              })}
+            />
             <div>
-              <DenierSelector
-                deniers={availableDeniers}
-                initialDenier={selectedDenier}
-                selectedDenier={(denier: Denier) => {
-                  setSelectedDenier(denier);
-                  console.log(`selected denier ${denier.label}`);
-                }}
-              />
+              {availableDeniers.length > 1 && (
+                <DenierSelector
+                  deniers={availableDeniers}
+                  initialDenier={selectedDenier}
+                  selectedDenier={(denier: Denier) => {
+                    setSelectedDenier(denier);
+                    console.log(`selected denier ${denier.label}`);
+                  }}
+                />
+              )}
+
               <LegSelector
                 legs={availableLegs}
                 initialLeg={selectedLeg}
@@ -109,14 +151,16 @@ const SingleProductContentByDenierLegSize: React.FC<
                 }}
               />
 
-              <SizeSelector
-                sizes={availableSizes}
-                initialSize={selectedSize}
-                selectedSize={(size: Size) => {
-                  setSelectedSize(size);
-                  console.log(`selected size is ${size.label}`);
-                }}
-              />
+              {availableSizes.length > 1 && (
+                <SizeSelector
+                  sizes={availableSizes}
+                  initialSize={selectedSize}
+                  selectedSize={(size: Size) => {
+                    setSelectedSize(size);
+                    console.log(`selected size is ${size.label}`);
+                  }}
+                />
+              )}
             </div>
           </div>
           <ColorSelector
@@ -128,7 +172,21 @@ const SingleProductContentByDenierLegSize: React.FC<
             }}
           />
           <hr />
-          <AddToCart singleProduct={{}} />
+          <AmountButtons
+            className="center"
+            amount={amount}
+            increase={increaseAmount}
+            decrease={decreaseAmount}
+          />
+          <Button
+            className="center"
+            text="הוסף לעגלה"
+            onClick={() => {
+              const item = cartItem();
+              console.log(`add to cart ${JSON.stringify(item, null, 4)}`);
+              addToCart(item);
+            }}
+          />
         </>
       )}
     </Wrapper>

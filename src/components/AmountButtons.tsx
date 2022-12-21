@@ -6,14 +6,16 @@ interface AmountButtonsProps {
   amount: number;
   increase: () => void;
   decrease: () => void;
+  className?: string;
 }
 const AmountButtons: React.FC<AmountButtonsProps> = ({
   amount,
   increase,
   decrease,
+  className,
 }) => {
   return (
-    <Wrapper className="amount-btns">
+    <Wrapper className={`amount-btns ${className}`}>
       <button type="button" className="amount-btn" onClick={increase}>
         <FaPlus />{' '}
       </button>

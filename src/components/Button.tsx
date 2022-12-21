@@ -3,11 +3,14 @@ import styled from 'styled-components';
 interface ButtonProps {
   text: string;
   onClick: () => void;
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
   return (
-    <StyledButton onClick={() => props.onClick()}>{props.text}</StyledButton>
+    <StyledButton className={props.className} onClick={() => props.onClick()}>
+      {props.text}
+    </StyledButton>
   );
 };
 

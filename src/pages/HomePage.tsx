@@ -1,14 +1,13 @@
-import { Services, Contact, FeaturedProducts } from '../components';
+import { FeaturedProducts } from '../components';
+import Page from '../components/Page';
 import Title from '../components/Title';
 
 const HomePage = () => {
   return (
-    <main>
+    <Page>
       <Title />
       <FeaturedProducts />
-      {/* <Services /> */}
-      {/* <Contact /> */}
-    </main>
+    </Page>
   );
 };
 

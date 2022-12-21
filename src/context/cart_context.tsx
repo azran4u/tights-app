@@ -1,101 +1,101 @@
-import React, { useEffect, useContext, useReducer } from 'react'
-import reducer from '../reducers/cart_reducer'
-import { productDataType } from '../utils/productData'
-import {
-  ADD_TO_CART,
-  REMOVE_CART_ITEM,
-  TOGGLE_CART_ITEM_AMOUNT,
-  CLEAR_CART,
-  COUNT_CART_TOTALS,
-} from '../actions'
+import React, { useEffect, useContext, useReducer } from 'react';
+import reducer from '../reducers/cart_reducer';
+import { CartItem } from '../model';
+import { isNil } from 'lodash';
 
-export type cartType = {
-  id: string
-  slug: string
-  name: string
-  amount: number
-  image: string
-  price: number
+export type CartItemsMap = Map<string, CartItem>;
+
+function mapSerializer(map: CartItemsMap): string {
+  return JSON.stringify(Array.from(map.entries()));
 }
 
-export type initialStateType = {
-  cart: cartType[]
-  totalItems: number
-  totalAmount: number
-  addToCart: (
-    id: string | undefined,
-    slug: string | undefined,
-    amount: number,
-    singleProduct: productDataType | {}
-  ) => void
-  removeItem: (id: string) => void
-  toggleAmount: (id: string, value: string) => void
-  clearCart: () => void
+function mapDeSerializer(serializedMap: string): CartItemsMap {
+  return new Map(JSON.parse(serializedMap));
 }
 
-const getLocalStorage: () => [] | cartType[] = () => {
-  let cart = localStorage.getItem('cart')
-  if (cart) {
-    return JSON.parse(cart)
+export interface CartState {
+  items: CartItemsMap;
+  addToCart: (item: CartItem) => void;
+  removeItem: (item: CartItem) => void;
+  updateAmount: (item: CartItem, value: UpdateCartItemAmountOperations) => void;
+  clearCart: () => void;
+}
+
+function getLocalStorage() {
+  let cart = localStorage.getItem('cart');
+  if (!isNil(cart)) {
+    return mapDeSerializer(cart);
   } else {
-    return []
+    return new Map<string, CartItem>();
   }
 }
 
-const initialState = {
-  cart: getLocalStorage(),
-  totalItems: 0,
-  totalAmount: 0,
+const initialState: CartState = {
+  items: getLocalStorage(),
   addToCart: () => {},
   removeItem: () => {},
-  toggleAmount: () => {},
+  updateAmount: () => {},
   clearCart: () => {},
+};
+
+const CartContext = React.createContext<CartState>(initialState);
+
+export enum CartActionType {
+  ADD_TO_CART = 'ADD_TO_CART',
+  REMOVE_CART_ITEM = 'REMOVE_CART_ITEM',
+  UPDATE_CART_ITEM_AMOUNT = 'UPDATE_CART_ITEM_AMOUNT',
+  CLEAR_CART = 'CLEAR_CART',
 }
 
-const CartContext = React.createContext<initialStateType>(initialState)
+export type UpdateCartItemAmountOperations = "increase-one" | "decrease-one";
+export type CartActions =
+  | { type: CartActionType.ADD_TO_CART; payload: { item: CartItem } }
+  | { type: CartActionType.CLEAR_CART }
+  | { type: CartActionType.REMOVE_CART_ITEM; payload: { item: CartItem } }
+  | {
+      type: CartActionType.UPDATE_CART_ITEM_AMOUNT;
+      payload: { item: CartItem; operation: UpdateCartItemAmountOperations };
+    };
 
 export const CartProvider: React.FC = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addToCart = (
-    id: string | undefined,
-    slug: string | undefined,
-    amount: number,
-    singleProduct: productDataType | {}
+  const addToCart = (item: CartItem) => {
+    dispatch({ type: CartActionType.ADD_TO_CART, payload: { item } });
+  };
+
+  const removeItem = (item: CartItem) => {
+    dispatch({ type: CartActionType.REMOVE_CART_ITEM, payload: { item } });
+  };
+
+  const updateAmount = (
+    item: CartItem,
+    operation: UpdateCartItemAmountOperations
   ) => {
     dispatch({
-      type: ADD_TO_CART,
-      payload: { id, slug, amount, singleProduct },
-    })
-  }
-
-  const removeItem = (id: string) => {
-    dispatch({ type: REMOVE_CART_ITEM, payload: id })
-  }
-
-  const toggleAmount = (id: string, value: string) => {
-    dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } })
-  }
+      type: CartActionType.UPDATE_CART_ITEM_AMOUNT,
+      payload: { item, operation },
+    });
+  };
 
   const clearCart = () => {
-    dispatch({ type: CLEAR_CART })
-  }
+    dispatch({ type: CartActionType.CLEAR_CART });
+  };
 
   // when the cart changes, store the changes to localStorage + re-calculate total amount in cart
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(state.cart))
-    dispatch({type: COUNT_CART_TOTALS})
-  }, [state.cart])
+    localStorage.setItem('cart', mapSerializer(state.items));
+  }, [state.items]);
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart }}
+      value={{ ...state, addToCart, removeItem, updateAmount, clearCart }}
     >
       {children}
     </CartContext.Provider>
-  )
-}
+  );
+};
 // make sure use
 export const useCartContext = () => {
-  return useContext(CartContext)
-}
+  return useContext(CartContext);
+};

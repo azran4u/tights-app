@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import { useProductsContext } from '../../context/products_context';
-import { Logo } from '../Navbar/Logo';
+import Logo from '../Navbar/Logo';
 import styled from 'styled-components';
 
 export const SidebarHeader = () => {

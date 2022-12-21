@@ -6,8 +6,9 @@ import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 
 const CartTotals = () => {
-  const { totalAmount } = useCartContext()
+  const { items } = useCartContext()
 
+  const totalAmount = 10;
   return (
     <Wrapper>
       <div>

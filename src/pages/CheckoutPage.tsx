@@ -5,9 +5,9 @@ import { useCartContext } from '../context/cart_context';
 import { Link } from 'react-router-dom';
 
 const CheckoutPage = () => {
-  const { cart } = useCartContext();
+  const { items } = useCartContext();
 
-  if (cart.length < 1) {
+  if (items.size < 1) {
     return (
       <PageWrapper>
         <div className="empty">

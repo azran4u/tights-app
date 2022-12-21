@@ -1,43 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useCartContext } from '../context/cart_context';
-import { Link } from 'react-router-dom';
-import { PageHero, CartContent } from '../components';
+import { Link, useHistory } from 'react-router-dom';
+import { CartContent } from '../components';
+import Page from '../components/Page';
+import Button from '../components/Button';
 
 const CartPage = () => {
-  const { cart } = useCartContext();
-  if (cart.length < 1) {
+  const { items } = useCartContext();
+  const history = useHistory();
+
+  if (items.size < 1) {
     return (
-      <Wrapper className="page">
-        <div className="empty">
+      <Page>
+        <Wrapper>
           <h2>העגלה שלך ריקה</h2>
-          <Link to="/products" className="btn">
-            מלאי את העגלה
-          </Link>
-        </div>
-      </Wrapper>
+          <Button
+            text="מלאי את העגלה"
+            onClick={() => {
+              history.push('/');
+            }}
+          />
+        </Wrapper>
+      </Page>
     );
   } else {
     return (
-      <main>
-        {/* <PageHero title="Cart" /> */}
-        <Wrapper className="page">
-          <CartContent />
-        </Wrapper>
-      </main>
+      <Page>
+        <CartContent />
+      </Page>
     );
   }
 };
 
-const Wrapper = styled.main`
-  min-height: 81vh;
-  .empty {
-    text-align: center;
-    h2 {
-      margin-bottom: 1rem;
-      text-transform: none;
-    }
-  }
+const Wrapper = styled.div`
+  min-height: 80vh;
+  text-align: center;
 `;
 
 export default CartPage;

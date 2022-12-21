@@ -1,10 +1,9 @@
 import React from 'react';
+import SubHeader from '../SubHeader';
 
-export const FeaturedProductsHeader = () => {
-  return (
-    <div className="title">
-      <h2>המוצרים שלנו</h2>
-      <div className="underline" />
-    </div>
-  );
+interface ClassName {
+  className?: string;
+}
+export const FeaturedProductsHeader: React.FC<ClassName> = ({ className }) => {
+  return <SubHeader text="המוצרים שלנו" className={className} />;
 };

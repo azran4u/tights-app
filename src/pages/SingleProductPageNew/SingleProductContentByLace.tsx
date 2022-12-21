@@ -52,7 +52,11 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
 
       {shouldRender && (
         <>
-          <ProductImages images={attributes.images} />
+          <ProductImages
+            images={attributes.images({
+              color: selectedColor.value,
+            })}
+          />
           <ProductDescription description={props.product.description} />
           <Price price={attributes.price} />
 
@@ -74,7 +78,7 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
             }}
           />
           <hr />
-          <AddToCart singleProduct={{}} />
+          {/* <AddToCart singleProduct={{}} /> */}
         </>
       )}
     </Wrapper>

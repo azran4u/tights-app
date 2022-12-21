@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { device } from '../../utils/device.sizes';
 import CartButtons from '../CartButtons';
-import { Logo } from './Logo';
+import Logo from './Logo';
 import { MenuIcon } from './MenuIcon';
 import { NavLinks } from './NavLinks';
 
@@ -54,7 +55,8 @@ const NavContainer = styled.nav`
   .cart-btn-wrapper {
     display: none;
   }
-  @media (min-width: 992px) {
+
+  @media ${device.desktop} {
     img {
       margin-right: 2rem;
       margin-top: 1rem;

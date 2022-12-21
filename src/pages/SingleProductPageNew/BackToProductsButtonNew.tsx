@@ -1,10 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import Button from '../../components/Button';
 
 export const BackToProductsButtonNew: React.FC = () => {
+  const history = useHistory();
   return (
-    <Link to="/products" className="btn">
-      חזרה לקטלוג המוצרים
-    </Link>
+    <Button
+      text="חזרה לקטלוג המוצרים"
+      onClick={() => history.push('/products')}
+    />
   );
 };

@@ -9,17 +9,22 @@ const ProductImages: React.FC<{ images: string[] | undefined }> = ({
 
   return (
     <Wrapper>
-      <img src={imagePath(images[imageIndex])} alt="main" className="main" />
+      {/* <img src={imagePath(images[imageIndex])} alt="main" className="main" /> */}
+      <img src={images[0]} alt="main" className="main" />
       {images.length > 1 ?? (
         <div className="gallery">
           {images.map((image, index) => {
             return (
               <img
                 key={image}
-                src={imagePath(image)}
+                src={image}
                 alt={image}
                 onClick={() => setImageIndex(index)}
                 className={index === imageIndex ? 'active' : undefined}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src = imagePath('missing-image.svg');
+                }}
               />
             );
           })}

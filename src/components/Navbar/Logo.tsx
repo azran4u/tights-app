@@ -1,17 +1,13 @@
-import whiteLogo from '../../assets/TH.svg';
 import styled from 'styled-components';
+import logo from '../../assets/images/logo.svg';
 
-export const Logo = () => {
-  return (
-    <StyledLogo>
-      <img src={whiteLogo} alt="cute buddy" />
-    </StyledLogo>
-  );
+const Logo = () => {
+  return <StyledLogo src={logo} alt="cute buddy" />;
 };
 
-const StyledLogo = styled.div`
-  img {
-    width: 3rem;
-    height: 3rem;
-  }
+const StyledLogo = styled.img`
+  width: 3rem;
+  height: 3rem;
 `;
+
+export default Logo;
