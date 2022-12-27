@@ -4,14 +4,16 @@ import App from './App';
 import './index.scss';
 import { ProductsProvider } from './context/products_context';
 import { FilterProvider } from './context/filter_context';
-import { CartProvider } from './context/cart_context';
-
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import { enableMapSet } from 'immer';
+enableMapSet();
 ReactDOM.render(
   <ProductsProvider>
     <FilterProvider>
-      <CartProvider>
+      <Provider store={store}>
         <App />
-      </CartProvider>
+      </Provider>
     </FilterProvider>
   </ProductsProvider>,
   document.getElementById('root')

@@ -1,15 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useCartContext } from '../context/cart_context';
 import { Link } from 'react-router-dom';
 import CartColumns from './CartColumns';
 import CartItem from './CartItem';
 import CartTotals from './CartTotals';
 import { CartItemSku } from '../model';
 import CartItemComponent from './CartItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { clear, selectCartItemsMap } from '../store/cartSlice';
 
 const CartContent = () => {
-  const { items, clearCart } = useCartContext();
+  const items = useSelector(selectCartItemsMap);
+  const dispatch = useDispatch();
+
   return (
     <Wrapper className="section section-center">
       <CartColumns />
@@ -19,7 +22,7 @@ const CartContent = () => {
         );
       })}
       <hr />
-      <Buttons clearCart={clearCart} />
+      <Buttons clearCart={dispatch(clear)} />
       <CartTotals />
     </Wrapper>
   );

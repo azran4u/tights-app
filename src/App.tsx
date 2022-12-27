@@ -28,7 +28,7 @@ function App() {
             <Cart />
           </Route>
           <Route exact path="/products">
-            <Products />
+            <Home />
           </Route>
           <Route
             exact
@@ -36,7 +36,7 @@ function App() {
             children={<SingleProductPageNew />}
           />
           <Route exact path="/checkout">
-            <Checkout />
+            <Cart />
           </Route>
           <Route exact path="/successful_payment">
             <SuccessfulPayment />

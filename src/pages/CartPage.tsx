@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useCartContext } from '../context/cart_context';
 import { Link, useHistory } from 'react-router-dom';
 import { CartContent } from '../components';
 import Page from '../components/Page';
 import Button from '../components/Button';
+import { useSelector } from 'react-redux';
+import { selectCartItemsTotalAmount } from '../store/cartSlice';
 
 const CartPage = () => {
-  const { items } = useCartContext();
+  const itemsCount = useSelector(selectCartItemsTotalAmount)
   const history = useHistory();
 
-  if (items.size < 1) {
+  if (itemsCount < 1) {
     return (
       <Page>
         <Wrapper>

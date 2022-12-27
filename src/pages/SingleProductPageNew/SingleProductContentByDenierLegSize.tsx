@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AddToCart, AmountButtons, ProductImages } from '../../components';
+import { AmountButtons, ProductImages } from '../../components';
 import {
   CartItem,
   Color,
@@ -21,8 +21,9 @@ import DenierSelector from './DenierSelector';
 import Price from './Price';
 import ProductDescription from './ProductDescription';
 import Button from '../../components/Button';
-import { useCartContext } from '../../context/cart_context';
 import { imageSrc } from '../../utils/images';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, selectCartItemsMap } from '../../store/cartSlice';
 
 interface SingleProductContentByDenierLegSizeProps {
   product: ProductDenierLegSize;
@@ -31,6 +32,8 @@ interface SingleProductContentByDenierLegSizeProps {
 const SingleProductContentByDenierLegSize: React.FC<
   SingleProductContentByDenierLegSizeProps
 > = (props) => {
+  const dispatch = useDispatch();
+
   const availableDeniers = useProductDenierLegSizeAvailableDenier(
     props.product
   );
@@ -78,7 +81,8 @@ const SingleProductContentByDenierLegSize: React.FC<
     }
   };
 
-  const { items, addToCart } = useCartContext();
+  // const { items, addToCart } = useCartContext();
+  const items = useSelector(selectCartItemsMap);
 
   useEffect(() => {
     console.log(
@@ -184,7 +188,7 @@ const SingleProductContentByDenierLegSize: React.FC<
             onClick={() => {
               const item = cartItem();
               console.log(`add to cart ${JSON.stringify(item, null, 4)}`);
-              addToCart(item);
+              dispatch(addItem(item));
             }}
           />
         </>

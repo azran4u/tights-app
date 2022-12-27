@@ -1,10 +1,15 @@
 import { FaBars } from 'react-icons/fa';
-import { useProductsContext } from '../../context/products_context';
+import { useAppDispatch } from '../../store/hooks';
+import { openSidebar } from '../../store/sidebarSlice';
 
 export const MenuIcon = () => {
-  const { openSidebar } = useProductsContext();
+  const dispatch = useAppDispatch();
   return (
-    <button type="button" className="nav-toggle" onClick={openSidebar}>
+    <button
+      type="button"
+      className="nav-toggle"
+      onClick={() => dispatch(openSidebar())}
+    >
       <FaBars />
     </button>
   );

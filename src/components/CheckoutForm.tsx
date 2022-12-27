@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { useCartContext } from '../context/cart_context';
 import { formatPrice } from '../utils/helpers';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 // Billing info and style from Stripe YouTube tutorial
 import Row from './Row';
 import BillingDetailsFields from './BillingDetailsFields';
+import { useSelector } from 'react-redux';
+import { selectCartItemsMap } from '../store/cartSlice';
 
 export const CheckoutForm = () => {
-  const { items } = useCartContext();
+  const items = useSelector(selectCartItemsMap);
   const [succeeded, setSucceeded] = useState(false); // if the payment succeeded
   const [error, setError] = useState(''); // error message
   const [processing, setProcessing] = useState(false); // if the payment is processing

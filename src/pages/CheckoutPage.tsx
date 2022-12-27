@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PageHero, StripeCheckout } from '../components';
-import { useCartContext } from '../context/cart_context';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCartItemsMap } from '../store/cartSlice';
 
 const CheckoutPage = () => {
-  const { items } = useCartContext();
+  const items = useSelector(selectCartItemsMap);
 
   if (items.size < 1) {
     return (

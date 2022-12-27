@@ -1,27 +1,40 @@
 import React from 'react';
-// import logo from '../../assets/logo_white.png';
 import { Link } from 'react-router-dom';
-import { FaTimes } from 'react-icons/fa';
-import { useProductsContext } from '../../context/products_context';
 import Logo from '../Navbar/Logo';
 import styled from 'styled-components';
+import { useAppDispatch } from '../../store/hooks';
+import { closeSidebar } from '../../store/sidebarSlice';
+import { Close } from '@styled-icons/material/Close';
 
-export const SidebarHeader = () => {
-  const { closeSidebar } = useProductsContext();
+export const SidebarHeader: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const close = () => dispatch(closeSidebar());
+
   return (
-    <div className="sidebar-header">
-      <Link to="/" onClick={closeSidebar}>
+    <Wrapper>
+      <CloseButton onClick={close} />
+      <Link to="/" onClick={close}>
         <StyledLogo />
       </Link>
-      <button type="button" className="close-btn" onClick={closeSidebar}>
-        <FaTimes />
-      </button>
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+`;
 
 const StyledLogo = styled(Logo)`
   width: 3rem;
   height: 3rem;
-  background-color: red;
+`;
+
+const CloseButton = styled(Close)`
+  color: var(--clr-primary-5);
+  width: 3rem;
+  height: 3rem;
 `;

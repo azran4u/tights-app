@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { formatPrice } from '../utils/helpers';
 import AmountButtons from './AmountButtons';
 import { FaTrash } from 'react-icons/fa';
-import { useCartContext } from '../context/cart_context';
 import { Link } from 'react-router-dom';
 import { CartItem } from '../model';
+import { useAppDispatch } from '../store/hooks';
 
 const CartItemComponent: React.FC<{ cartItem: CartItem }> = ({ cartItem }) => {
   // const { id, image, name, price, amount, slug } = cartItem
 
-  const { removeItem, updateAmount } = useCartContext();
+  const dispatch = useAppDispatch();
 
   const increase: () => void = () => {
     // updateAmount(id, 1)
