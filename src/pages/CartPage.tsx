@@ -1,42 +1,35 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { CartContent } from '../components';
-import Page from '../components/Page';
-import Button from '../components/Button';
-import { useSelector } from 'react-redux';
-import { selectCartItemsTotalAmount } from '../store/cartSlice';
+import React from "react";
+import { CartContent } from "../components";
+import { useSelector } from "react-redux";
+import { selectCartItemsTotalAmount } from "../store/cartSlice";
+import EmptyCart from "../components/EmptyCart";
+import styled from "styled-components";
 
-const CartPage = () => {
-  const itemsCount = useSelector(selectCartItemsTotalAmount)
-  const history = useHistory();
+const CartPage: React.FC = () => {
+  const itemsCount = useSelector(selectCartItemsTotalAmount);
+  const isCartEmpty = itemsCount === 0;
 
-  if (itemsCount < 1) {
-    return (
-      <Page>
-        <Wrapper>
-          <h2>העגלה שלך ריקה</h2>
-          <Button
-            text="מלאי את העגלה"
-            onClick={() => {
-              history.push('/');
-            }}
-          />
-        </Wrapper>
-      </Page>
-    );
-  } else {
-    return (
-      <Page>
-        <CartContent />
-      </Page>
-    );
-  }
+  return (
+    <Wrapper>
+      <h1 className="title">עגלה</h1>
+      {isCartEmpty && <EmptyCart className="content" />}
+      {!isCartEmpty && <CartContent className="content" />}
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.div`
-  min-height: 80vh;
-  text-align: center;
+  width: 90vw;
+  margin: 0 auto;
+
+  .title {
+    min-height: 15vh;
+    text-align: center;
+  }
+
+  .content {
+    min-height: 65vh;
+  }
 `;
 
 export default CartPage;

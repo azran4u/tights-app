@@ -1,51 +1,54 @@
-import React from 'react';
-import styled from 'styled-components';
-import CartButtons from '../CartButtons';
-import { NavLinks } from '../Navbar/NavLinks';
-import { SidebarHeader } from './SidebarHeader';
-import * as sidebarStore from '../../store/sidebarSlice';
-import { useAppSelector } from '../../store/hooks';
+import React from "react";
+import styled, { css } from "styled-components";
+import CartWithBadge from "../CartWithBadge";
+import { NavLinks } from "../Navbar/NavLinks";
+import { SidebarHeader } from "./SidebarHeader";
+import * as sidebarStore from "../../store/sidebarSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { device } from "../../utils/device.sizes";
+import { Link } from "react-router-dom";
+import { closeSidebar } from "../../store/sidebarSlice";
 
 const Sidebar: React.FC = () => {
   const isSidebarOpen = useAppSelector(sidebarStore.selectSidebarIsOpen);
+  const dispatch = useAppDispatch();
+  const close = () => dispatch(closeSidebar());
   return (
-    <Wrapper>
-      <aside className={isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'}>
-        <SidebarHeader />
-        <NavLinks />
-        <CartButtons />
-      </aside>
+    <Wrapper isSidebarOpen={isSidebarOpen}>
+      <SidebarHeader />
+      <NavLinks isSidebar={true} />
+      <Link to="/cart" onClick={close}>
+        <CartWithBadge />
+      </Link>
     </Wrapper>
   );
 };
 
 export default Sidebar;
 
-const Wrapper = styled.div`
+interface WrapperProps {
+  isSidebarOpen: boolean;
+}
+
+const Wrapper = styled.aside.attrs<WrapperProps>({})<WrapperProps>`
   text-align: center;
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--clr-white);
+  transition: var(--transition);
+  transform: translate(100%);
+  ${({ isSidebarOpen }) =>
+    isSidebarOpen &&
+    css`
+      z-index: 999;
+      transform: translate(0);
+    `}
 
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-
-    height: 100%;
-    background: var(--clr-white);
-    transition: var(--transition);
-    transform: translate(100%);
-    z-index: -1;
-  }
-  .show-sidebar {
-    transform: translate(0);
-    z-index: 999;
-  }
-  .cart-btn-wrapper {
-    margin: 2rem auto;
-  }
-  @media screen and (min-width: 992px) {
-    .sidebar {
-      display: none;
-    }
+  @media ${device.desktop} {
+    display: none;
   }
 `;

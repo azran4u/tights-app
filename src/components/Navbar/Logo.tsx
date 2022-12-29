@@ -1,13 +1,8 @@
-import styled from 'styled-components';
-import logo from '../../assets/images/logo.svg';
+import logo from "../../assets/images/logo.svg";
+import { OptionalClassName } from "../../utils/classNameInterface";
 
-const Logo = () => {
-  return <StyledLogo src={logo} alt="cute buddy" />;
+const Logo = (props: OptionalClassName) => {
+  return <img src={logo} alt="cute buddy" className={props.className} />;
 };
-
-const StyledLogo = styled.img`
-  width: 3rem;
-  height: 3rem;
-`;
 
 export default Logo;

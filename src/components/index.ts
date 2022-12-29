@@ -1,4 +1,4 @@
-import Navbar from './Navbar/Navbar'
+import Navbar from './Navbar/Nav'
 import Footer from './Footer'
 import Sidebar from './Sidebar/Sidebar'
 import PageHero from './PageHero'

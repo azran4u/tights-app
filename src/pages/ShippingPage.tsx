@@ -1,51 +1,38 @@
-import React from 'react';
-import styled from 'styled-components';
-import { PageHero } from '../components';
-import shopLogo from '../assets/shop_logo.jpg';
+import React from "react";
+import styled from "styled-components";
+import { PageHero } from "../components";
+import shopLogo from "../assets/shop_logo.jpg";
 
 const ShippingPage = () => {
   return (
     <main>
-      {/* <PageHero title="shipping" /> */}
       <Wrapper className="page">
-        {/* insert about page image here */}
-        {/* <img src={shopLogo} alt="square logo" /> */}
-        <article className="title">
-          <h2>משלוח חינם לנקודות חלוקה בכל רחבי הארץ</h2>
+        <div className="title">
+          <h1>משלוח</h1>
           <div className="underline"></div>
+        </div>
+        <div className="content">
+          <p>משלוח חינם לנקודות חלוקה בכל רחבי הארץ</p>
           <p>לרשימת נקודות החלוקה</p>
+          <p>תצוגת מפה</p>
           <p>מעוניינת לפתוח נקודת חלוקה באזורך? - צרי איתנו קשר</p>
-        </article>
+        </div>
       </Wrapper>
     </main>
   );
 };
 
 const Wrapper = styled.div`
-  display: grid;
-  gap: 4rem;
-  img {
-    width: 100%;
-    display: block;
-    border-radius: var(--radius);
-    height: 500px;
-    object-fit: cover;
-  }
-  p {
-    line-height: 2;
-    max-width: 45em;
-    margin: 0 auto;
-    margin-top: 2rem;
-    color: var(--clr-grey-5);
-  }
+  width: 90vw;
+  margin: 0 auto;
+
   .title {
-    text-align: right;
+    min-height: 15vh;
+    text-align: center;
   }
-  .underline {
-    margin-right: 0;
-  }
-  @media (min-width: 992px) {
-    grid-template-columns: 1fr 1fr;
+
+  .content {
+    min-height: 65vh;
   }
 `;
 export default ShippingPage;

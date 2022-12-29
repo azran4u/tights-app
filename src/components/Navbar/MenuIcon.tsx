@@ -1,16 +1,28 @@
-import { FaBars } from 'react-icons/fa';
-import { useAppDispatch } from '../../store/hooks';
-import { openSidebar } from '../../store/sidebarSlice';
+import { FaBars } from "react-icons/fa";
+import styled from "styled-components";
+import { useAppDispatch } from "../../store/hooks";
+import { openSidebar } from "../../store/sidebarSlice";
+import { OptionalClassName } from "../../utils/classNameInterface";
 
-export const MenuIcon = () => {
+export const MenuButton: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();
   return (
-    <button
+    <Wrapper
       type="button"
-      className="nav-toggle"
+      className={props.className}
       onClick={() => dispatch(openSidebar())}
     >
       <FaBars />
-    </button>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.button`
+  background: transparent;
+  border: transparent;
+  color: var(--clr-primary-5);
+  cursor: pointer;
+  svg {
+    font-size: 2rem;
+  }
+`;

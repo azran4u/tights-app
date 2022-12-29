@@ -1,20 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import CartColumns from './CartColumns';
-import CartItem from './CartItem';
-import CartTotals from './CartTotals';
-import { CartItemSku } from '../model';
-import CartItemComponent from './CartItem';
-import { useDispatch, useSelector } from 'react-redux';
-import { clear, selectCartItemsMap } from '../store/cartSlice';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import CartColumns from "./CartColumns";
+import CartItem from "./CartItem";
+import CartTotals from "./CartTotals";
+import { CartItemSku } from "../model";
+import CartItemComponent from "./CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { clear, selectCartItemsMap } from "../store/cartSlice";
+import { OptionalClassName } from "../utils/classNameInterface";
 
-const CartContent = () => {
+interface CartContentProps extends OptionalClassName {}
+
+const CartContent: React.FC<CartContentProps> = (props) => {
   const items = useSelector(selectCartItemsMap);
   const dispatch = useDispatch();
 
   return (
-    <Wrapper className="section section-center">
+    <Wrapper className={`section section-center ${props.className}`}>
       <CartColumns />
       {items.forEach((cartItem) => {
         return (

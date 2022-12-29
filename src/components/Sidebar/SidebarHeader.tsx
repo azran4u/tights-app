@@ -8,12 +8,11 @@ import { Close } from '@styled-icons/material/Close';
 
 export const SidebarHeader: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const close = () => dispatch(closeSidebar());
 
   return (
     <Wrapper>
-      <CloseButton onClick={close} />
+      <StyledClose onClick={close} />
       <Link to="/" onClick={close}>
         <StyledLogo />
       </Link>
@@ -33,7 +32,7 @@ const StyledLogo = styled(Logo)`
   height: 3rem;
 `;
 
-const CloseButton = styled(Close)`
+const StyledClose = styled(Close)`
   color: var(--clr-primary-5);
   width: 3rem;
   height: 3rem;
