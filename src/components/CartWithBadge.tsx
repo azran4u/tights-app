@@ -3,10 +3,10 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { selectCartItemsTotalAmount } from "../store/cartSlice";
-import { useAppDispatch } from "../store/hooks";
-import { closeSidebar } from "../store/sidebarSlice";
 import { OptionalClassName } from "../utils/classNameInterface";
+import { useAppDispatch } from "../store/hooks";
+import { selectCartItemsTotalAmount } from "../store/cartSlice";
+import { closeSidebar } from "../store/sidebarSlice";
 
 const CartWithBadge: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();

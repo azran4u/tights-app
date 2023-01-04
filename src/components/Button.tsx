@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { device } from "../utils/device.sizes";
 
 interface ButtonProps {
   text: string;
@@ -28,9 +29,12 @@ const StyledButton = styled.button`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: var(--radius);
   border-color: transparent;
-  &:hover {
-    color: var(--clr-primary-1);
-    background: var(--clr-primary-7);
+
+  @media ${device.desktop} {
+    &:hover {
+      color: var(--clr-primary-1);
+      background: var(--clr-primary-7);
+    }
   }
 `;
 

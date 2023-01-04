@@ -1,22 +1,21 @@
-import Navbar from './Navbar/Nav'
-import Footer from './Footer'
-import Sidebar from './Sidebar/Sidebar'
-import PageHero from './PageHero'
-import Hero from './Title'
-import Services from './Services/Services'
-import Contact from './Contact/Contact'
-import FeaturedProducts from './FeaturedProducts/FeaturedProducts'
-import Loading from './Loading'
-import ProductImages from './ProductImages'
-import AddToCart from './AddToCart'
-import AmountButtons from './AmountButtons'
-import Filters from './Filters/Filters'
-import ProductList from './ProductList'
-import Sort from './Sort/Sort'
-import CartContent from './CartContent'
-import StripeCheckout from './StripeCheckout'
-import ScrollToTop from './ScrollToTop'
-
+import Navbar from "../features/Layout/Navbar/Nav";
+import Footer from "../features/Layout/Footer/Footer";
+import Sidebar from "../features/Layout/Sidebar/Sidebar";
+import PageHero from "./old/PageHero";
+import Hero from "../features/Home/Title";
+import Services from "./old/Services/Services";
+import Contact from "./old/Contact/Contact";
+import FeaturedProducts from "../features/Home/FeaturedProducts/FeaturedProducts";
+import Loading from "./Loading";
+import ProductImages from "../features/Products/ProductsList/ProductImages";
+import AddToCart from "../features/Cart/AddToCart";
+import AmountButtons from "./AmountButtons";
+import Filters from "./old/Filters/Filters";
+import ProductList from "../features/Products/ProductsList/ProductList";
+import Sort from "./old/Sort/Sort";
+import CartContent from "../features/Cart/CartContent";
+import StripeCheckout from "./old/StripeCheckout";
+import ScrollToTop from "./ScrollToTop";
 
 // import CartButtons from './CartButtons'
 // import Error from './Error'
@@ -44,4 +43,4 @@ export {
   // CartButtons,
   // Error,
   // Stars,
-}
+};

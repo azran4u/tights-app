@@ -14,7 +14,7 @@
     {
       "name": "SWA: Run cutebuddy",
       "request": "launch",
-      "type": "pwa-chrome",
+      "type": "chrome",
       "url": "http://localhost:4280",
       "preLaunchTask": "swa: start cutebuddy",
       "webRoot": "${workspaceFolder}/cutebuddy",
@@ -23,7 +23,7 @@
     {
       "name": "SWA: Run typescript-e-commerce",
       "request": "launch",
-      "type": "pwa-chrome",
+      "type": "chrome",
       "url": "http://localhost:4280",
       "preLaunchTask": "swa: start typescript-e-commerce",
       "webRoot": "${workspaceFolder}/",

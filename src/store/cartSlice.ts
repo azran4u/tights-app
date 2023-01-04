@@ -1,11 +1,11 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from './store';
-import { CartItem, CartItemSku } from '../model';
-import { isNil } from 'lodash';
+import { createSelector, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "./store";
+import { CartItem, CartItemSku } from "../model";
+import { isNil } from "lodash";
 
 export type CartItemsMap = Map<string, CartItem>;
-export type UpdateCartItemAmountOperations = 'increase-one' | 'decrease-one';
+export type UpdateCartItemAmountOperations = "increase-one" | "decrease-one";
 
 export interface CartState {
   items: CartItemsMap;
@@ -16,7 +16,7 @@ const initialState: CartState = {
 };
 
 export const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     clear: (state) => {
@@ -45,10 +45,10 @@ export const cartSlice = createSlice({
       }
 
       let value: number = 0;
-      if (operation === 'increase-one') {
+      if (operation === "increase-one") {
         value = 1;
       }
-      if (operation === 'decrease-one') {
+      if (operation === "decrease-one") {
         value = -1;
       }
       state.items.set(itemSku, {
@@ -97,6 +97,7 @@ export const cartSlice = createSlice({
   },
 });
 
+export const cartActions = cartSlice.actions;
 export const { addItem, removeItem, updateItem, clear } = cartSlice.actions;
 
 export const selectCart = (state: RootState) => state.cart;
@@ -112,6 +113,13 @@ export const selectCartItemsTotalAmount = createSelector(
   (items) => items.reduce((prev, curr) => prev + curr.amount, 0)
 );
 
+export const cartSelectors = {
+  selectCart,
+  selectCartItemsArray,
+  selectCartItemsMap,
+  selectCartItemsTotalAmount,
+};
+
 export default cartSlice.reducer;
 
 function mapSerializer(map: CartItemsMap): string {
@@ -123,7 +131,7 @@ function mapDeSerializer(serializedMap: string): CartItemsMap {
 }
 
 function getLocalStorage() {
-  let cart = localStorage.getItem('cart');
+  let cart = localStorage.getItem("cart");
   if (!isNil(cart)) {
     return mapDeSerializer(cart);
   } else {

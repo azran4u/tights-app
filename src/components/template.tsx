@@ -17,6 +17,10 @@ const Wrapper = styled.div`
   }
 `;
 
+const PageWrapper: React.FC = ({ children }) => {
+  return <Wrapper>{children}</Wrapper>;
+};
+
 interface WrapperProps {}
 
 const Wrapper2 = styled.div.attrs<WrapperProps>({})<WrapperProps>``;
