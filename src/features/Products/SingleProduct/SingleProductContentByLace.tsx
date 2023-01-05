@@ -78,7 +78,7 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
             }}
           />
           <hr />
-          {/* <AddToCart singleProduct={{}} /> */}
+          {/* <AddToCart item={cartItem()} className="center" /> */}
         </>
       )}
     </Wrapper>

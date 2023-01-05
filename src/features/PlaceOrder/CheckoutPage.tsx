@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCartItemsMap } from "../../store/cartSlice";
+import { selectCartItemsMap } from "../Cart/store/cartSlice";
 
 const CheckoutPage = () => {
   const items = useSelector(selectCartItemsMap);

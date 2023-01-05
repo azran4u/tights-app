@@ -1,13 +1,13 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { NavLinks } from "../Navbar/NavLinks";
+import { NavLinks } from "../../Navbar/NavLinks";
 import { SidebarHeader } from "./SidebarHeader";
-import * as sidebarStore from "../../../store/sidebarSlice";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { device } from "../../../utils/device.sizes";
+import * as sidebarStore from "../store/sidebarSlice";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { device } from "../../../../utils/device.sizes";
 import { Link } from "react-router-dom";
-import { closeSidebar } from "../../../store/sidebarSlice";
-import CartWithBadge from "../../../components/CartWithBadge";
+import { closeSidebar } from "../store/sidebarSlice";
+import CartWithBadge from "../../../../components/CartWithBadge";
 
 const Sidebar: React.FC = () => {
   const isSidebarOpen = useAppSelector(sidebarStore.selectSidebarIsOpen);

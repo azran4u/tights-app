@@ -1,7 +1,7 @@
 import { FaBars } from "react-icons/fa";
 import styled from "styled-components";
 import { useAppDispatch } from "../../../store/hooks";
-import { openSidebar } from "../../../store/sidebarSlice";
+import { openSidebar } from "../Sidebar/store/sidebarSlice";
 import { OptionalClassName } from "../../../utils/classNameInterface";
 
 export const MenuButton: React.FC<OptionalClassName> = (props) => {

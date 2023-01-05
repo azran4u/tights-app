@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { OptionalClassName } from "../utils/classNameInterface";
 import { useAppDispatch } from "../store/hooks";
-import { selectCartItemsTotalAmount } from "../store/cartSlice";
-import { closeSidebar } from "../store/sidebarSlice";
+import { selectCartItemsTotalAmount } from "../features/Cart/store/cartSlice";
+import { closeSidebar } from "../features/Layout/Sidebar/store/sidebarSlice";
 
 const CartWithBadge: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();

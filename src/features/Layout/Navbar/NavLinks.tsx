@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../store/hooks";
-import { closeSidebar } from "../../../store/sidebarSlice";
+import { closeSidebar } from "../Sidebar/store/sidebarSlice";
 import styled from "styled-components";
 import { OptionalClassName } from "../../../utils/classNameInterface";
 import { device } from "../../../utils/device.sizes";

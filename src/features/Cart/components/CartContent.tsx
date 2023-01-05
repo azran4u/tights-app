@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CartColumns from "./CartColumns";
 import CartTotals from "./CartTotals";
-import { CartItemSku } from "../../model";
+import { CartItemSku } from "../../../model";
 import CartItemComponent from "./CartItem";
-import { cartActions, cartSelectors } from "../../store/cartSlice";
-import { OptionalClassName } from "../../utils/classNameInterface";
-import Button from "../../components/Button";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { cartActions, cartSelectors } from "../store/cartSlice";
+import { OptionalClassName } from "../../../utils/classNameInterface";
+import Button from "../../../components/Button";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 interface CartContentProps extends OptionalClassName {}
 

@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "./store";
-import { CartItem, CartItemSku } from "../model";
+import type { RootState } from "../../../store/store";
+import { CartItem, CartItemSku } from "../../../model";
 import { isNil } from "lodash";
 
 export type CartItemsMap = Map<string, CartItem>;

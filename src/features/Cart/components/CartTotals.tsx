@@ -3,8 +3,8 @@ import styled from "styled-components";
 // import { useUserContext } from '../context/user_context'
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCartItemsMap } from "../../store/cartSlice";
-import { formatPrice } from "../../utils/helpers";
+import { selectCartItemsMap } from "../store/cartSlice";
+import { formatPrice } from "../../../utils/helpers";
 
 const CartTotals = () => {
   const items = useSelector(selectCartItemsMap);

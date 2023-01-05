@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Logo from "../Navbar/Logo";
+import Logo from "../../Navbar/Logo";
 import styled from "styled-components";
-import { useAppDispatch } from "../../../store/hooks";
-import { closeSidebar } from "../../../store/sidebarSlice";
+import { useAppDispatch } from "../../../../store/hooks";
+import { closeSidebar } from "../store/sidebarSlice";
 import { Close } from "@styled-icons/material/Close";
 
 export const SidebarHeader: React.FC = () => {

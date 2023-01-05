@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { AmountButtons, ProductImages } from "../../../components";
+import React, { useState } from "react";
+import { AddToCart, AmountButtons, ProductImages } from "../../../components";
 import {
   CartItem,
   Color,
@@ -20,10 +20,7 @@ import SizeSelector from "./SizeSelector";
 import DenierSelector from "./DenierSelector";
 import Price from "./Price";
 import ProductDescription from "./ProductDescription";
-import Button from "../../../components/Button";
 import { imageSrc } from "../../../utils/images";
-import { useDispatch, useSelector } from "react-redux";
-import { addItem, selectCartItemsMap } from "../../../store/cartSlice";
 
 interface SingleProductContentByDenierLegSizeProps {
   product: ProductDenierLegSize;
@@ -32,8 +29,6 @@ interface SingleProductContentByDenierLegSizeProps {
 const SingleProductContentByDenierLegSize: React.FC<
   SingleProductContentByDenierLegSizeProps
 > = (props) => {
-  const dispatch = useDispatch();
-
   const availableDeniers = useProductDenierLegSizeAvailableDenier(
     props.product
   );
@@ -80,15 +75,6 @@ const SingleProductContentByDenierLegSize: React.FC<
       setAmount(amount - 1);
     }
   };
-
-  // const { items, addToCart } = useCartContext();
-  const items = useSelector(selectCartItemsMap);
-
-  useEffect(() => {
-    console.log(
-      `cart changed ${JSON.stringify(Array.from(items.entries()), null, 4)}`
-    );
-  }, [items]);
 
   function cartItem(): CartItem {
     return {
@@ -182,15 +168,7 @@ const SingleProductContentByDenierLegSize: React.FC<
             increase={increaseAmount}
             decrease={decreaseAmount}
           />
-          <Button
-            className="center"
-            text="הוסף לעגלה"
-            onClick={() => {
-              const item = cartItem();
-              console.log(`add to cart ${JSON.stringify(item, null, 4)}`);
-              dispatch(addItem(item));
-            }}
-          />
+          <AddToCart item={cartItem()} className="center" />
         </>
       )}
     </Wrapper>

@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../store/hooks";
-import { CartItem } from "../../model";
+import { useAppDispatch } from "../../../store/hooks";
+import { CartItem } from "../../../model";
 
 const CartItemComponent: React.FC<{ cartItem: CartItem }> = ({ cartItem }) => {
   // const { id, image, name, price, amount, slug } = cartItem

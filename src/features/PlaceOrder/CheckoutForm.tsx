@@ -8,7 +8,7 @@ import styled from "styled-components";
 import Row from "../../components/old/Row";
 import BillingDetailsFields from "./BillingDetailsFields";
 import { useSelector } from "react-redux";
-import { selectCartItemsMap } from "../../store/cartSlice";
+import { selectCartItemsMap } from "../Cart/store/cartSlice";
 
 export const CheckoutForm = () => {
   const items = useSelector(selectCartItemsMap);

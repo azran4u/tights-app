@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { OptionalClassName } from "../../utils/classNameInterface";
-import Button from "../../components/Button";
+import { OptionalClassName } from "../../../utils/classNameInterface";
+import Button from "../../../components/Button";
 
 interface EmptyCartProps extends OptionalClassName {}
 
