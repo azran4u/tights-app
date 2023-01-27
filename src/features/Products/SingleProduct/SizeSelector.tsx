@@ -16,26 +16,22 @@ const SizeSelector: React.FC<SizeSelectorProps> = (props) => {
   return (
     <Wrapper>
       {props.sizes && (
-        <div className="sizes-selector">
-          <select
-            name="size-selector"
-            value={selectedSize.label}
-            onChange={(e) => {
-              const label = e.target.value;
-              setSelectedSize(
-                props.sizes.find((size) => size.label === label)!
-              );
-            }}
-          >
-            {props.sizes.map((size) => {
-              return (
-                <option key={size.value} value={size.label}>
-                  {size.label}
-                </option>
-              );
-            })}
-          </select>
-        </div>
+        <select
+          name="size-selector"
+          value={selectedSize.label}
+          onChange={(e) => {
+            const label = e.target.value;
+            setSelectedSize(props.sizes.find((size) => size.label === label)!);
+          }}
+        >
+          {props.sizes.map((size) => {
+            return (
+              <option key={size.value} value={size.label}>
+                {size.label}
+              </option>
+            );
+          })}
+        </select>
       )}
     </Wrapper>
   );

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { AddToCart, AmountButtons, ProductImages } from "../../../components";
+import { AddToCart, AmountButtons, ProductImages } from "../../../shared";
 import {
   CartItem,
   Color,
   Denier,
   Leg,
   ProductDenierLegSize,
-  ProductSchema,
   Size,
   useProductDenierLegSizeAttributes,
   useProductDenierLegSizeAvailableDenier,
@@ -20,7 +19,8 @@ import SizeSelector from "./SizeSelector";
 import DenierSelector from "./DenierSelector";
 import Price from "./Price";
 import ProductDescription from "./ProductDescription";
-import { imageSrc } from "../../../utils/images";
+import { imageSrcByDenierLegSize } from "../../../utils/images";
+import ErrorMessage from "../../Error/ErorrMessage";
 
 interface SingleProductContentByDenierLegSizeProps {
   product: ProductDenierLegSize;
@@ -100,13 +100,8 @@ const SingleProductContentByDenierLegSize: React.FC<
     attributes?.colors.length > 1;
 
   return (
-    <Wrapper className="content">
-      {!shouldRender && (
-        <>
-          <h5 className="center">אופס... משהו השתבש</h5>
-          <h5 className="center">רענן את הדף</h5>
-        </>
-      )}
+    <Wrapper>
+      {!shouldRender && <ErrorMessage className="center" />}
 
       {shouldRender && (
         <>
@@ -114,8 +109,7 @@ const SingleProductContentByDenierLegSize: React.FC<
           <Price price={attributes.price} />
           <div className="side-by-side">
             <ProductImages
-              images={imageSrc({
-                schema: ProductSchema.BY_DENIER_LEG_SIZE,
+              images={imageSrcByDenierLegSize({
                 denier: selectedDenier.value,
                 color: selectedColor.value,
               })}

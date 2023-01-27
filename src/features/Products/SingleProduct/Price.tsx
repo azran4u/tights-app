@@ -1,14 +1,14 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface PriceProps {
   price: number;
 }
 
 const Price: React.FC<PriceProps> = (props) => {
-  return <Wrapper>{props.price && MyformatPrice(props.price)}</Wrapper>;
+  return <Wrapper>{props.price && formatPrice(props.price)}</Wrapper>;
 };
 
-function MyformatPrice(price: number): string {
+export function formatPrice(price: number): string {
   return `${price} ש"ח`;
 }
 

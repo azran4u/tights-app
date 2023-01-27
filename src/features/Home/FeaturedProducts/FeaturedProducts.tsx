@@ -16,6 +16,7 @@ export default FeaturedProducts;
 const Wrapper = styled.div`
   background-color: var(--clr-grey-10);
   min-height: 63vh;
+  margin-bottom: 1rem;
 `;
 
 const StyledFeaturedProductsHeader = styled(FeaturedProductsHeader)`

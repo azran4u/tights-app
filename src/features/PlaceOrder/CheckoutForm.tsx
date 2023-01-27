@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
-import { formatPrice } from "../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 // Billing info and style from Stripe YouTube tutorial
-import Row from "../../components/old/Row";
 import BillingDetailsFields from "./BillingDetailsFields";
 import { useSelector } from "react-redux";
 import { selectCartItemsMap } from "../Cart/store/cartSlice";
+import { formatPrice } from "../Products/SingleProduct/Price";
 
 export const CheckoutForm = () => {
   const items = useSelector(selectCartItemsMap);
@@ -94,9 +93,9 @@ export const CheckoutForm = () => {
     <Wrapper>
       <form id="payment-form" onSubmit={handleSubmit}>
         <h4>enter billing details:</h4>
-        <Row>
+        <div>
           <BillingDetailsFields />
-        </Row>
+        </div>
 
         <h4>card details for test:</h4>
         <TestCardDetails>
@@ -105,13 +104,13 @@ export const CheckoutForm = () => {
           <li>CVC: 222</li>
         </TestCardDetails>
 
-        <Row>
+        <div>
           <CardElement
             id="card-element"
             options={cardStyle}
             onChange={handleChange}
           />
-        </Row>
+        </div>
 
         {/* Show any error that happens when processing the payment */}
         {error ?? (
@@ -120,7 +119,7 @@ export const CheckoutForm = () => {
           </div>
         )}
 
-        <Row>
+        <div>
           <button
             disabled={processing || disabled || succeeded || !CardElement}
             type="submit"
@@ -133,7 +132,7 @@ export const CheckoutForm = () => {
               )}
             </span>
           </button>
-        </Row>
+        </div>
       </form>
     </Wrapper>
   );

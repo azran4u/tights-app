@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { PageHero } from "../../components";
-import shopLogo from "../assets/shop_logo.jpg";
 
-const ShippingPage = () => {
+const ShippingPage: React.FC = () => {
   return (
     <main>
       <Wrapper className="page">

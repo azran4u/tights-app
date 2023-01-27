@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AddToCart, ProductImages } from "../../../components";
+import { AddToCart, ProductImages } from "../../../shared";
 import {
   Color,
   Lace,
@@ -12,6 +12,7 @@ import ColorSelector from "./ColorSelector";
 import Price from "./Price";
 import ProductDescription from "./ProductDescription";
 import LaceSelector from "./LaceSelector";
+import ErrorMessage from "../../Error/ErorrMessage";
 
 interface SingleProductContentByLaceProps {
   product: ProductLace;
@@ -43,12 +44,7 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
 
   return (
     <Wrapper className="content">
-      {!shouldRender && (
-        <>
-          <h5 className="center">אופס... משהו השתבש</h5>
-          <h5 className="center">רענן את הדף</h5>
-        </>
-      )}
+      {!shouldRender && <ErrorMessage className="center" />}
 
       {shouldRender && (
         <>

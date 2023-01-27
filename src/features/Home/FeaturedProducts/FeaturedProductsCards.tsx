@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { ProductKind, ProductSchema, useProducts } from "../../../model";
+import { useProducts } from "../../../model";
 import { device } from "../../../utils/device.sizes";
-import { imageSrc, productDefaultImage } from "../../../utils/images";
+import { productDefaultImage } from "../../../utils/images";
 import FeaturedProduct from "./FeaturedProduct";
 
 export const FeaturedProductsCards = () => {

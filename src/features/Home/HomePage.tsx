@@ -1,5 +1,5 @@
-import { FeaturedProducts } from "../../components";
-import Page from "../../components/old/Page";
+import { FeaturedProducts } from "../../shared";
+import Page from "../../shared/Page";
 import Title from "./Title";
 
 const HomePage = () => {

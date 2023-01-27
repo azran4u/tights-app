@@ -1,33 +1,33 @@
-import { flatten, isNil, uniq } from 'lodash';
-import { stringify } from 'querystring';
+import { flatten, isNil, uniq } from "lodash";
+import { stringify } from "querystring";
 
 export interface ValueLabel<V = string, L = string> {
   value: V;
   label: L;
 }
 
-export interface Color extends ValueLabel<ColorOptions> {
+export interface Color extends ValueLabel<ColorOption> {
   cssColor: string;
 }
 
-export interface Size extends ValueLabel<SizeOptions> {}
+export interface Size extends ValueLabel<SizeOption> {}
 
-export type Supplier = 'filo' | 'sharon';
+export type Supplier = "filo" | "sharon";
 
 export type Price = number;
 
 export type ImageUrl = string;
 
 export type ImageUrlFn = (input: {
-  denier?: DenierOptions;
-  leg?: LegOptions;
-  size?: SizeOptions;
-  color?: ColorOptions;
+  denier?: DenierOption;
+  leg?: LegOption;
+  size?: SizeOption;
+  color?: ColorOption;
 }) => ImageUrl[];
 
 export enum DiscountKind {
-  NO_DISCOUNT = 'NO_DISCOUNT',
-  COUNT_DISCOUNT = 'COUNT_DISCOUNT',
+  NO_DISCOUNT = "NO_DISCOUNT",
+  COUNT_DISCOUNT = "COUNT_DISCOUNT",
 }
 
 export interface CountDiscount {
@@ -50,56 +50,56 @@ export interface ProductBaseAttributes extends DiscountField {
   images: ImageUrlFn;
 }
 
-export type LegOptions = 'with-leg' | 'without-leg';
-export interface Leg extends ValueLabel<LegOptions> {}
+export type LegOption = "with-leg" | "without-leg";
+export interface Leg extends ValueLabel<LegOption> {}
 export const legs: Leg[] = [
   {
-    value: 'with-leg',
-    label: 'עם רגל',
+    value: "with-leg",
+    label: "עם רגל",
   },
   {
-    value: 'without-leg',
-    label: 'ללא רגל',
+    value: "without-leg",
+    label: "ללא רגל",
   },
 ];
 
-export type DenierOptions = '200' | '120' | '40' | '20';
-export interface Denier extends ValueLabel<DenierOptions> {}
+export type DenierOption = "200" | "120" | "40" | "20";
+export interface Denier extends ValueLabel<DenierOption> {}
 export const deniers: Denier[] = [
   {
-    value: '200',
-    label: '200 דניר',
+    value: "200",
+    label: "200 דניר",
   },
   {
-    value: '120',
-    label: '120 דניר',
+    value: "120",
+    label: "120 דניר",
   },
   {
-    value: '40',
-    label: '40 דניר',
+    value: "40",
+    label: "40 דניר",
   },
   {
-    value: '20',
-    label: '20 דניר',
+    value: "20",
+    label: "20 דניר",
   },
 ];
 
-export type LaceOptions = 'fan' | 'lengthwise';
-export interface Lace extends ValueLabel<LaceOptions> {}
+export type LaceOption = "fan" | "lengthwise";
+export interface Lace extends ValueLabel<LaceOption> {}
 export const laces: Lace[] = [
   {
-    value: 'fan',
-    label: 'מניפה',
+    value: "fan",
+    label: "מניפה",
   },
   {
-    value: 'lengthwise',
-    label: 'לאורך',
+    value: "lengthwise",
+    label: "לאורך",
   },
 ];
 
 export enum ProductSchema {
-  BY_DENIER_LEG_SIZE = 'BY_DENIER_LEG_SIZE',
-  BY_LACE = 'BY_LACE',
+  BY_DENIER_LEG_SIZE = "BY_DENIER_LEG_SIZE",
+  BY_LACE = "BY_LACE",
 }
 
 export interface ProductPropertyLace extends Lace {
@@ -110,7 +110,7 @@ export interface ProductBase {
   schema: ProductSchema;
   kind: ProductKind;
   description: string;
-  image: string;
+  primaryImage: string;
 }
 
 export interface ProductLace extends ProductBase {
@@ -141,122 +141,122 @@ export interface ProductPropertySize extends Size {
 }
 
 export enum ProductKind {
-  TIGHTS_OR_STOCKING_200_DENIER = 'TIGHTS_OR_STOCKING_200_DENIER',
-  TIGHTS_OR_STOCKING_GIRLS_120_DENIER = 'TIGHTS_OR_STOCKING_GIRLS_120_DENIER',
-  TIGHTS_OR_STOCKING_20_OR_40_DENIER = 'TIGHTS_OR_STOCKING_20_OR_40_DENIER',
-  LACE_FAN_TIGHTS = 'LACE_FAN_TIGHTS',
+  TIGHTS_OR_STOCKING_200_DENIER = "TIGHTS_OR_STOCKING_200_DENIER",
+  TIGHTS_OR_STOCKING_GIRLS_120_DENIER = "TIGHTS_OR_STOCKING_GIRLS_120_DENIER",
+  TIGHTS_OR_STOCKING_20_OR_40_DENIER = "TIGHTS_OR_STOCKING_20_OR_40_DENIER",
+  LACE_FAN_TIGHTS = "LACE_FAN_TIGHTS",
 }
 
 export type Product = ProductDenierLegSize | ProductLace;
 
-export type SizeOptions =
-  | 'onesize'
-  | '3XL_to_5XL'
-  | '9-12'
-  | 'L(36-40)'
-  | 'XL(40-44)'
-  | 'XXL(44-50)'
-  | 'onesize-slim'
-  | 'XXL(40-44)';
+export type SizeOption =
+  | "onesize"
+  | "3XL_to_5XL"
+  | "9-12"
+  | "L(36-40)"
+  | "XL(40-44)"
+  | "XXL(44-50)"
+  | "onesize-slim"
+  | "XXL(40-44)";
 
 export const sizes: Size[] = [
   {
-    value: 'onesize',
-    label: 'One Size',
+    value: "onesize",
+    label: "One Size",
   },
   {
-    value: 'onesize-slim',
-    label: 'One Size מידה צרה',
+    value: "onesize-slim",
+    label: "One Size מידה צרה",
   },
   {
-    value: 'XXL(44-50)',
-    label: 'XXL(44-50)',
+    value: "XXL(44-50)",
+    label: "XXL(44-50)",
   },
   {
-    value: 'XXL(40-44)',
-    label: 'XXL(40-44)',
+    value: "XXL(40-44)",
+    label: "XXL(40-44)",
   },
   {
-    value: 'XL(40-44)',
-    label: 'XL(40-44)',
+    value: "XL(40-44)",
+    label: "XL(40-44)",
   },
   {
-    value: 'L(36-40)',
-    label: 'L(36-40)',
+    value: "L(36-40)",
+    label: "L(36-40)",
   },
   {
-    value: '9-12',
-    label: '9-12 מידות',
+    value: "9-12",
+    label: "9-12 מידות",
   },
   {
-    value: '3XL_to_5XL',
-    label: '3XL עד 5XL',
+    value: "3XL_to_5XL",
+    label: "3XL עד 5XL",
   },
 ];
 
-export type ColorOptions =
-  | 'azure'
-  | 'baby_pink'
-  | 'black'
-  | 'body'
-  | 'bordeaux'
-  | 'cream'
-  | 'dark_blue'
-  | 'dark_purple'
-  | 'silver_very_light_gray_not_shimmery'
-  | 'white'
-  | 'light_gray';
+export type ColorOption =
+  | "azure"
+  | "baby_pink"
+  | "black"
+  | "body"
+  | "bordeaux"
+  | "cream"
+  | "dark_blue"
+  | "dark_purple"
+  | "silver_very_light_gray_not_shimmery"
+  | "white"
+  | "light_gray";
 
 export const colors: Color[] = [
   {
-    value: 'azure',
-    label: 'תכלת',
-    cssColor: '#ababab',
+    value: "azure",
+    label: "תכלת",
+    cssColor: "#ababab",
   },
   {
-    value: 'baby_pink',
-    label: 'ורוד בייבי',
-    cssColor: '#c69ec1',
+    value: "baby_pink",
+    label: "ורוד בייבי",
+    cssColor: "#c69ec1",
   },
   {
-    value: 'black',
-    label: 'שחור',
-    cssColor: '#000000',
+    value: "black",
+    label: "שחור",
+    cssColor: "#000000",
   },
   {
-    value: 'body',
-    label: 'גוף',
-    cssColor: '#b28983',
+    value: "body",
+    label: "גוף",
+    cssColor: "#b28983",
   },
   {
-    value: 'bordeaux',
-    label: 'בורדו',
-    cssColor: '#5b212d',
+    value: "bordeaux",
+    label: "בורדו",
+    cssColor: "#5b212d",
   },
   {
-    value: 'cream',
-    label: 'שמנת',
-    cssColor: '#c2bcbe',
+    value: "cream",
+    label: "שמנת",
+    cssColor: "#c2bcbe",
   },
   {
-    value: 'dark_blue',
-    label: 'כחול כהה',
-    cssColor: '#353c46',
+    value: "dark_blue",
+    label: "כחול כהה",
+    cssColor: "#353c46",
   },
   {
-    value: 'dark_purple',
-    label: 'סגול כהה',
-    cssColor: '#2c2342',
+    value: "dark_purple",
+    label: "סגול כהה",
+    cssColor: "#2c2342",
   },
   {
-    value: 'silver_very_light_gray_not_shimmery',
-    label: 'כסף - אפור בהיר מאד (לא מנצנץ)',
-    cssColor: '#b3aeb4',
+    value: "silver_very_light_gray_not_shimmery",
+    label: "כסף - אפור בהיר מאד (לא מנצנץ)",
+    cssColor: "#b3aeb4",
   },
   {
-    value: 'white',
-    label: 'לבן',
-    cssColor: '#c0bcbd',
+    value: "white",
+    label: "לבן",
+    cssColor: "#c0bcbd",
   },
 ];
 
@@ -300,48 +300,48 @@ export const no_discount: DiscountField = {
 export const TIGHTS_OR_STOCKING_200_DENIER: Product = {
   schema: ProductSchema.BY_DENIER_LEG_SIZE,
   kind: ProductKind.TIGHTS_OR_STOCKING_200_DENIER,
-  description: 'טייץ / גרביון 200 דניר',
-  image: 'legging-bordeaux.jpg',
+  description: "טייץ / גרביון 200 דניר",
+  primaryImage: "legging-bordeaux.jpg",
   denier: [
     {
-      ...selectDenier('200'),
+      ...selectDenier("200"),
       legOptions: [
         {
-          ...selectLeg('with-leg'),
+          ...selectLeg("with-leg"),
           sizes: [
             {
-              ...selectSize('onesize'),
+              ...selectSize("onesize"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 22,
                 ...discount_3_in_60,
-                supplier: 'filo',
-                images: () => ['legging-bordeaux-doesnt-exists.jpg'],
+                supplier: "filo",
+                images: () => ["legging-bordeaux-doesnt-exists.jpg"],
               },
             },
           ],
         },
         {
-          ...selectLeg('without-leg'),
+          ...selectLeg("without-leg"),
           sizes: [
             {
-              ...selectSize('3XL_to_5XL'),
+              ...selectSize("3XL_to_5XL"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 30,
                 ...no_discount,
-                supplier: 'filo',
+                supplier: "filo",
                 images: () => [],
               },
             },
             {
-              ...selectSize('onesize'),
+              ...selectSize("onesize"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 22,
                 ...discount_3_in_60,
-                supplier: 'filo',
-                images: () => ['legging-bordeaux.jpg'],
+                supplier: "filo",
+                images: () => ["legging-bordeaux.jpg"],
               },
             },
           ],
@@ -354,22 +354,22 @@ export const TIGHTS_OR_STOCKING_200_DENIER: Product = {
 export const TIGHTS_OR_STOCKING_GIRLS_120_DENIER: Product = {
   schema: ProductSchema.BY_DENIER_LEG_SIZE,
   kind: ProductKind.TIGHTS_OR_STOCKING_GIRLS_120_DENIER,
-  description: 'טייץ / גרביון ילדות 120 דניר לגיל גן חובה עד א-ב',
-  image: 'legging-bordeaux.jpg',
+  description: "טייץ / גרביון ילדות 120 דניר לגיל גן חובה עד א-ב",
+  primaryImage: "legging-bordeaux.jpg",
   denier: [
     {
-      ...selectDenier('120'),
+      ...selectDenier("120"),
       legOptions: [
         {
-          ...selectLeg('with-leg'),
+          ...selectLeg("with-leg"),
           sizes: [
             {
-              ...selectSize('9-12'),
+              ...selectSize("9-12"),
               attributes: {
-                colors: selectColors(['black', 'body', 'white']),
+                colors: selectColors(["black", "body", "white"]),
                 price: 15,
                 ...discount_3_in_40,
-                supplier: 'filo',
+                supplier: "filo",
                 images: ({ color }) => [
                   `TIGHTS_OR_STOCKING_GIRLS_120_DENIER/${color}.jpg`,
                 ],
@@ -378,15 +378,15 @@ export const TIGHTS_OR_STOCKING_GIRLS_120_DENIER: Product = {
           ],
         },
         {
-          ...selectLeg('without-leg'),
+          ...selectLeg("without-leg"),
           sizes: [
             {
-              ...selectSize('9-12'),
+              ...selectSize("9-12"),
               attributes: {
-                colors: selectColors(['black', 'body', 'white', 'cream']),
+                colors: selectColors(["black", "body", "white", "cream"]),
                 price: 15,
                 ...discount_3_in_40,
-                supplier: 'filo',
+                supplier: "filo",
                 images: ({ color }) => [
                   `TIGHTS_OR_STOCKING_GIRLS_120_DENIER/${color}.jpg`,
                 ],
@@ -402,67 +402,67 @@ export const TIGHTS_OR_STOCKING_GIRLS_120_DENIER: Product = {
 export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
   schema: ProductSchema.BY_DENIER_LEG_SIZE,
   kind: ProductKind.TIGHTS_OR_STOCKING_20_OR_40_DENIER,
-  description: 'טייץ / גרביון 20 / 40 דניר',
-  image: 'legging-bordeaux.jpg',
+  description: "טייץ / גרביון 20 / 40 דניר",
+  primaryImage: "legging-bordeaux.jpg",
   denier: [
     {
-      ...selectDenier('20'),
+      ...selectDenier("20"),
       legOptions: [
         {
-          ...selectLeg('with-leg'),
+          ...selectLeg("with-leg"),
           sizes: [
             {
-              ...selectSize('L(36-40)'),
+              ...selectSize("L(36-40)"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
             {
-              ...selectSize('XL(40-44)'),
+              ...selectSize("XL(40-44)"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
             {
-              ...selectSize('XXL(44-50)'),
+              ...selectSize("XXL(44-50)"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
           ],
         },
         {
-          ...selectLeg('without-leg'),
+          ...selectLeg("without-leg"),
           sizes: [
             {
-              ...selectSize('onesize'),
+              ...selectSize("onesize"),
               attributes: {
-                colors: selectColors(['black']),
+                colors: selectColors(["black"]),
                 price: 20,
                 ...discount_2_in_35,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
             {
-              ...selectSize('XXL(40-44)'),
+              ...selectSize("XXL(40-44)"),
               attributes: {
-                colors: selectColors(['black']),
+                colors: selectColors(["black"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
@@ -471,73 +471,73 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
       ],
     },
     {
-      ...selectDenier('40'),
+      ...selectDenier("40"),
       legOptions: [
         {
-          ...selectLeg('with-leg'),
+          ...selectLeg("with-leg"),
           sizes: [
             {
-              ...selectSize('L(36-40)'),
+              ...selectSize("L(36-40)"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
             {
-              ...selectSize('XL(40-44)'),
+              ...selectSize("XL(40-44)"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
             {
-              ...selectSize('XXL(44-50)'),
+              ...selectSize("XXL(44-50)"),
               attributes: {
-                colors: selectColors(['black', 'body']),
+                colors: selectColors(["black", "body"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'filo',
+                supplier: "filo",
                 images: () => [],
               },
             },
           ],
         },
         {
-          ...selectLeg('without-leg'),
+          ...selectLeg("without-leg"),
           sizes: [
             {
-              ...selectSize('onesize'),
+              ...selectSize("onesize"),
               attributes: {
-                colors: selectColors(['black']),
+                colors: selectColors(["black"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
             {
-              ...selectSize('XXL(40-44)'),
+              ...selectSize("XXL(40-44)"),
               attributes: {
-                colors: selectColors(['black']),
+                colors: selectColors(["black"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
             {
-              ...selectSize('XXL(44-50)'),
+              ...selectSize("XXL(44-50)"),
               attributes: {
-                colors: selectColors(['black']),
+                colors: selectColors(["black"]),
                 price: 20,
                 ...no_discount,
-                supplier: 'sharon',
+                supplier: "sharon",
                 images: () => [],
               },
             },
@@ -551,49 +551,49 @@ export const TIGHTS_OR_STOCKING_20_OR_40_DENIER: Product = {
 export const LACE_FAN_TIGHTS: Product = {
   schema: ProductSchema.BY_LACE,
   kind: ProductKind.LACE_FAN_TIGHTS,
-  description: 'תחרה מניפה טייץ onesize',
-  image: 'legging-bordeaux.jpg',
+  description: "תחרה מניפה טייץ onesize",
+  primaryImage: "legging-bordeaux.jpg",
   lace: [
     {
-      ...selectLace('fan'),
+      ...selectLace("fan"),
       attributes: {
-        colors: selectColors(['black', 'white']),
+        colors: selectColors(["black", "white"]),
         price: 25,
         ...no_discount,
-        supplier: 'sharon',
+        supplier: "sharon",
         images: () => [],
       },
     },
     {
-      ...selectLace('lengthwise'),
+      ...selectLace("lengthwise"),
       attributes: {
-        colors: selectColors(['black', 'white']),
+        colors: selectColors(["black", "white"]),
         price: 25,
         ...no_discount,
-        supplier: 'sharon',
+        supplier: "sharon",
         images: () => [],
       },
     },
   ],
 };
 
-export function selectDenier(denier: DenierOptions): Denier {
+export function selectDenier(denier: DenierOption): Denier {
   return deniers.find((v) => v.value === denier)!;
 }
 
-export function selectLeg(legOption: LegOptions): Leg {
+export function selectLeg(legOption: LegOption): Leg {
   return legs.find((v) => v.value === legOption)!;
 }
 
-export function selectSize(size: SizeOptions): Size {
+export function selectSize(size: SizeOption): Size {
   return sizes.find((v) => v.value === size)!;
 }
 
-export function selectColors(colorValues: ColorOptions[]): Color[] {
+export function selectColors(colorValues: ColorOption[]): Color[] {
   return colors.filter((v) => colorValues.includes(v.value))!;
 }
 
-export function selectLace(lace: LaceOptions): Lace {
+export function selectLace(lace: LaceOption): Lace {
   return laces.find((v) => v.value === lace)!;
 }
 
@@ -734,33 +734,64 @@ export interface CartItemCommon {
 
 export interface CartItemByDenierLegSize extends CartItemCommon {
   schema: ProductSchema.BY_DENIER_LEG_SIZE;
-  denier: DenierOptions;
-  leg: LegOptions;
-  size: SizeOptions;
-  color: ColorOptions;
+  denier: DenierOption;
+  leg: LegOption;
+  size: SizeOption;
+  color: ColorOption;
 }
 
 export interface CartItemByLace extends CartItemCommon {
   schema: ProductSchema.BY_LACE;
-  lace: LaceOptions;
-  color: ColorOptions;
+  lace: LaceOption;
+  color: ColorOption;
 }
 
 export type CartItem = CartItemByDenierLegSize | CartItemByLace;
 
 export function CartItemSku(item: CartItem) {
   if (item.schema === ProductSchema.BY_DENIER_LEG_SIZE) {
-    return CartItemByDenierLegSizeSku(item);
+    return skuByDenierLegSize(item);
   }
   if (item.schema === ProductSchema.BY_LACE) {
-    return CartItemByLaceSku(item);
+    return skuByLace(item);
   }
 }
 
-export function CartItemByDenierLegSizeSku(item: CartItemByDenierLegSize) {
-  return `${item.schema}#${item.denier}#${item.leg}#${item.size}#${item.color}`;
+export function skuByDenierLegSize(item: {
+  denier: DenierOption;
+  leg: LegOption;
+  size: SizeOption;
+  color: ColorOption;
+}) {
+  return `${ProductSchema.BY_DENIER_LEG_SIZE}#${item.denier}#${item.leg}#${item.size}#${item.color}`;
 }
 
-export function CartItemByLaceSku(item: CartItemByLace) {
-  return `${item.schema}#${item.lace}#${item.color}`;
+export function skuByLace(item: { lace: LaceOption; color: ColorOption }) {
+  return `${ProductSchema.BY_LACE}#${item.lace}#${item.color}`;
 }
+
+// export function CartItemAttributesByDenierLegSize(
+//   item: CartItemByDenierLegSize
+// ): ProductBaseAttributes {
+//   let attributes: ProductBaseAttributes;
+
+//   products.forEach((p) => {
+//     if (p.schema === ProductSchema.BY_DENIER_LEG_SIZE) {
+//       p.denier.forEach((d) => {
+//         if (d.value === item.denier) {
+//           d.legOptions.forEach((l) => {
+//             if (l.value === item.leg) {
+//               l.sizes.forEach((s) => {
+//                 if (s.value === item.size) {
+//                   attributes = s.attributes;
+//                 }
+//               });
+//             }
+//           });
+//         }
+//       });
+//     }
+//   });
+
+//   return attributes;
+// }

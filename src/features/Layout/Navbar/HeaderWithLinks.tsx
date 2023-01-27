@@ -4,7 +4,7 @@ import { device } from "../../../utils/device.sizes";
 import { NavLinks } from "./NavLinks";
 import SmallLogo from "./LogoSmall";
 import LinkToHome from "./LinkToHome";
-import CartWithBadge from "../../../components/CartWithBadge";
+import CartWithBadge from "../../../shared/CartWithBadge";
 
 const HeaderWithLinks: React.FC = () => {
   return (

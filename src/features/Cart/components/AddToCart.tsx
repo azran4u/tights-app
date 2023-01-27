@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "../../../components/Button";
+import Button from "../../../shared/Button";
 import { CartItem } from "../../../model";
 import { useAppDispatch } from "../../../store/hooks";
 import { OptionalClassName } from "../../../utils/classNameInterface";

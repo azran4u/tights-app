@@ -11,7 +11,7 @@ const ProductsListView: React.FC<ProductsListViewProps> = (props) => {
   return (
     <Wrapper>
       {props.products.map((product) => {
-        const { description, image, kind } = product;
+        const { description, primaryImage: image, kind } = product;
         return (
           <div className="container">
             <Link to={`/products/${kind}`}>

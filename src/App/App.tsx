@@ -1,16 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Navbar, Sidebar, Footer, ScrollToTop } from "../components";
+import { Navbar, Sidebar, Footer, ScrollToTop } from "../shared";
 
-import {
-  Home,
-  Error,
-  Shipping,
-  Checkout,
-  Products,
-  Cart,
-  SuccessfulPayment,
-} from "../features";
+import { Home, Error, Shipping, Cart, SuccessfulPayment } from "../features";
 import SingleProductPage from "../features/Products/SingleProduct/SingleProductPage";
 
 function App() {

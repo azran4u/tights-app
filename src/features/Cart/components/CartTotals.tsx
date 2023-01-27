@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCartItemsMap } from "../store/cartSlice";
-import { formatPrice } from "../../../utils/helpers";
+import { formatPrice } from "../../Products/SingleProduct/Price";
 
 const CartTotals = () => {
   const items = useSelector(selectCartItemsMap);

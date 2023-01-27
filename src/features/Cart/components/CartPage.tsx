@@ -1,5 +1,5 @@
 import React from "react";
-import { CartContent } from "../../../components";
+import { CartContent } from "../../../shared";
 import { useSelector } from "react-redux";
 import { selectCartItemsTotalAmount } from "../store/cartSlice";
 import EmptyCart from "./EmptyCart";
@@ -23,12 +23,12 @@ const Wrapper = styled.div`
   margin: 0 auto;
 
   .title {
-    min-height: 15vh;
+    min-height: 10vh;
     text-align: center;
   }
 
   .content {
-    min-height: 65vh;
+    min-height: 70vh;
   }
 `;
 

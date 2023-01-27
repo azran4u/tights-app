@@ -1,4 +1,4 @@
-import FormField from "../../components/FormField";
+import FormField from "../../shared/FormField";
 
 const BillingDetailsFields = () => {
   return (

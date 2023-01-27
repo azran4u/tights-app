@@ -1,48 +1,46 @@
 import {
-  ColorOptions,
-  DenierOptions,
-  LaceOptions,
-  LegOptions,
+  CartItem,
+  ColorOption,
+  DenierOption,
+  LaceOption,
+  LegOption,
   Product,
   ProductSchema,
-  SizeOptions,
-} from '../model';
+  SizeOption,
+} from "../model";
 
-import no_image from '../assets/images/missing-image.svg';
+import no_image from "../assets/images/missing-image.svg";
 
-import tights_or_stocking_girls_120_denier_azure from '../assets/images/tights_or_stocking_girls_120_denier/azure.jpg';
-import tights_or_stocking_girls_120_denier_baby_pink from '../assets/images/tights_or_stocking_girls_120_denier/baby_pink.jpg';
-import tights_or_stocking_girls_120_denier_black from '../assets/images/tights_or_stocking_girls_120_denier/black.jpg';
-import tights_or_stocking_girls_120_denier_body from '../assets/images/tights_or_stocking_girls_120_denier/body.jpg';
-import tights_or_stocking_girls_120_denier_bordeaux from '../assets/images/tights_or_stocking_girls_120_denier/bordeaux.jpg';
-import tights_or_stocking_girls_120_denier_cream from '../assets/images/tights_or_stocking_girls_120_denier/cream.jpg';
-import tights_or_stocking_girls_120_denier_dark_blue from '../assets/images/tights_or_stocking_girls_120_denier/dark_blue.jpg';
-import tights_or_stocking_girls_120_denier_dark_purple from '../assets/images/tights_or_stocking_girls_120_denier/dark_purple.jpg';
-import tights_or_stocking_girls_120_denier_white from '../assets/images/tights_or_stocking_girls_120_denier/white.jpg';
+import tights_or_stocking_girls_120_denier_azure from "../assets/images/tights_or_stocking_girls_120_denier/azure.jpg";
+import tights_or_stocking_girls_120_denier_baby_pink from "../assets/images/tights_or_stocking_girls_120_denier/baby_pink.jpg";
+import tights_or_stocking_girls_120_denier_black from "../assets/images/tights_or_stocking_girls_120_denier/black.jpg";
+import tights_or_stocking_girls_120_denier_body from "../assets/images/tights_or_stocking_girls_120_denier/body.jpg";
+import tights_or_stocking_girls_120_denier_bordeaux from "../assets/images/tights_or_stocking_girls_120_denier/bordeaux.jpg";
+import tights_or_stocking_girls_120_denier_cream from "../assets/images/tights_or_stocking_girls_120_denier/cream.jpg";
+import tights_or_stocking_girls_120_denier_dark_blue from "../assets/images/tights_or_stocking_girls_120_denier/dark_blue.jpg";
+import tights_or_stocking_girls_120_denier_dark_purple from "../assets/images/tights_or_stocking_girls_120_denier/dark_purple.jpg";
+import tights_or_stocking_girls_120_denier_white from "../assets/images/tights_or_stocking_girls_120_denier/white.jpg";
 
 export interface ImageSrcByDenierLegSizeProps {
-  schema?: ProductSchema.BY_DENIER_LEG_SIZE;
-  denier?: DenierOptions;
-  leg?: LegOptions;
-  size?: SizeOptions;
-  color?: ColorOptions;
+  denier?: DenierOption;
+  leg?: LegOption;
+  size?: SizeOption;
+  color?: ColorOption;
 }
 
 export interface ImageSrcByLace {
-  schema?: ProductSchema.BY_LACE;
-  lace?: LaceOptions;
-  size?: SizeOptions;
-  color?: ColorOptions;
+  lace?: LaceOption;
+  color?: ColorOption;
 }
 export type ImageSrcProps = ImageSrcByDenierLegSizeProps | ImageSrcByLace;
 
-export function imageSrc(input?: ImageSrcProps) {
-  switch (input?.schema) {
+export function imageSrcByCartItem(cartItem: CartItem) {
+  switch (cartItem.schema) {
     case ProductSchema.BY_DENIER_LEG_SIZE:
-      return imageSrcByDenierLegSize(input);
+      return imageSrcByDenierLegSize(cartItem);
 
     case ProductSchema.BY_LACE:
-      return imageSrcByLace(input);
+      return imageSrcByLace(cartItem);
 
     default:
       return [no_image];
@@ -51,7 +49,7 @@ export function imageSrc(input?: ImageSrcProps) {
 
 export function imageSrcByDenierLegSize(input?: ImageSrcByDenierLegSizeProps) {
   switch (input?.denier) {
-    case '120':
+    case "120":
       return imageSrcFor120Denier(input);
 
     default:
@@ -60,31 +58,31 @@ export function imageSrcByDenierLegSize(input?: ImageSrcByDenierLegSizeProps) {
 }
 export function imageSrcFor120Denier(input?: ImageSrcByDenierLegSizeProps) {
   switch (input?.color) {
-    case 'azure':
+    case "azure":
       return [tights_or_stocking_girls_120_denier_azure];
 
-    case 'baby_pink':
+    case "baby_pink":
       return [tights_or_stocking_girls_120_denier_baby_pink];
 
-    case 'black':
+    case "black":
       return [tights_or_stocking_girls_120_denier_black];
 
-    case 'body':
+    case "body":
       return [tights_or_stocking_girls_120_denier_body];
 
-    case 'bordeaux':
+    case "bordeaux":
       return [tights_or_stocking_girls_120_denier_bordeaux];
 
-    case 'cream':
+    case "cream":
       return [tights_or_stocking_girls_120_denier_cream];
 
-    case 'dark_blue':
+    case "dark_blue":
       return [tights_or_stocking_girls_120_denier_dark_blue];
 
-    case 'dark_purple':
+    case "dark_purple":
       return [tights_or_stocking_girls_120_denier_dark_purple];
 
-    case 'white':
+    case "white":
       return [tights_or_stocking_girls_120_denier_white];
 
     default:
@@ -94,10 +92,10 @@ export function imageSrcFor120Denier(input?: ImageSrcByDenierLegSizeProps) {
 
 export function imageSrcByLace(input?: ImageSrcByLace) {
   switch (input?.lace) {
-    case 'fan':
+    case "fan":
       return imageSrcByLaceFan(input);
 
-    case 'lengthwise':
+    case "lengthwise":
       return imageSrcByLaceLengthWise(input);
 
     default:
@@ -121,14 +119,12 @@ export function imageSrcByLaceLengthWise(input?: ImageSrcByLace) {
 
 export function productDefaultImage(product: Product) {
   if (product.schema === ProductSchema.BY_DENIER_LEG_SIZE) {
-    return imageSrc({
-      schema: product.schema,
+    return imageSrcByDenierLegSize({
       denier: product.denier[0].value,
     })[0];
   }
   if (product.schema === ProductSchema.BY_LACE) {
-    return imageSrc({
-      schema: product.schema,
+    return imageSrcByLace({
       lace: product.lace[0].value,
     })[0];
   }

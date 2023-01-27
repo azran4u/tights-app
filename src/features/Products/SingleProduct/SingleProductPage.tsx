@@ -5,7 +5,7 @@ import { ProductSchema, useProductByKindString } from "../../../model";
 import SingleProductContentByDenierLegSize from "./SingleProductContentByDenierLegSize";
 import SingleProductContentByLace from "./SingleProductContentByLace";
 import { useParams } from "react-router-dom";
-import Page from "../../../components/old/Page";
+import Page from "../../../shared/Page";
 
 const SingleProductPage: React.FC = () => {
   const { kind } = useParams<{ kind: string }>();
@@ -15,17 +15,15 @@ const SingleProductPage: React.FC = () => {
     <Page>
       <Wrapper>
         {product && (
-          <div>
-            <BackToProductsButton />
-            <div className="product-center">
-              {product.schema === ProductSchema.BY_DENIER_LEG_SIZE && (
-                <SingleProductContentByDenierLegSize product={product} />
-              )}
-              {product.schema === ProductSchema.BY_LACE && (
-                <SingleProductContentByLace product={product} />
-              )}
-            </div>
-          </div>
+          <>
+            <BackToProductsButton className="product-center" />
+            {product.schema === ProductSchema.BY_DENIER_LEG_SIZE && (
+              <SingleProductContentByDenierLegSize product={product} />
+            )}
+            {product.schema === ProductSchema.BY_LACE && (
+              <SingleProductContentByLace product={product} />
+            )}
+          </>
         )}
       </Wrapper>
     </Page>
@@ -34,7 +32,7 @@ const SingleProductPage: React.FC = () => {
 export default SingleProductPage;
 
 const Wrapper = styled.main`
-  margin: 0 1rem;
+  margin: 1rem 1rem;
   .product-center {
     display: flex;
     justify-content: center;
