@@ -24,6 +24,10 @@ const EmptyCart: React.FC<EmptyCartProps> = (props) => {
 
 const Wrapper = styled.div`
   text-align: center;
+
+  h5 {
+    margin-bottom: 1rem;
+  }
 `;
 
 export default EmptyCart;

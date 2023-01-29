@@ -1,8 +1,8 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
-import { CartItem, CartItemSku } from "../../../model";
 import { isNil } from "lodash";
+import { CartItem } from "../../../model/cart/CartItem";
 
 export type CartItemsMap = Map<string, CartItem>;
 export type UpdateCartItemAmountOperations = "increase-one" | "decrease-one";
@@ -19,86 +19,94 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    clear: (state) => {
-      state.items.clear();
-    },
-    updateItem: (
-      state,
-      action: PayloadAction<{
-        item: CartItem;
-        operation: UpdateCartItemAmountOperations;
-      }>
-    ) => {
-      const { item, operation } = action.payload;
-      const itemSku = CartItemSku(item);
+    upsertItem: (state, action: PayloadAction<CartItem>) => {
+      const item = action.payload;
+      const { sku, amount } = item;
 
-      if (isNil(itemSku)) {
+      if (isNil(sku)) {
         console.error(
-          `UPDATE_CART_ITEM_AMOUNT: invalid payload ${JSON.stringify(item)}`
+          `ADD_TO_CART: invalid payload ${JSON.stringify(action.payload)}`
         );
         return state;
       }
-      const foundItem = state.items.get(itemSku);
+
+      state.items.set(sku, item);
+    },
+    clear: (state) => {
+      state.items.clear();
+    },
+    increaseAmount: (
+      state,
+      action: PayloadAction<{
+        sku: string;
+      }>
+    ) => {
+      const { sku } = action.payload;
+
+      if (isNil(sku)) {
+        console.error(`INCREASE_CART_ITEM_AMOUNT: invalid sku ${sku}`);
+        return state;
+      }
+      const foundItem = state.items.get(sku);
 
       if (isNil(foundItem)) {
         return state;
       }
 
-      let value: number = 0;
-      if (operation === "increase-one") {
-        value = 1;
-      }
-      if (operation === "decrease-one") {
-        value = -1;
-      }
-      state.items.set(itemSku, {
-        ...foundItem,
-        amount: foundItem.amount + value,
+      state.items.set(sku, {
+        sku,
+        amount: foundItem.amount + 1,
       });
     },
-    addItem: (state, action: PayloadAction<CartItem>) => {
-      const item = action.payload;
-      const itemSku = CartItemSku(item);
 
-      if (isNil(itemSku)) {
-        console.error(`ADD_TO_CART: invalid payload ${JSON.stringify(item)}`);
+    decreaseAmount: (
+      state,
+      action: PayloadAction<{
+        sku: string;
+      }>
+    ) => {
+      const { sku } = action.payload;
+
+      if (isNil(sku)) {
+        console.error(`DECREASE_CART_ITEM_AMOUNT: invalid sku ${sku}`);
+        return state;
+      }
+      const foundItem = state.items.get(sku);
+
+      if (isNil(foundItem)) {
         return state;
       }
 
-      const foundItem = state.items.get(itemSku);
-
-      if (isNil(foundItem)) {
-        state.items.set(itemSku, item);
-      } else {
-        state.items.set(itemSku, {
-          ...item,
-          amount: foundItem.amount + item.amount,
-        });
-      }
+      state.items.set(sku, {
+        sku,
+        amount: foundItem.amount - 1,
+      });
     },
     removeItem: (state, action: PayloadAction<CartItem>) => {
       const item = action.payload;
-      const itemSku = CartItemSku(item);
+      const { sku, amount } = item;
 
-      if (isNil(itemSku)) {
+      if (isNil(sku)) {
         console.error(
           `REMOVE_CART_ITEM: invalid payload ${JSON.stringify(item)}`
         );
         return state;
       }
-      const foundItem = state.items.get(itemSku);
+
+      const foundItem = state.items.get(sku);
 
       if (isNil(foundItem)) {
         return state;
       }
 
-      state.items.delete(itemSku);
+      state.items.delete(sku);
     },
   },
 });
 
 export const cartActions = cartSlice.actions;
-export const { addItem, removeItem, updateItem, clear } = cartSlice.actions;
+export const { upsertItem, removeItem, clear, increaseAmount, decreaseAmount } =
+  cartSlice.actions;
 
 export const selectCart = (state: RootState) => state.cart;
 export const selectCartItemsMap = createSelector(

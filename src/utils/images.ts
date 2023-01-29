@@ -1,14 +1,3 @@
-import {
-  CartItem,
-  ColorOption,
-  DenierOption,
-  LaceOption,
-  LegOption,
-  Product,
-  ProductSchema,
-  SizeOption,
-} from "../model";
-
 import no_image from "../assets/images/missing-image.svg";
 
 import tights_or_stocking_girls_120_denier_azure from "../assets/images/tights_or_stocking_girls_120_denier/azure.jpg";
@@ -20,6 +9,28 @@ import tights_or_stocking_girls_120_denier_cream from "../assets/images/tights_o
 import tights_or_stocking_girls_120_denier_dark_blue from "../assets/images/tights_or_stocking_girls_120_denier/dark_blue.jpg";
 import tights_or_stocking_girls_120_denier_dark_purple from "../assets/images/tights_or_stocking_girls_120_denier/dark_purple.jpg";
 import tights_or_stocking_girls_120_denier_white from "../assets/images/tights_or_stocking_girls_120_denier/white.jpg";
+import { ColorOption } from "../model/color/ColorOption";
+import { DenierOption } from "../model/denier/DenierOption";
+import { LaceOption } from "../model/lace/LaceOption";
+import { LegOption } from "../model/leg/LegOption";
+import { Product } from "../model/product/Product";
+import { ProductSchema } from "../model/product/ProductSchema";
+import { SizeOption } from "../model/size/SizeOption";
+
+export class ImagesConstants {
+  public static girls120Azure = tights_or_stocking_girls_120_denier_azure;
+  public static girls120babyPink =
+    tights_or_stocking_girls_120_denier_baby_pink;
+  public static girls120black = tights_or_stocking_girls_120_denier_black;
+  public static girls120body = tights_or_stocking_girls_120_denier_body;
+  public static girls120bordeaux = tights_or_stocking_girls_120_denier_bordeaux;
+  public static girls120cream = tights_or_stocking_girls_120_denier_cream;
+  public static girls120darkBlue =
+    tights_or_stocking_girls_120_denier_dark_blue;
+  public static girls120darkPurple =
+    tights_or_stocking_girls_120_denier_dark_purple;
+  public static girls120white = tights_or_stocking_girls_120_denier_white;
+}
 
 export interface ImageSrcByDenierLegSizeProps {
   denier?: DenierOption;
@@ -34,18 +45,18 @@ export interface ImageSrcByLace {
 }
 export type ImageSrcProps = ImageSrcByDenierLegSizeProps | ImageSrcByLace;
 
-export function imageSrcByCartItem(cartItem: CartItem) {
-  switch (cartItem.schema) {
-    case ProductSchema.BY_DENIER_LEG_SIZE:
-      return imageSrcByDenierLegSize(cartItem);
+// export function imageSrcByCartItem(cartItem: CartItem) {
+//   switch (cartItem.schema) {
+//     case ProductSchema.BY_DENIER_LEG_SIZE:
+//       return imageSrcByDenierLegSize(cartItem);
 
-    case ProductSchema.BY_LACE:
-      return imageSrcByLace(cartItem);
+//     case ProductSchema.BY_LACE:
+//       return imageSrcByLace(cartItem);
 
-    default:
-      return [no_image];
-  }
-}
+//     default:
+//       return [no_image];
+//   }
+// }
 
 export function imageSrcByDenierLegSize(input?: ImageSrcByDenierLegSizeProps) {
   switch (input?.denier) {

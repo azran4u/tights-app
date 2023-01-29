@@ -1,5 +1,5 @@
-import { ProductDenierLegSize } from "./ProductDenierLegSize";
-import { ProductPropertyDenier } from "./ProductPropertyDenier";
+import { ProductDenierLegSize } from "../ProductDenierLegSize";
+import { ProductPropertyDenier } from "../ProductPropertyDenier";
 
 export function ProductDenierLegSizeAvailableDenier(
   product: ProductDenierLegSize

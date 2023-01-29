@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Color } from "../../../model";
 import styled from "styled-components";
+import { Color } from "../../../model/color/Color";
 
 interface ColorSelectorProps {
   colors: Color[];

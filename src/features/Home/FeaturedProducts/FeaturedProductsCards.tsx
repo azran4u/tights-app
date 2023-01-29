@@ -1,23 +1,17 @@
 import styled from "styled-components";
-import { useProducts } from "../../../model";
 import { device } from "../../../utils/device.sizes";
-import { productDefaultImage } from "../../../utils/images";
-import FeaturedProduct from "./FeaturedProduct";
+import { useFeatureProducts } from "../../Products/hooks/useFeatureProducts";
+import FeaturedProductComponent from "./FeaturedProduct";
 
 export const FeaturedProductsCards = () => {
-  const products = useProducts();
+  const products = useFeatureProducts();
 
   return (
     <Wrapper>
       {products &&
         products.map((product) => {
           return (
-            <FeaturedProduct
-              key={product.kind}
-              image={productDefaultImage(product)}
-              kind={product.kind}
-              description={product.description}
-            />
+            <FeaturedProductComponent product={product} key={product.slug} />
           );
         })}
     </Wrapper>

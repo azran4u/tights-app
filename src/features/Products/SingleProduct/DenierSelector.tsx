@@ -1,4 +1,4 @@
-import { Denier } from "../../../model";
+import { Denier } from "../../../model/denier/Denier";
 import ValueLabelSelector from "./ValueLabelSelector";
 
 interface DenierSelectorProps {

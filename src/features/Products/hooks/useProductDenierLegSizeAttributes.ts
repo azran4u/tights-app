@@ -2,7 +2,7 @@ import { Denier } from "../../../model/denier/Denier";
 import { Leg } from "../../../model/leg/Leg";
 import { ProductBaseAttributes } from "../../../model/product/ProductBaseAttributes";
 import { ProductDenierLegSize } from "../../../model/product/ProductDenierLegSize";
-import { ProductDenierLegSizeAttributes } from "../../../model/product/ProductDenierLegSizeAttributes";
+import { ProductDenierLegSizeAttributes } from "../../../model/product/utils/ProductDenierLegSizeAttributes";
 import { Size } from "../../../model/size/Size";
 
 export function useProductDenierLegSizeAttributes(

@@ -1,6 +1,6 @@
-import { Product } from "../../../model/product/Product";
-import { products } from "../../../model/product/products";
+import { ProductInstance } from "../../../model/productInstance/ProductInstance";
+import { catalog } from "../../../utils/catalog-generator/catalog";
 
-export function useProducts(): Product[] {
-  return products;
+export function useProducts(): ProductInstance[] {
+  return catalog;
 }

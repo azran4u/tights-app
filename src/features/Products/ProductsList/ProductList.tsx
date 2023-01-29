@@ -1,5 +1,5 @@
-import { useProducts } from "../../../model";
 import ErrorPage from "../../Error/ErrorPage";
+import { useProducts } from "../hooks/useProducts";
 import ProductsListView from "./ProductsListView";
 
 const ProductList = () => {

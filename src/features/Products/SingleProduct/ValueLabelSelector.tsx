@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ValueLabel } from "../../../model";
+import { ValueLabel } from "../../../utils/valueLabel/ValueLabel";
 
 interface ValueLabelSelectorProps<T> {
   values: T[];

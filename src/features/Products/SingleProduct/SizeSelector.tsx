@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Size } from "../../../model";
 import styled from "styled-components";
+import { Size } from "../../../model/size/Size";
 
 interface SizeSelectorProps {
   sizes: Size[];

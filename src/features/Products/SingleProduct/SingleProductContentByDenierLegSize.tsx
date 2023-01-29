@@ -1,17 +1,5 @@
 import React, { useState } from "react";
 import { AddToCart, AmountButtons, ProductImages } from "../../../shared";
-import {
-  CartItem,
-  Color,
-  Denier,
-  Leg,
-  ProductDenierLegSize,
-  Size,
-  useProductDenierLegSizeAttributes,
-  useProductDenierLegSizeAvailableDenier,
-  useProductDenierLegSizeAvailableLegs,
-  useProductDenierLegSizeAvailableSizes,
-} from "../../../model";
 import styled from "styled-components";
 import ColorSelector from "./ColorSelector";
 import LegSelector from "./LegSelector";
@@ -21,16 +9,32 @@ import Price from "./Price";
 import ProductDescription from "./ProductDescription";
 import { imageSrcByDenierLegSize } from "../../../utils/images";
 import ErrorMessage from "../../Error/ErorrMessage";
+import { Denier } from "../../../model/denier/Denier";
+import { Leg } from "../../../model/leg/Leg";
+import { Size } from "../../../model/size/Size";
+import { Color } from "../../../model/color/Color";
+import { CartItem } from "../../../model/cart/CartItem";
+import { skuByDenierLegSize } from "../../../model/sku/skuByDenierLegSize";
+import { useProductInstancesDlsBySlug } from "../hooks/useProductInstancesDlsBySlug";
+import { uniq } from "lodash";
+import { selectDenier } from "../../../model/denier/selectDenier";
+import { selectLeg } from "../../../model/leg/selectLeg";
+import { selectSize } from "../../../model/size/selectSize";
+import { selectColor } from "../../../model/color/selectColor";
 
 interface SingleProductContentByDenierLegSizeProps {
-  product: ProductDenierLegSize;
+  slug: string;
 }
 
 const SingleProductContentByDenierLegSize: React.FC<
   SingleProductContentByDenierLegSizeProps
 > = (props) => {
-  const availableDeniers = useProductDenierLegSizeAvailableDenier(
-    props.product
+  const { slug } = props;
+
+  const productInstances = useProductInstancesDlsBySlug(slug);
+
+  const availableDeniers = uniq(productInstances.map((x) => x.denier)).map(
+    selectDenier
   );
 
   const [selectedDenier, setSelectedDenier] = useState<Denier>(
@@ -38,34 +42,51 @@ const SingleProductContentByDenierLegSize: React.FC<
       availableDeniers[0]
   );
 
-  const availableLegs = useProductDenierLegSizeAvailableLegs(
-    props.product,
-    selectedDenier
-  );
+  const availableLegs = uniq(
+    productInstances
+      .filter((x) => x.denier === selectedDenier.value)
+      .map((x) => x.leg)
+  ).map(selectLeg);
+
   const [selectedLeg, setSelectedLeg] = useState<Leg>(
     availableLegs.find((leg) => leg.value === "without-leg") ?? availableLegs[0]
   );
 
-  const availableSizes = useProductDenierLegSizeAvailableSizes(
-    props.product,
-    selectedDenier,
-    selectedLeg
-  );
+  const availableSizes = uniq(
+    productInstances
+      .filter(
+        (x) => x.denier === selectedDenier.value && x.leg === selectedLeg.value
+      )
+      .map((x) => x.size)
+  ).map(selectSize);
+
   const [selectedSize, setSelectedSize] = useState<Size>(
     availableSizes.find((size) => size.value === "onesize") ?? availableSizes[0]
   );
 
-  const attributes = useProductDenierLegSizeAttributes(
-    props.product,
-    selectedDenier,
-    selectedLeg,
-    selectedSize
+  const availableColors = uniq(
+    productInstances
+      .filter(
+        (x) =>
+          x.denier === selectedDenier.value &&
+          x.leg === selectedLeg.value &&
+          x.size === selectedSize.value
+      )
+      .map((x) => x.color)
+  ).map(selectColor);
+
+  const [selectedColor, setSelectedColor] = useState<Color>(
+    availableColors.find((color) => color.value === "black") ??
+      availableColors[0]
   );
 
-  const [selectedColor, setSelectedColor] = useState<Color | undefined>(
-    attributes?.colors.find((color) => (color.value = "black")) ??
-      attributes?.colors[0]
-  );
+  const productInstance = productInstances.filter(
+    (x) =>
+      x.denier === selectedDenier.value &&
+      x.leg === selectedLeg.value &&
+      x.size === selectedSize.value &&
+      x.color === selectedColor.value
+  )[0];
 
   const [amount, setAmount] = useState(1);
 
@@ -78,11 +99,7 @@ const SingleProductContentByDenierLegSize: React.FC<
 
   function cartItem(): CartItem {
     return {
-      schema: props.product.schema,
-      denier: selectedDenier.value,
-      leg: selectedLeg.value,
-      size: selectedSize.value,
-      color: selectedColor?.value!,
+      sku: productInstance.sku,
       amount,
     };
   }
@@ -91,13 +108,13 @@ const SingleProductContentByDenierLegSize: React.FC<
     availableDeniers &&
     availableLegs &&
     availableSizes &&
+    availableColors &&
     selectedDenier &&
     selectedLeg &&
     selectedSize &&
     selectedColor &&
-    attributes &&
-    attributes.price &&
-    attributes?.colors.length > 1;
+    productInstance &&
+    productInstance.price;
 
   return (
     <Wrapper>
@@ -105,23 +122,18 @@ const SingleProductContentByDenierLegSize: React.FC<
 
       {shouldRender && (
         <>
-          <ProductDescription description={props.product.description} />
-          <Price price={attributes.price} />
+          <ProductDescription description={productInstance.description} />
+          <Price price={productInstance.price} />
           <div className="side-by-side">
-            <ProductImages
-              images={imageSrcByDenierLegSize({
-                denier: selectedDenier.value,
-                color: selectedColor.value,
-              })}
-            />
+            <ProductImages images={[productInstance.image]} />
             <div>
               {availableDeniers.length > 1 && (
                 <DenierSelector
                   deniers={availableDeniers}
                   initialDenier={selectedDenier}
                   selectedDenier={(denier: Denier) => {
-                    setSelectedDenier(denier);
                     console.log(`selected denier ${denier.label}`);
+                    setSelectedDenier(denier);
                   }}
                 />
               )}
@@ -130,8 +142,8 @@ const SingleProductContentByDenierLegSize: React.FC<
                 legs={availableLegs}
                 initialLeg={selectedLeg}
                 selectedLeg={(leg: Leg) => {
-                  setSelectedLeg(leg);
                   console.log(`selected leg ${leg.label}`);
+                  setSelectedLeg(leg);
                 }}
               />
 
@@ -140,19 +152,19 @@ const SingleProductContentByDenierLegSize: React.FC<
                   sizes={availableSizes}
                   initialSize={selectedSize}
                   selectedSize={(size: Size) => {
-                    setSelectedSize(size);
                     console.log(`selected size is ${size.label}`);
+                    setSelectedSize(size);
                   }}
                 />
               )}
             </div>
           </div>
           <ColorSelector
-            colors={attributes.colors}
+            colors={availableColors}
             initialColor={selectedColor}
             selectedColor={(color: Color) => {
-              setSelectedColor(color);
               console.log(`selected color ${color.label}`);
+              setSelectedColor(color);
             }}
           />
           <hr />

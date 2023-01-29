@@ -1,26 +1,60 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import CartColumns from "./CartColumns";
-import CartTotals from "./CartTotals";
-import { CartItemSku } from "../../../model";
-import CartListItem from "./CartListItem";
-import { cartActions, cartSelectors } from "../store/cartSlice";
+import {
+  cartActions,
+  cartSelectors,
+  decreaseAmount,
+  increaseAmount,
+} from "../store/cartSlice";
 import { OptionalClassName } from "../../../utils/classNameInterface";
 import Button from "../../../shared/Button";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { BackToProductsButton } from "../../Products/SingleProduct/BackToProductsButton";
 import Underline from "../../../shared/Underline";
 import ProductAmountButtons from "../../../shared/ProductAmountButtons";
 import { FaTrash } from "react-icons/fa";
 import { device } from "../../../utils/device.sizes";
+import { catalog } from "../../../utils/catalog-generator/catalog";
+import CartItemDescription from "./CartItemDescription";
+import { ProductInstance } from "../../../model/productInstance/ProductInstance";
+import { DiscountKind } from "../../../model/discount/DiscountKind";
 
 interface CartContentProps extends OptionalClassName {}
 
 const CartContent: React.FC<CartContentProps> = (props) => {
   const items = useAppSelector(cartSelectors.selectCartItemsArray);
   const dispatch = useAppDispatch();
-  const [amount, setAmount] = useState(0);
+
+  function productInstanceBySku(sku: string): ProductInstance {
+    return catalog.find((x) => x.sku === sku)!;
+  }
+  const totalCost = items.reduce((prev, curr) => {
+    const productInstace = productInstanceBySku(curr.sku);
+    return prev + productInstace.price * curr.amount;
+  }, 0);
+
+  const totalCostAfterDiscount = items.reduce((prev, curr) => {
+    const productInstace = productInstanceBySku(curr.sku);
+
+    if (productInstace.discount.kind === DiscountKind.COUNT_DISCOUNT) {
+      const { group, count, pricePerCount } = productInstace.discount;
+      const totalCount = items.reduce((prev, curr) => {
+        const productInstaceInCart = productInstanceBySku(curr.sku);
+        if (
+          productInstaceInCart.discount.kind === DiscountKind.COUNT_DISCOUNT &&
+          productInstaceInCart.discount.group === group
+        ) {
+          return prev + curr.amount;
+        }
+        return prev;
+      }, 0);
+
+      if (totalCount >= count) {
+        return prev + (pricePerCount / count) * curr.amount;
+      }
+    }
+
+    return prev + productInstace.price * curr.amount;
+  }, 0);
 
   return (
     <Wrapper className={props.className}>
@@ -46,11 +80,11 @@ const CartContent: React.FC<CartContentProps> = (props) => {
           <Underline className="underline" />
         </div>
         <div className="header">
-          <h5>מחיר</h5>
+          <h5>כמות</h5>
           <Underline className="underline" />
         </div>
         <div className="header">
-          <h5>כמות</h5>
+          <h5>מחיר</h5>
           <Underline className="underline" />
         </div>
         <div className="header">
@@ -59,38 +93,45 @@ const CartContent: React.FC<CartContentProps> = (props) => {
         </div>
         <div> </div>
         {items.length > 0 &&
-          items.map((cartItem) => (
-            <>
-              <div className="row-value">
-                <h5>טייץ גרביון</h5>
-                <h5>200 דניר</h5>
-                <h5>צבע שחור</h5>
-                <h5>ללא רגל</h5>
-              </div>
-              <h5 className="row-value">
-                <ProductAmountButtons
-                  className="amount-buttons"
-                  amount={amount}
-                  increase={() => setAmount(amount + 1)}
-                  decrease={() => {
-                    if (amount > 1) setAmount(amount - 1);
-                  }}
-                />
-              </h5>
-              <h5 className="row-value">{cartItem.amount}</h5>
-              <h5 className="row-value">{cartItem.amount * 22}</h5>
+          items.map((cartItem) => {
+            const productInstance = catalog.find(
+              (x) => x.sku === cartItem.sku
+            )!;
+            return (
+              <>
+                <div className="row-value">
+                  <CartItemDescription sku={cartItem.sku} />
+                </div>
+                <h5 className="row-value">
+                  <ProductAmountButtons
+                    className="amount-buttons"
+                    amount={cartItem.amount}
+                    increase={() =>
+                      dispatch(increaseAmount({ sku: cartItem.sku }))
+                    }
+                    decrease={() => {
+                      if (cartItem.amount > 1)
+                        dispatch(decreaseAmount({ sku: cartItem.sku }));
+                    }}
+                  />
+                </h5>
+                <h5 className="row-value">{productInstance.price}</h5>
+                <h5 className="row-value">
+                  {cartItem.amount * productInstance.price}
+                </h5>
 
-              <div className="row-value">
-                <FaTrash />
-              </div>
-            </>
-          ))}
+                <div className="row-value">
+                  <FaTrash />
+                </div>
+              </>
+            );
+          })}
       </div>
 
       <div className="cart-summary">
-        <h5> סכום כולל: 57 ש"ח</h5>
-        <h5>בקנייה זו חסכת: 13 ש"ח</h5>
-        <h5 className="final-price">סכום סופי: 44 ש"ח</h5>
+        <h5> סכום כולל: {totalCost} ש"ח</h5>
+        <h5>בקנייה זו חסכת: {totalCost - totalCostAfterDiscount} ש"ח</h5>
+        <h5 className="final-price">סכום סופי: {totalCostAfterDiscount} ש"ח</h5>
       </div>
 
       <div className="place-order">
@@ -166,6 +207,7 @@ const Wrapper = styled.section`
     flex-direction: row;
     justify-content: center;
     margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   .place-order-button {

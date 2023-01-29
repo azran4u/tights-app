@@ -1,27 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import { BackToProductsButton } from "./BackToProductsButton";
-import { ProductSchema, useProductByKindString } from "../../../model";
 import SingleProductContentByDenierLegSize from "./SingleProductContentByDenierLegSize";
 import SingleProductContentByLace from "./SingleProductContentByLace";
 import { useParams } from "react-router-dom";
 import Page from "../../../shared/Page";
+import { ProductSchema } from "../../../model/product/ProductSchema";
+import { useProductInstancesBySlug } from "../hooks/useProductInstancesBySlug";
+import { useProductInstancesSchemaBySlug } from "../hooks/useProductInstanceSchemaBySlug";
 
 const SingleProductPage: React.FC = () => {
-  const { kind } = useParams<{ kind: string }>();
-  const product = useProductByKindString(kind);
+  const { slug } = useParams<{ slug: string }>();
+  const productSchema = useProductInstancesSchemaBySlug(slug);
 
   return (
     <Page>
       <Wrapper>
-        {product && (
+        {productSchema && (
           <>
             <BackToProductsButton className="product-center" />
-            {product.schema === ProductSchema.BY_DENIER_LEG_SIZE && (
-              <SingleProductContentByDenierLegSize product={product} />
+            {productSchema === ProductSchema.BY_DENIER_LEG_SIZE && (
+              <SingleProductContentByDenierLegSize slug={slug} />
             )}
-            {product.schema === ProductSchema.BY_LACE && (
-              <SingleProductContentByLace product={product} />
+            {productSchema === ProductSchema.BY_LACE && (
+              <SingleProductContentByLace slug={slug} />
             )}
           </>
         )}

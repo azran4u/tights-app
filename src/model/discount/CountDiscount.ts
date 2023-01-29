@@ -6,4 +6,5 @@ export interface CountDiscount extends DiscountBase {
   count: number;
   pricePerCount: number;
   displayText?: string;
+  group: string;
 }

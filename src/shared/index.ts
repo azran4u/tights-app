@@ -7,7 +7,6 @@ import Loading from "./Loading";
 import ProductImages from "../features/Products/ProductsList/ProductImages";
 import AddToCart from "../features/Cart/components/AddToCart";
 import ProductAmountButtons from "./ProductAmountButtons";
-import ProductList from "../features/Products/ProductsList/ProductList";
 import CartContent from "../features/Cart/components/CartContent";
 import ScrollToTop from "./ScrollToTop";
 
@@ -24,7 +23,6 @@ export {
   ProductImages,
   AddToCart,
   ProductAmountButtons as AmountButtons,
-  ProductList,
   CartContent,
   ScrollToTop,
 

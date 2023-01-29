@@ -1,16 +1,19 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
-import { productDataGenerator } from "../../../utils/catalog-generator/productDataGenerator";
-import { ProductData } from "../../../model/product/ProductData";
+import { ProductInstance } from "../../../model/productInstance/ProductInstance";
+import { catalog } from "../../../utils/catalog-generator/catalog";
 
-export type ProductItemsMap = Map<string, ProductData>;
+export type ProductItemsMap = Map<string, ProductInstance>;
 
 export interface ProductsState {
   products: ProductItemsMap;
 }
 
 const initialState: ProductsState = {
-  products: productDataGenerator(),
+  products: catalog.reduce((prev, curr) => {
+    prev.set(curr.sku, curr);
+    return prev;
+  }, new Map<string, ProductInstance>()),
 };
 
 export const cartSlice = createSlice({

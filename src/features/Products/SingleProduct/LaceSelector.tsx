@@ -1,4 +1,4 @@
-import { Lace } from "../../../model";
+import { Lace } from "../../../model/lace/Lace";
 import ValueLabelSelector from "./ValueLabelSelector";
 
 interface LaceSelectorProps {

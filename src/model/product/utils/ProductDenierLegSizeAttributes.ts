@@ -1,10 +1,10 @@
 import { isNil } from "lodash";
-import { Denier } from "../denier/Denier";
-import { Leg } from "../leg/Leg";
-import { ProductBaseAttributes } from "./ProductBaseAttributes";
-import { ProductDenierLegSize } from "./ProductDenierLegSize";
+import { Denier } from "../../denier/Denier";
+import { Leg } from "../../leg/Leg";
+import { ProductBaseAttributes } from "../ProductBaseAttributes";
+import { ProductDenierLegSize } from "../ProductDenierLegSize";
 import { ProductDenierLegSizeAvailableSizes } from "./ProductDenierLegSizeAvailableSizes";
-import { Size } from "../size/Size";
+import { Size } from "../../size/Size";
 
 export function ProductDenierLegSizeAttributes(
   product: ProductDenierLegSize,

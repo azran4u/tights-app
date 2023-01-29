@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Product } from "../../../model";
 import { imagePath } from "../../../utils/imagePath";
+import { ProductInstance } from "../../../model/productInstance/ProductInstance";
 
 interface ProductsListViewProps {
-  products: Product[];
+  products: ProductInstance[];
 }
 const ProductsListView: React.FC<ProductsListViewProps> = (props) => {
   return (
     <Wrapper>
       {props.products.map((product) => {
-        const { description, primaryImage: image, kind } = product;
+        const { description, image, slug } = product;
         return (
           <div className="container">
-            <Link to={`/products/${kind}`}>
+            <Link to={`/products/${slug}`}>
               <img src={imagePath(image)} alt={description} />
             </Link>
             <h4>{description}</h4>

@@ -1,4 +1,4 @@
-import { Leg } from "../../../model";
+import { Leg } from "../../../model/leg/Leg";
 import ValueLabelSelector from "./ValueLabelSelector";
 
 interface LegSelectorProps {

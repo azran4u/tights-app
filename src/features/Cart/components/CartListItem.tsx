@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { FaTrash } from "react-icons/fa";
-import { useAppDispatch } from "../../../store/hooks";
-import { CartItem, ProductSchema } from "../../../model";
-import { Link } from "react-router-dom";
-import { imageSrcByCartItem } from "../../../utils/images";
+import { CartItem } from "../../../model/cart/CartItem";
+import { ProductSchema } from "../../../model/product/ProductSchema";
 import { AmountButtons } from "../../../shared";
 
 const CartListItem: React.FC<{ cartItem: CartItem }> = ({ cartItem }) => {
@@ -14,13 +11,13 @@ const CartListItem: React.FC<{ cartItem: CartItem }> = ({ cartItem }) => {
       {/* item column */}
       {/* <div className="title"> */}
       {/* <Link to={`/products/${slug}`}> */}
-      {cartItem.schema === ProductSchema.BY_DENIER_LEG_SIZE && (
+      {/* {cartItem.schema === ProductSchema.BY_DENIER_LEG_SIZE && (
         <div>
           <h6>{cartItem.denier} denier</h6>
           <h6>{cartItem.leg}</h6>
           <h6>{cartItem.color}</h6>
         </div>
-      )}
+      )} */}
       <h6>22</h6>
       <AmountButtons
         className="amount-buttons"
