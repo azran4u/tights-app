@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import {
   cartActions,
-  cartSelectors,
   decreaseAmount,
   increaseAmount,
+  selectCartItemsArray,
+  selectCartTotalCost,
+  selectCartTotalCostAfterDiscount,
 } from "../store/cartSlice";
 import { OptionalClassName } from "../../../utils/classNameInterface";
 import Button from "../../../shared/Button";
@@ -15,46 +17,20 @@ import { FaTrash } from "react-icons/fa";
 import { device } from "../../../utils/device.sizes";
 import { catalog } from "../../../utils/catalog-generator/catalog";
 import CartItemDescription from "./CartItemDescription";
-import { ProductInstance } from "../../../model/productInstance/ProductInstance";
-import { DiscountKind } from "../../../model/discount/DiscountKind";
+import { useHistory } from "react-router";
 
 interface CartContentProps extends OptionalClassName {}
 
 const CartContent: React.FC<CartContentProps> = (props) => {
-  const items = useAppSelector(cartSelectors.selectCartItemsArray);
   const dispatch = useAppDispatch();
 
-  function productInstanceBySku(sku: string): ProductInstance {
-    return catalog.find((x) => x.sku === sku)!;
-  }
-  const totalCost = items.reduce((prev, curr) => {
-    const productInstace = productInstanceBySku(curr.sku);
-    return prev + productInstace.price * curr.amount;
-  }, 0);
+  const cartItems = useAppSelector(selectCartItemsArray);
+  const totalCost = useAppSelector(selectCartTotalCost);
+  const totalCostAfterDiscount = useAppSelector(
+    selectCartTotalCostAfterDiscount
+  );
 
-  const totalCostAfterDiscount = items.reduce((prev, curr) => {
-    const productInstace = productInstanceBySku(curr.sku);
-
-    if (productInstace.discount.kind === DiscountKind.COUNT_DISCOUNT) {
-      const { group, count, pricePerCount } = productInstace.discount;
-      const totalCount = items.reduce((prev, curr) => {
-        const productInstaceInCart = productInstanceBySku(curr.sku);
-        if (
-          productInstaceInCart.discount.kind === DiscountKind.COUNT_DISCOUNT &&
-          productInstaceInCart.discount.group === group
-        ) {
-          return prev + curr.amount;
-        }
-        return prev;
-      }, 0);
-
-      if (totalCount >= count) {
-        return prev + (pricePerCount / count) * curr.amount;
-      }
-    }
-
-    return prev + productInstace.price * curr.amount;
-  }, 0);
+  const history = useHistory();
 
   return (
     <Wrapper className={props.className}>
@@ -62,16 +38,12 @@ const CartContent: React.FC<CartContentProps> = (props) => {
         <Button
           className="top-buttons-item"
           text="להמשך קניות"
-          onClick={() => {
-            dispatch(cartActions.clear);
-          }}
+          onClick={() => history.push("/")}
         />
         <Button
           className="clear-cart"
           text="רוקן עגלה"
-          onClick={() => {
-            dispatch(cartActions.clear);
-          }}
+          onClick={() => dispatch(cartActions.clear())}
         />
       </div>
       <div className="cart-items-list">
@@ -92,14 +64,14 @@ const CartContent: React.FC<CartContentProps> = (props) => {
           <Underline className="underline" />
         </div>
         <div> </div>
-        {items.length > 0 &&
-          items.map((cartItem) => {
+        {cartItems.length > 0 &&
+          cartItems.map((cartItem) => {
             const productInstance = catalog.find(
               (x) => x.sku === cartItem.sku
             )!;
             return (
               <>
-                <div className="row-value">
+                <div className="row-value" key={cartItem.sku}>
                   <CartItemDescription sku={cartItem.sku} />
                 </div>
                 <h5 className="row-value">
@@ -120,7 +92,10 @@ const CartContent: React.FC<CartContentProps> = (props) => {
                   {cartItem.amount * productInstance.price}
                 </h5>
 
-                <div className="row-value">
+                <div
+                  className="row-value change-mouse"
+                  onClick={() => dispatch(cartActions.removeItem(cartItem.sku))}
+                >
                   <FaTrash />
                 </div>
               </>
@@ -139,7 +114,7 @@ const CartContent: React.FC<CartContentProps> = (props) => {
           className="place-order-button"
           text="ביצוע הזמנה"
           onClick={() => {
-            dispatch(cartActions.clear);
+            history.push("/checkout");
           }}
         />
       </div>
@@ -236,36 +211,8 @@ const Wrapper = styled.section`
     }
   }
 
-  /* .buttons-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 1rem;
-  }
-
-  .continue-shopping {
-  }
-
-  .link-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-    column-gap: 0.25rem;
-  }
-  .link-btn {
-    background: transparent;
-    border-color: transparent;
-    text-transform: capitalize;
-    padding: 0.25rem 0.5rem;
-    background: var(--clr-primary-5);
-    color: var(--clr-white);
-    border-radius: var(--radius);
-    letter-spacing: var(--spacing);
-    font-weight: 400;
+  .change-mouse :hover {
     cursor: pointer;
   }
-  .clear-btn {
-    background: var(--clr-black);
-  } */
 `;
 export default CartContent;

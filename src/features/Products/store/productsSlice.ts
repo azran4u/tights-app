@@ -26,10 +26,14 @@ export const cartActions = cartSlice.actions;
 export const {} = cartSlice.actions;
 
 export const selectProductsState = (state: RootState) => state.products;
+
 export const selectProductsMap = createSelector(
   selectProductsState,
   (state) => state.products
 );
+
+export const selectProductBySku = (sku: string) =>
+  createSelector(selectProductsMap, (products) => products.get(sku));
 
 export const selectProductsArray = createSelector(selectProductsMap, (map) =>
   Array.from(map.values())
@@ -38,6 +42,7 @@ export const selectProductsArray = createSelector(selectProductsMap, (map) =>
 export const cartSelectors = {
   selectProductsMap,
   selectProductsArray,
+  selectProductBySku,
 };
 
 export default cartSlice.reducer;

@@ -1,44 +1,59 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
+import { useAppSelector } from "../../store/hooks";
+import { selectCheckout } from "../Checkout/store/checkoutSlice";
+import { isNil } from "lodash";
+import { selectSuccessfulOrderId } from "./store/successfulOrderSlice";
 
-const SuccessfulPayment = () => {
-  // const { clearCart } = useCartContext();
+const SuccessfulOrder: React.FC = () => {
+  const checkoutDetails = useAppSelector(selectCheckout);
+  const orderId = useAppSelector(selectSuccessfulOrderId);
+  const history = useHistory();
 
-  // clear the cart when the page mounts
-  // assume only successful payment will route to this page
-  useEffect(() => {
-    // clearCart();
-    //eslint-disable-next-line
-  }, []);
-
+  if (isNil(orderId)) {
+    history.push("/products");
+  }
   return (
-    <Wrapper className="page">
-      <section>
-        <h1>Thank you</h1>
-        <h3>Payment is completed</h3>
-        <Link to="/" className="btn">
-          back to home page
-        </Link>
-      </section>
+    <Wrapper>
+      <h1 className="title">הזמנה בוצעה בהצלחה</h1>
+      <div className="content">
+        <h5>תודה {checkoutDetails.firstName} על רכישתך!</h5>
+        <h5>ההזמנה עוברת לטיפול ונעדכן כאשר תגיע לנקודת החלוקה שבחרת </h5>
+        <h5 className="pickup-location">
+          {checkoutDetails.prefferedPickupLocation}
+        </h5>
+        <h5>תשלום יועבר בביט / פייבוקס בעת קבלת ההזמנה</h5>
+      </div>
     </Wrapper>
   );
 };
 
-export default SuccessfulPayment;
+export default SuccessfulOrder;
 
-const Wrapper = styled.main`
-  background: var(--clr-primary-10);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  h1 {
-    font-size: 8rem;
-    margin-bottom: 1rem;
+const Wrapper = styled.div`
+  width: 90vw;
+  margin: 0 auto;
+
+  .title {
+    min-height: 10vh;
+    text-align: center;
   }
-  h3 {
-    text-transform: none;
-    margin-bottom: 2rem;
+
+  .content {
+    min-height: 68vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  h5 {
+    margin-top: 1rem;
+  }
+
+  .pickup-location {
+    border-radius: --var(radius);
+    background-color: var(--clr-grey-8);
   }
 `;

@@ -1,34 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const ErrorPage: React.FC = () => {
   return (
-    <Wrapper className="page">
-      <section>
-        <h1>מצטערים</h1>
-        <h3>הדף שחיפשת אינו קיים...</h3>
-        <Link to="/" className="btn">
-          לדף הבית
-        </Link>
-      </section>
+    <Wrapper>
+      <h1 className="title">מצטערים</h1>
+      <h5 className="content">הדף שחיפשת אינו קיים...</h5>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.main`
-  background: var(--clr-primary-10);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  h1 {
-    /* font-size: 8rem; */
-    margin-bottom: 1rem;
+const Wrapper = styled.div`
+  width: 90vw;
+  margin: 0 auto;
+
+  .title {
+    min-height: 10vh;
+    text-align: center;
   }
-  h3 {
-    text-transform: none;
-    margin-bottom: 2rem;
+
+  .content {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 `;
 

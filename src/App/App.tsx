@@ -1,9 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Navbar, Sidebar, Footer, ScrollToTop } from "../shared";
-
 import { Home, Error, Shipping, Cart, SuccessfulPayment } from "../features";
 import SingleProductPage from "../features/Products/SingleProduct/SingleProductPage";
+import CheckoutPage from "../features/Checkout/CheckoutPage";
+import ErrorPage from "../features/Error/ErrorPage";
+import SuccessfulOrder from "../features/SuccessfulOrder/SuccessfulOrderPage";
 
 function App() {
   return (
@@ -22,16 +24,19 @@ function App() {
           <Route exact path="/products">
             <Home />
           </Route>
+          <Route exact path="/error">
+            <ErrorPage />
+          </Route>
           <Route
             exact
             path="/products/:slug"
             children={<SingleProductPage />}
           />
           <Route exact path="/checkout">
-            <Cart />
+            <CheckoutPage />
           </Route>
-          <Route exact path="/successful_payment">
-            <SuccessfulPayment />
+          <Route exact path="/successful-order">
+            <SuccessfulOrder />
           </Route>
           <Route path="*">
             <Error />

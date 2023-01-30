@@ -3,6 +3,9 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
 import { isNil } from "lodash";
 import { CartItem } from "../../../model/cart/CartItem";
+import { selectProductsMap } from "../../Products/store/productsSlice";
+import { DiscountKind } from "../../../model/discount/DiscountKind";
+import { ProductInstanceWithAmount } from "../../../model/order/order";
 
 export type CartItemsMap = Map<string, CartItem>;
 export type UpdateCartItemAmountOperations = "increase-one" | "decrease-one";
@@ -30,7 +33,13 @@ export const cartSlice = createSlice({
         return state;
       }
 
-      state.items.set(sku, item);
+      const current = state.items.get(sku);
+
+      if (isNil(current)) {
+        state.items.set(sku, item);
+      } else {
+        state.items.set(sku, { ...current, amount: current.amount + amount });
+      }
     },
     clear: (state) => {
       state.items.clear();
@@ -82,14 +91,11 @@ export const cartSlice = createSlice({
         amount: foundItem.amount - 1,
       });
     },
-    removeItem: (state, action: PayloadAction<CartItem>) => {
-      const item = action.payload;
-      const { sku, amount } = item;
+    removeItem: (state, action: PayloadAction<string>) => {
+      const sku = action.payload;
 
       if (isNil(sku)) {
-        console.error(
-          `REMOVE_CART_ITEM: invalid payload ${JSON.stringify(item)}`
-        );
+        console.error(`REMOVE_CART_ITEM: invalid payload ${sku}}`);
         return state;
       }
 
@@ -109,16 +115,100 @@ export const { upsertItem, removeItem, clear, increaseAmount, decreaseAmount } =
   cartSlice.actions;
 
 export const selectCart = (state: RootState) => state.cart;
+
 export const selectCartItemsMap = createSelector(
   selectCart,
   (cart) => cart.items
 );
+
+export const selectCartItemsCount = createSelector(
+  selectCart,
+  (cart) => cart.items.size
+);
+
 export const selectCartItemsArray = createSelector(selectCartItemsMap, (map) =>
   Array.from(map.values())
 );
+
+export const selectCartProductInstances = createSelector(
+  selectCartItemsArray,
+  selectProductsMap,
+  (cartItems, productInstances) =>
+    cartItems.map((cartItem) => productInstances.get(cartItem.sku)!)
+);
+
+export const selectCartProductInstancesWithAmount = createSelector(
+  selectCartItemsArray,
+  selectProductsMap,
+  (cartItems, productInstances) => {
+    return cartItems.map(
+      (cartItem) =>
+        ({
+          ...productInstances.get(cartItem.sku)!,
+          amount: cartItem.amount,
+        } as ProductInstanceWithAmount)
+    );
+  }
+);
+
 export const selectCartItemsTotalAmount = createSelector(
   selectCartItemsArray,
   (items) => items.reduce((prev, curr) => prev + curr.amount, 0)
+);
+
+export const selectCartTotalCost = createSelector(
+  selectCartItemsArray,
+  selectCartProductInstances,
+  (cartItems, cartItemsProductInstances) => {
+    const totalCost = cartItems.reduce((prev, curr) => {
+      const productInstace = cartItemsProductInstances.find(
+        (x) => x.sku === curr.sku
+      );
+      if (isNil(productInstace)) return prev;
+      return prev + productInstace.price * curr.amount;
+    }, 0);
+    return totalCost;
+  }
+);
+
+export const selectCartTotalCostAfterDiscount = createSelector(
+  selectCartItemsArray,
+  selectCartProductInstances,
+  (cartItems, cartItemsProductInstances) => {
+    return cartItems.reduce((prev, curr) => {
+      const productInstace = cartItemsProductInstances.find(
+        (x) => x.sku === curr.sku
+      );
+
+      if (isNil(productInstace)) return prev;
+
+      if (productInstace.discount.kind === DiscountKind.COUNT_DISCOUNT) {
+        const { group, count, pricePerCount } = productInstace.discount;
+        const totalCount = cartItems.reduce((prev, curr) => {
+          const productInstaceInCart = cartItemsProductInstances.find(
+            (x) => x.sku === curr.sku
+          );
+
+          if (isNil(productInstaceInCart)) return prev;
+
+          if (
+            productInstaceInCart.discount.kind ===
+              DiscountKind.COUNT_DISCOUNT &&
+            productInstaceInCart.discount.group === group
+          ) {
+            return prev + curr.amount;
+          }
+          return prev;
+        }, 0);
+
+        if (totalCount >= count) {
+          return prev + (pricePerCount / count) * curr.amount;
+        }
+      }
+
+      return prev + productInstace.price * curr.amount;
+    }, 0);
+  }
 );
 
 export const cartSelectors = {
