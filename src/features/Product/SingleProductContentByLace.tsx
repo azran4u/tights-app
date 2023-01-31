@@ -26,22 +26,16 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
 ) => {
   const { slug } = props;
 
-  const products = useAppSelector(
-    selectProductsBySlug(slug)
-  ) as ProductLace[];
+  const products = useAppSelector(selectProductsBySlug(slug)) as ProductLace[];
 
-  const availableLaces = uniq(products.map((x) => x.lace)).map(
-    selectLace
-  );
+  const availableLaces = uniq(products.map((x) => x.lace)).map(selectLace);
 
   const [selectedLace, setSelectedLace] = useState<Lace>(
     availableLaces?.find((x) => x.value === "lengthwise") ?? availableLaces[0]
   );
 
   const availableColors = uniq(
-    products
-      .filter((x) => x.lace === selectedLace.value)
-      .map((x) => x.color)
+    products.filter((x) => x.lace === selectedLace.value).map((x) => x.color)
   ).map(selectColor);
 
   const [selectedColor, setSelectedColor] = useState<Color>(
@@ -82,21 +76,16 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
       {shouldRender && (
         <>
           <ProductDescription description={selectedProduct.description} />
+          <ProductImage image={selectedProduct.image} />
+          <LaceSelector
+            laces={availableLaces}
+            initialLace={selectedLace}
+            selectedLace={(denier: Lace) => {
+              setSelectedLace(denier);
+              console.log(`selected denier ${denier.label}`);
+            }}
+          />
           <Price price={selectedProduct.price} />
-          <div className="side-by-side">
-            <ProductImage image={selectedProduct.image} />
-            <div>
-              <LaceSelector
-                laces={availableLaces}
-                initialLace={selectedLace}
-                selectedLace={(denier: Lace) => {
-                  setSelectedLace(denier);
-                  console.log(`selected denier ${denier.label}`);
-                }}
-              />
-            </div>
-          </div>
-
           <ColorSelector
             colors={availableColors}
             initialColor={selectedColor}
@@ -122,6 +111,7 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
   .center {
     margin-top: 1rem;
@@ -130,7 +120,7 @@ const Wrapper = styled.div`
 
   .side-by-side {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
     justify-content: space-between;
   }
 `;

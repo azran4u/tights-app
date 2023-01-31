@@ -46,9 +46,7 @@ const SingleProductContentByDenierLegSize: React.FC<
   );
 
   const availableLegs = uniq(
-    products
-      .filter((x) => x.denier === selectedDenier.value)
-      .map((x) => x.leg)
+    products.filter((x) => x.denier === selectedDenier.value).map((x) => x.leg)
   ).map(selectLeg);
 
   const [selectedLeg, setSelectedLeg] = useState<Leg>(
@@ -126,42 +124,40 @@ const SingleProductContentByDenierLegSize: React.FC<
       {shouldRender && (
         <>
           <ProductDescription description={product.description} />
-          <Price price={product.price} />
-          <div className="side-by-side">
-            <ProductImage image={product.image} />
-            <div>
-              {availableDeniers.length > 1 && (
-                <DenierSelector
-                  deniers={availableDeniers}
-                  initialDenier={selectedDenier}
-                  selectedDenier={(denier: Denier) => {
-                    console.log(`selected denier ${denier.label}`);
-                    setSelectedDenier(denier);
-                  }}
-                />
-              )}
-
-              <LegSelector
-                legs={availableLegs}
-                initialLeg={selectedLeg}
-                selectedLeg={(leg: Leg) => {
-                  console.log(`selected leg ${leg.label}`);
-                  setSelectedLeg(leg);
+          <ProductImage image={product.image} />
+          <div>
+            {availableDeniers.length > 1 && (
+              <DenierSelector
+                deniers={availableDeniers}
+                initialDenier={selectedDenier}
+                selectedDenier={(denier: Denier) => {
+                  console.log(`selected denier ${denier.label}`);
+                  setSelectedDenier(denier);
                 }}
               />
+            )}
 
-              {availableSizes.length > 1 && (
-                <SizeSelector
-                  sizes={availableSizes}
-                  initialSize={selectedSize}
-                  selectedSize={(size: Size) => {
-                    console.log(`selected size is ${size.label}`);
-                    setSelectedSize(size);
-                  }}
-                />
-              )}
-            </div>
+            <LegSelector
+              legs={availableLegs}
+              initialLeg={selectedLeg}
+              selectedLeg={(leg: Leg) => {
+                console.log(`selected leg ${leg.label}`);
+                setSelectedLeg(leg);
+              }}
+            />
+
+            {availableSizes.length > 1 && (
+              <SizeSelector
+                sizes={availableSizes}
+                initialSize={selectedSize}
+                selectedSize={(size: Size) => {
+                  console.log(`selected size is ${size.label}`);
+                  setSelectedSize(size);
+                }}
+              />
+            )}
           </div>
+          <Price price={product.price} />
           <ColorSelector
             colors={availableColors}
             initialColor={selectedColor}
@@ -187,6 +183,7 @@ const SingleProductContentByDenierLegSize: React.FC<
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
   .center {
     margin-top: 1rem;
@@ -195,7 +192,7 @@ const Wrapper = styled.div`
 
   .side-by-side {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
     justify-content: space-between;
   }
 `;

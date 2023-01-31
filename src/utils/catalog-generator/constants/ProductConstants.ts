@@ -68,7 +68,7 @@ export class ProductConstants {
 
   public static dls200withoutLeg3XLto5XL: ProductDenierLegSize = {
     ...ProductConstants.dls200withoutLeg,
-    ...SizeConstants.onesize,
+    ...SizeConstants.size3xlTo5xl,
     discount: DiscountConstants.noDiscount,
     price: 30,
     supplier: "filo",
