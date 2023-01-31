@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { device } from "../../../utils/device.sizes";
-import LinkToHome from "./LinkToHome";
-import SmallLogo from "./LogoSmall";
+import LinkToHome from "../../../shared/LinkToHome";
 import { MenuButton } from "./MenuIcon";
+import Logo from "./Logo";
 
 const HeaderWithMenu: React.FC = () => {
   return (
     <Wrapper>
       <LinkToHome>
-        <SmallLogo />
+        <Logo size="small" />
       </LinkToHome>
       <MenuButton />
     </Wrapper>

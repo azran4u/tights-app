@@ -17,10 +17,12 @@ export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();
   const checkoutData = useAppSelector(selectCheckout);
   const pickupLocations = useAppSelector(selectPickupLocations);
+
   const [
     shouldDisplayFormValidationError,
     setShouldDisplayFormValidationError,
   ] = useState(false);
+
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const history = useHistory();
 
@@ -41,7 +43,7 @@ export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
     const validationResult = schema.validate(checkoutData);
     console.log(JSON.stringify(validationResult?.error));
     setIsFormValid(validationResult?.error ? false : true);
-  }, [checkoutData]);
+  }, [checkoutData, schema]);
 
   return (
     <Wrapper className={props.className}>

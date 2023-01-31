@@ -2,24 +2,18 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { NavLinks } from "../../Navbar/NavLinks";
 import { SidebarHeader } from "./SidebarHeader";
-import * as sidebarStore from "../store/sidebarSlice";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { useAppSelector } from "../../../../store/hooks";
 import { device } from "../../../../utils/device.sizes";
-import { Link } from "react-router-dom";
-import { closeSidebar } from "../store/sidebarSlice";
-import CartWithBadge from "../../../../shared/CartWithBadge";
+import CartWithBadge from "../../../Cart/components/CartWithBadge";
+import { selectSidebarIsOpen } from "../store/sidebarSlice";
 
 const Sidebar: React.FC = () => {
-  const isSidebarOpen = useAppSelector(sidebarStore.selectSidebarIsOpen);
-  const dispatch = useAppDispatch();
-  const close = () => dispatch(closeSidebar());
+  const isSidebarOpen = useAppSelector(selectSidebarIsOpen);
   return (
     <Wrapper isSidebarOpen={isSidebarOpen}>
       <SidebarHeader />
       <NavLinks isSidebar={true} />
-      <Link to="/cart" onClick={close}>
-        <CartWithBadge />
-      </Link>
+      <CartWithBadge />
     </Wrapper>
   );
 };

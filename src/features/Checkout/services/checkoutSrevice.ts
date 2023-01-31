@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../shared/services/firestore";
 import {
-  selectCartProductInstancesWithAmount,
+  selectCartProductsWithAmount,
   selectCartTotalCost,
   selectCartTotalCostAfterDiscount,
 } from "../../Cart/store/cartSlice";
@@ -25,7 +25,7 @@ export class checkoutService {
     const totalCostAfterDiscount = selectCartTotalCostAfterDiscount(state);
     const totalCost = selectCartTotalCost(state);
     const checkoutDetails = selectCheckout(state);
-    const products = selectCartProductInstancesWithAmount(state);
+    const products = selectCartProductsWithAmount(state);
 
     const order: Order = {
       totalCost,

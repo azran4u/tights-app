@@ -1,7 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
-import { CheckoutDetails } from "../../../model/checkout/checkout";
 
 export interface SuccessfulOrderState {
   orderId: string | undefined;

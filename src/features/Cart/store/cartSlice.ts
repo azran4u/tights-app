@@ -3,9 +3,9 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
 import { isNil } from "lodash";
 import { CartItem } from "../../../model/cart/CartItem";
-import { selectProductsMap } from "../../Products/store/productsSlice";
+import { selectProductsMap } from "../../Product/store/productsSlice";
 import { DiscountKind } from "../../../model/discount/DiscountKind";
-import { ProductInstanceWithAmount } from "../../../model/order/order";
+import { ProductWithAmount } from "../../../model/order/order";
 
 export type CartItemsMap = Map<string, CartItem>;
 export type UpdateCartItemAmountOperations = "increase-one" | "decrease-one";
@@ -15,7 +15,7 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  items: getLocalStorage(),
+  items: new Map<string, CartItem>(),
 };
 
 export const cartSlice = createSlice({
@@ -130,23 +130,23 @@ export const selectCartItemsArray = createSelector(selectCartItemsMap, (map) =>
   Array.from(map.values())
 );
 
-export const selectCartProductInstances = createSelector(
+export const selectCartProducts = createSelector(
   selectCartItemsArray,
   selectProductsMap,
-  (cartItems, productInstances) =>
-    cartItems.map((cartItem) => productInstances.get(cartItem.sku)!)
+  (cartItems, products) =>
+    cartItems.map((cartItem) => products.get(cartItem.sku)!)
 );
 
-export const selectCartProductInstancesWithAmount = createSelector(
+export const selectCartProductsWithAmount = createSelector(
   selectCartItemsArray,
   selectProductsMap,
-  (cartItems, productInstances) => {
+  (cartItems, products) => {
     return cartItems.map(
       (cartItem) =>
         ({
-          ...productInstances.get(cartItem.sku)!,
+          ...products.get(cartItem.sku)!,
           amount: cartItem.amount,
-        } as ProductInstanceWithAmount)
+        } as ProductWithAmount)
     );
   }
 );
@@ -158,10 +158,10 @@ export const selectCartItemsTotalAmount = createSelector(
 
 export const selectCartTotalCost = createSelector(
   selectCartItemsArray,
-  selectCartProductInstances,
-  (cartItems, cartItemsProductInstances) => {
+  selectCartProducts,
+  (cartItems, cartItemsProducts) => {
     const totalCost = cartItems.reduce((prev, curr) => {
-      const productInstace = cartItemsProductInstances.find(
+      const productInstace = cartItemsProducts.find(
         (x) => x.sku === curr.sku
       );
       if (isNil(productInstace)) return prev;
@@ -173,10 +173,10 @@ export const selectCartTotalCost = createSelector(
 
 export const selectCartTotalCostAfterDiscount = createSelector(
   selectCartItemsArray,
-  selectCartProductInstances,
-  (cartItems, cartItemsProductInstances) => {
+  selectCartProducts,
+  (cartItems, cartItemsProducts) => {
     return cartItems.reduce((prev, curr) => {
-      const productInstace = cartItemsProductInstances.find(
+      const productInstace = cartItemsProducts.find(
         (x) => x.sku === curr.sku
       );
 
@@ -185,7 +185,7 @@ export const selectCartTotalCostAfterDiscount = createSelector(
       if (productInstace.discount.kind === DiscountKind.COUNT_DISCOUNT) {
         const { group, count, pricePerCount } = productInstace.discount;
         const totalCount = cartItems.reduce((prev, curr) => {
-          const productInstaceInCart = cartItemsProductInstances.find(
+          const productInstaceInCart = cartItemsProducts.find(
             (x) => x.sku === curr.sku
           );
 
@@ -220,19 +220,47 @@ export const cartSelectors = {
 
 export default cartSlice.reducer;
 
-function mapSerializer(map: CartItemsMap): string {
-  return JSON.stringify(Array.from(map.entries()));
-}
+// function mapSerializer(map: CartItemsMap): string {
+//   return JSON.stringify(Array.from(map.entries()));
+// }
 
-function mapDeSerializer(serializedMap: string): CartItemsMap {
-  return new Map(JSON.parse(serializedMap));
-}
+// function mapDeSerializer(serializedMap: string): CartItemsMap {
+//   return new Map(JSON.parse(serializedMap));
+// }
 
-function getLocalStorage() {
-  let cart = localStorage.getItem("cart");
-  if (!isNil(cart)) {
-    return mapDeSerializer(cart);
-  } else {
-    return new Map<string, CartItem>();
-  }
-}
+// function getLocalStorage() {
+//   let cart = localStorage.getItem("cart");
+//   if (!isNil(cart)) {
+//     return mapDeSerializer(cart);
+//   } else {
+//     return initialState;
+//   }
+// }
+
+// function setLocalStorage(items: CartItemsMap) {
+//   const serializedString = mapSerializer(items);
+//   const objectToSave: LocalStorageWithTTL = {
+//     ttl: nowPlusDays(2),
+//     value: serializedString,
+//   };
+//   localStorage.setItem("cart", serializedString);
+// }
+
+// function dateSerializer(date: Date): number {
+//   return date.getTime();
+// }
+
+// function dateDesrializer(time: number): Date {
+//   return new Date(time);
+// }
+
+// interface LocalStorageWithTTL {
+//   ttl: Date;
+//   value: string;
+// }
+
+// const nowPlusDays = (days: number): Date => {
+//   let result = new Date();
+//   result.setDate(result.getDate() + days);
+//   return result;
+// };

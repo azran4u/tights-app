@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { device } from "../../../utils/device.sizes";
 import { NavLinks } from "./NavLinks";
-import SmallLogo from "./LogoSmall";
-import LinkToHome from "./LinkToHome";
-import CartWithBadge from "../../../shared/CartWithBadge";
+import LinkToHome from "../../../shared/LinkToHome";
+import CartWithBadge from "../../Cart/components/CartWithBadge";
+import Logo from "./Logo";
 
 const HeaderWithLinks: React.FC = () => {
   return (
     <NavContainer>
       <LinkToHome>
-        <SmallLogo />
+        <Logo size="small" />
       </LinkToHome>
       <NavLinks />
       <CartWithBadge />

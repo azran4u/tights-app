@@ -1,10 +1,8 @@
-import { ProductBase } from "./ProductBase";
-import { ProductPropertyLace } from "./ProductPropertyLace";
+import { LaceOption } from "../lace/LaceOption";
+import { ProductCommonFields } from "./ProductCommonFields";
 import { ProductSchema } from "./ProductSchema";
-import { ProductKind } from "./ProductKind";
 
-export interface ProductLace extends ProductBase {
+export interface ProductLace extends ProductCommonFields {
   schema: ProductSchema.BY_LACE;
-  kind: ProductKind.LACE_FAN_TIGHTS;
-  lace: ProductPropertyLace[];
+  lace: LaceOption;
 }

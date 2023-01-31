@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { selectCheckout } from "../Checkout/store/checkoutSlice";
 import { isNil } from "lodash";
@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   }
 
   .content {
-    min-height: 68vh;
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

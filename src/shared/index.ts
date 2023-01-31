@@ -4,7 +4,7 @@ import Sidebar from "../features/Layout/Sidebar/components/Sidebar";
 import Hero from "../features/Home/Title";
 import FeaturedProducts from "../features/Home/FeaturedProducts/FeaturedProducts";
 import Loading from "./Loading";
-import ProductImages from "../features/Products/ProductsList/ProductImages";
+import ProductImages from "../features/Product/ProductImage";
 import AddToCart from "../features/Cart/components/AddToCart";
 import ProductAmountButtons from "./ProductAmountButtons";
 import CartContent from "../features/Cart/components/CartContent";

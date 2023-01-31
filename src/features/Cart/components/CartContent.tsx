@@ -66,9 +66,7 @@ const CartContent: React.FC<CartContentProps> = (props) => {
         <div> </div>
         {cartItems.length > 0 &&
           cartItems.map((cartItem) => {
-            const productInstance = catalog.find(
-              (x) => x.sku === cartItem.sku
-            )!;
+            const product = catalog.find((x) => x.sku === cartItem.sku)!;
             return (
               <>
                 <div className="row-value" key={cartItem.sku}>
@@ -87,10 +85,8 @@ const CartContent: React.FC<CartContentProps> = (props) => {
                     }}
                   />
                 </h5>
-                <h5 className="row-value">{productInstance.price}</h5>
-                <h5 className="row-value">
-                  {cartItem.amount * productInstance.price}
-                </h5>
+                <h5 className="row-value">{product.price}</h5>
+                <h5 className="row-value">{cartItem.amount * product.price}</h5>
 
                 <div
                   className="row-value change-mouse"

@@ -1,8 +1,8 @@
 import { FaBars } from "react-icons/fa";
 import styled from "styled-components";
 import { useAppDispatch } from "../../../store/hooks";
-import { openSidebar } from "../Sidebar/store/sidebarSlice";
 import { OptionalClassName } from "../../../utils/classNameInterface";
+import { sidebarActions } from "../Sidebar/store/sidebarSlice";
 
 export const MenuButton: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();
@@ -10,7 +10,7 @@ export const MenuButton: React.FC<OptionalClassName> = (props) => {
     <Wrapper
       type="button"
       className={props.className}
-      onClick={() => dispatch(openSidebar())}
+      onClick={() => dispatch(sidebarActions.openSidebar())}
     >
       <FaBars />
     </Wrapper>

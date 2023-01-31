@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../store/hooks";
-import { closeSidebar } from "../Sidebar/store/sidebarSlice";
 import styled from "styled-components";
 import { OptionalClassName } from "../../../utils/classNameInterface";
 import { device } from "../../../utils/device.sizes";
+import { sidebarActions } from "../Sidebar/store/sidebarSlice";
 
 interface Props extends OptionalClassName {
   isSidebar?: boolean;
@@ -17,7 +17,11 @@ export const NavLinks: React.FC<Props> = ({ className, isSidebar }) => {
         return (
           <li
             key={id}
-            onClick={isSidebar ? () => dispatch(closeSidebar()) : undefined}
+            onClick={
+              isSidebar
+                ? () => dispatch(sidebarActions.closeSidebar())
+                : undefined
+            }
           >
             <Link to={url}>{text}</Link>
           </li>

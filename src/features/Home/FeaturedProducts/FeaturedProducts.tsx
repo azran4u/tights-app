@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { FeaturedProductsHeader } from "./FeaturedProductsHeader";
-import { FeaturedProductsCards } from "./FeaturedProductsCards";
+import { FeaturedProductsLayout } from "./FeaturedProductsLayout";
 
 const FeaturedProducts = () => {
   return (
     <Wrapper>
       <StyledFeaturedProductsHeader />
-      <FeaturedProductsCards />
+      <FeaturedProductsLayout />
     </Wrapper>
   );
 };

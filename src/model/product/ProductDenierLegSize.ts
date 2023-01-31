@@ -1,13 +1,10 @@
-import { ProductBase } from "./ProductBase";
+import { DenierOption } from "../denier/DenierOption";
+import { LegOption } from "../leg/LegOption";
+import { ProductCommonFields } from "./ProductCommonFields";
 import { ProductSchema } from "./ProductSchema";
-import { ProductKind } from "./ProductKind";
-import { ProductPropertyDenier } from "./ProductPropertyDenier";
 
-export interface ProductDenierLegSize extends ProductBase {
+export interface ProductDenierLegSize extends ProductCommonFields {
   schema: ProductSchema.BY_DENIER_LEG_SIZE;
-  kind:
-    | ProductKind.TIGHTS_OR_STOCKING_200_DENIER
-    | ProductKind.TIGHTS_OR_STOCKING_GIRLS_120_DENIER
-    | ProductKind.TIGHTS_OR_STOCKING_20_OR_40_DENIER;
-  denier: ProductPropertyDenier[];
+  denier: DenierOption;
+  leg: LegOption;
 }

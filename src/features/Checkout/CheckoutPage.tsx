@@ -7,9 +7,9 @@ import { CheckoutForm } from "./CheckoutForm";
 
 const CheckoutPage: React.FC = () => {
   const cartItemsCount = useSelector(selectCartItemsCount);
-  const cartIsEmpty = false; // cartItemsCount < 1;
+  const isCartEmpty = cartItemsCount < 1;
 
-  if (cartIsEmpty) {
+  if (isCartEmpty) {
     return <CartPage />;
   } else {
     return (

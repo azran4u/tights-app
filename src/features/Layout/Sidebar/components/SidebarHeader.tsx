@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import Logo from "../../Navbar/Logo";
 import styled from "styled-components";
 import { useAppDispatch } from "../../../../store/hooks";
-import { closeSidebar } from "../store/sidebarSlice";
 import { Close } from "@styled-icons/material/Close";
+import { sidebarActions } from "../store/sidebarSlice";
 
 export const SidebarHeader: React.FC = () => {
   const dispatch = useAppDispatch();
-  const close = () => dispatch(closeSidebar());
+  const close = () => dispatch(sidebarActions.closeSidebar());
 
   return (
     <Wrapper>

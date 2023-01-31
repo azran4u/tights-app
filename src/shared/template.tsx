@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useAppDispatch } from "../store/hooks";
 import { OptionalClassName } from "../utils/classNameInterface";
 import { device } from "../utils/device.sizes";
@@ -21,8 +21,22 @@ const PageWrapper: React.FC = ({ children }) => {
   return <Wrapper>{children}</Wrapper>;
 };
 
-interface WrapperProps {}
+interface WrapperProps {
+  isSidebarOpen: boolean;
+}
 
-const Wrapper2 = styled.div.attrs<WrapperProps>({})<WrapperProps>``;
+const WrapperWithProps = styled.aside.attrs<WrapperProps>({})<WrapperProps>`
+  ${({ isSidebarOpen }) =>
+    isSidebarOpen &&
+    css`
+      z-index: 999;
+      transform: translate(0);
+    `}
+
+  @media ${device.desktop} {
+    display: none;
+  }
+`;
 
 export default ComponentName;
+

@@ -7,10 +7,11 @@ import { selectLace } from "../../../model/lace/selectLace";
 import { selectLeg } from "../../../model/leg/selectLeg";
 import { ProductSchema } from "../../../model/product/ProductSchema";
 import { selectSize } from "../../../model/size/selectSize";
+import { useAppSelector } from "../../../store/hooks";
 import { OptionalClassName } from "../../../utils/classNameInterface";
 import { device } from "../../../utils/device.sizes";
 import ErrorPage from "../../Error/ErrorPage";
-import { useProductBySku } from "../../Products/hooks/useProductBySku";
+import { selectProductBySku } from "../../Product/store/productsSlice";
 
 interface CartItemDescriptionProps extends OptionalClassName {
   sku: string;
@@ -18,29 +19,29 @@ interface CartItemDescriptionProps extends OptionalClassName {
 const CartItemDescription: React.FC<CartItemDescriptionProps> = (props) => {
   const { sku } = props;
 
-  const productInstance = useProductBySku(sku);
+  const product = useAppSelector(selectProductBySku(sku));
 
-  if (isNil(productInstance)) return <ErrorPage />;
+  if (isNil(product)) return <ErrorPage />;
 
-  if (productInstance.schema === ProductSchema.BY_DENIER_LEG_SIZE) {
+  if (product.schema === ProductSchema.BY_DENIER_LEG_SIZE) {
     return (
       <Wrapper className="row-value">
-        <h5>{productInstance.description}</h5>
-        <h5>{selectDenier(productInstance.denier).label}</h5>
-        <h5>{selectLeg(productInstance.leg).label}</h5>
-        <h5>{selectSize(productInstance.size).label}</h5>
-        <h5>צבע {selectColor(productInstance.color).label}</h5>
+        <h5>{product.description}</h5>
+        <h5>{selectDenier(product.denier).label}</h5>
+        <h5>{selectLeg(product.leg).label}</h5>
+        <h5>{selectSize(product.size).label}</h5>
+        <h5>צבע {selectColor(product.color).label}</h5>
       </Wrapper>
     );
   }
 
-  if (productInstance.schema === ProductSchema.BY_LACE) {
+  if (product.schema === ProductSchema.BY_LACE) {
     return (
       <Wrapper className="row-value">
-        <h5>{productInstance.description}</h5>
-        <h5>{selectLace(productInstance.lace).label}</h5>
-        <h5>{selectSize(productInstance.size).label}</h5>
-        <h5>צבע {selectColor(productInstance.color).label}</h5>
+        <h5>{product.description}</h5>
+        <h5>{selectLace(product.lace).label}</h5>
+        <h5>{selectSize(product.size).label}</h5>
+        <h5>צבע {selectColor(product.color).label}</h5>
       </Wrapper>
     );
   }

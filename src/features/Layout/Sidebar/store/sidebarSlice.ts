@@ -22,7 +22,7 @@ export const sidebarSlice = createSlice({
   },
 });
 
-export const { openSidebar, closeSidebar } = sidebarSlice.actions;
+export const sidebarActions = sidebarSlice.actions;
 
 export const selectSidebar = (state: RootState) => state.sidebar;
 
