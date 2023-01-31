@@ -4,10 +4,12 @@ import { device } from "../../../utils/device.sizes";
 import LinkToHome from "../../../shared/LinkToHome";
 import { MenuButton } from "./MenuIcon";
 import Logo from "./Logo";
+import CartWithBadge from "../../Cart/components/CartWithBadge";
 
-const HeaderWithMenu: React.FC = () => {
+const NavbarForMobile: React.FC = () => {
   return (
     <Wrapper>
+      <CartWithBadge />
       <LinkToHome>
         <Logo size="small" />
       </LinkToHome>
@@ -16,7 +18,7 @@ const HeaderWithMenu: React.FC = () => {
   );
 };
 
-export default HeaderWithMenu;
+export default NavbarForMobile;
 
 const Wrapper = styled.nav`
   height: 10vh;

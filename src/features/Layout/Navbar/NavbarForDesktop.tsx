@@ -6,7 +6,7 @@ import LinkToHome from "../../../shared/LinkToHome";
 import CartWithBadge from "../../Cart/components/CartWithBadge";
 import Logo from "./Logo";
 
-const HeaderWithLinks: React.FC = () => {
+const NavbarForDesktop: React.FC = () => {
   return (
     <NavContainer>
       <LinkToHome>
@@ -18,7 +18,7 @@ const HeaderWithLinks: React.FC = () => {
   );
 };
 
-export default HeaderWithLinks;
+export default NavbarForDesktop;
 
 const NavContainer = styled.nav`
   height: 10vh;

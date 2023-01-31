@@ -1,12 +1,12 @@
 import React from "react";
-import HeaderWithLinks from "./HeaderWithLinks";
-import HeaderWithMenu from "./HeaderWithMenu";
+import NavbarForDesktop from "./NavbarForDesktop";
+import NavbarForMobile from "./NavbarForMobile";
 
 const Nav: React.FC = () => {
   return (
     <>
-      <HeaderWithMenu />
-      <HeaderWithLinks />
+      <NavbarForMobile />
+      <NavbarForDesktop />
     </>
   );
 };
