@@ -83,7 +83,6 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
             initialLace={selectedLace}
             selectedLace={(denier: Lace) => {
               setSelectedLace(denier);
-              console.log(`selected denier ${denier.label}`);
             }}
           />
           <Price price={selectedProduct.price} />
@@ -92,7 +91,6 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
             initialColor={selectedColor}
             selectedColor={(color: Color) => {
               setSelectedColor(color);
-              console.log(`selected color ${color.label}`);
             }}
           />
           <hr />

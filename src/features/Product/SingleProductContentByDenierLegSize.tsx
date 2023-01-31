@@ -132,7 +132,6 @@ const SingleProductContentByDenierLegSize: React.FC<
                 deniers={availableDeniers}
                 initialDenier={selectedDenier}
                 selectedDenier={(denier: Denier) => {
-                  console.log(`selected denier ${denier.label}`);
                   setSelectedDenier(denier);
                 }}
               />
@@ -142,7 +141,6 @@ const SingleProductContentByDenierLegSize: React.FC<
               legs={availableLegs}
               initialLeg={selectedLeg}
               selectedLeg={(leg: Leg) => {
-                console.log(`selected leg ${leg.label}`);
                 setSelectedLeg(leg);
               }}
             />
@@ -152,7 +150,6 @@ const SingleProductContentByDenierLegSize: React.FC<
                 sizes={availableSizes}
                 initialSize={selectedSize}
                 selectedSize={(size: Size) => {
-                  console.log(`selected size is ${size.label}`);
                   setSelectedSize(size);
                 }}
               />
@@ -163,7 +160,6 @@ const SingleProductContentByDenierLegSize: React.FC<
             colors={availableColors}
             initialColor={selectedColor}
             selectedColor={(color: Color) => {
-              console.log(`selected color ${color.label}`);
               setSelectedColor(color);
             }}
           />

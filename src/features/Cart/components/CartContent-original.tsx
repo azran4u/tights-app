@@ -4,6 +4,7 @@ import {
   cartActions,
   decreaseAmount,
   increaseAmount,
+  selectCartItemsArray,
   selectCartProductsWithAmount,
   selectCartTotalCost,
   selectCartTotalCostAfterDiscount,
@@ -20,7 +21,7 @@ import { useHistory } from "react-router";
 
 interface CartContentProps extends OptionalClassName {}
 
-const CartContent: React.FC<CartContentProps> = (props) => {
+const CartContent1: React.FC<CartContentProps> = (props) => {
   const dispatch = useAppDispatch();
 
   const cartProductsWithAmount = useAppSelector(selectCartProductsWithAmount);
@@ -47,88 +48,63 @@ const CartContent: React.FC<CartContentProps> = (props) => {
         />
       </div>
       <div className="cart-items-list">
-        <table>
-          <thead>
-            <tr>
-              <th>
-                <div className="header">
-                  <h5>פריט</h5>
-                  <Underline className="underline" />
+        <div className="header" key="header-item">
+          <h5>פריט</h5>
+          <Underline className="underline" />
+        </div>
+        <div className="header" key="header-quantity">
+          <h5>כמות</h5>
+          <Underline className="underline" />
+        </div>
+        <div className="header" key="header-price">
+          <h5>מחיר</h5>
+          <Underline className="underline" />
+        </div>
+        <div className="header" key="header-total">
+          <h5>סיכום</h5>
+          <Underline className="underline" />
+        </div>
+        <div key="header-trash"> </div>
+        {cartProductsWithAmount.length > 0 &&
+          cartProductsWithAmount.map((cartItem) => {
+            return (
+              <>
+                <div className="row-value" key={cartItem.sku + "description"}>
+                  <CartItemDescription
+                    sku={cartItem.sku}
+                    key={cartItem.sku + "description-comp"}
+                  />
                 </div>
-              </th>
-              <th>
-                <div className="header">
-                  <h5>כמות</h5>
-                  <Underline className="underline" />
-                </div>
-              </th>
-              <th>
-                <div className="header">
-                  <h5>מחיר</h5>
-                  <Underline className="underline" />
-                </div>
-              </th>
-              <th>
-                <div className="header">
-                  <h5>סיכום</h5>
-                  <Underline className="underline" />
-                </div>
-              </th>
-              <th>
-                <div key="header-trash"> </div>
-              </th>
-            </tr>
-          </thead>
+                <h5 className="row-value" key={cartItem.sku + "buttons"}>
+                  <ProductAmountButtons
+                    className="amount-buttons"
+                    amount={cartItem.amount}
+                    increase={() =>
+                      dispatch(increaseAmount({ sku: cartItem.sku }))
+                    }
+                    decrease={() => {
+                      if (cartItem.amount > 1)
+                        dispatch(decreaseAmount({ sku: cartItem.sku }));
+                    }}
+                  />
+                </h5>
+                <h5 className="row-value" key={cartItem.sku + "price"}>
+                  {cartItem.price}
+                </h5>
+                <h5 className="row-value" key={cartItem.sku + "amount"}>
+                  {cartItem.amount * cartItem.price}
+                </h5>
 
-          <tbody>
-            {cartProductsWithAmount.length > 0 &&
-              cartProductsWithAmount.map((cartItem) => {
-                return (
-                  <tr key={cartItem.sku}>
-                    <td>
-                      <div className="row-value">
-                        <CartItemDescription sku={cartItem.sku} />
-                      </div>
-                    </td>
-                    <td>
-                      <h5 className="row-value">
-                        <ProductAmountButtons
-                          className="amount-buttons"
-                          amount={cartItem.amount}
-                          increase={() =>
-                            dispatch(increaseAmount({ sku: cartItem.sku }))
-                          }
-                          decrease={() => {
-                            if (cartItem.amount > 1)
-                              dispatch(decreaseAmount({ sku: cartItem.sku }));
-                          }}
-                        />
-                      </h5>
-                    </td>
-                    <td>
-                      <h5 className="row-value">{cartItem.price}</h5>
-                    </td>
-                    <td>
-                      <h5 className="row-value">
-                        {cartItem.amount * cartItem.price}
-                      </h5>
-                    </td>
-                    <td>
-                      <div
-                        className="row-value change-mouse"
-                        onClick={() =>
-                          dispatch(cartActions.removeItem(cartItem.sku))
-                        }
-                        key={cartItem.sku + "trash"}
-                      >
-                        <FaTrash />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
+                <div
+                  className="row-value change-mouse"
+                  onClick={() => dispatch(cartActions.removeItem(cartItem.sku))}
+                  key={cartItem.sku + "trash"}
+                >
+                  <FaTrash />
+                </div>
+              </>
+            );
+          })}
       </div>
 
       <div className="cart-summary">
@@ -151,10 +127,10 @@ const CartContent: React.FC<CartContentProps> = (props) => {
 };
 
 const Wrapper = styled.section`
-  table {
-    width: 100%;
+  .cart-items-list {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
   }
-
   .header {
     display: flex;
     flex-direction: column;
@@ -243,4 +219,4 @@ const Wrapper = styled.section`
     cursor: pointer;
   }
 `;
-export default CartContent;
+export default CartContent1;

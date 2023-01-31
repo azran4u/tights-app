@@ -32,7 +32,6 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
     const q = query(this.collectionRef, queryWhere);
     const querySnapshot = await getDocs(q);
     const data = this.querySnapshotToObject(querySnapshot);
-    console.log(data);
     return data;
   }
 

@@ -15,7 +15,6 @@ const AddToCart: React.FC<AddToCartProps> = (props) => {
       className={props.className}
       text="הוסף לעגלה"
       onClick={() => {
-        console.log(`add to cart ${JSON.stringify(props.item, null, 4)}`);
         dispatch(upsertItem(props.item));
       }}
     />

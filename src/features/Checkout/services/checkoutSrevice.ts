@@ -24,7 +24,7 @@ export class CheckoutService extends FirestoreService<Order> {
       totalCost,
       totalCostAfterDiscount,
       ...checkoutDetails,
-      date: Date.now().toString(),
+      date: new Date().toLocaleString(),
       products,
       saleId: "1",
     };

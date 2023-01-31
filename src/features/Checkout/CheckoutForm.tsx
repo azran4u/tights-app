@@ -41,7 +41,6 @@ export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
 
   useEffect(() => {
     const validationResult = schema.validate(checkoutData);
-    console.log(JSON.stringify(validationResult?.error));
     setIsFormValid(validationResult?.error ? false : true);
   }, [checkoutData, schema]);
 
@@ -120,7 +119,11 @@ export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
         <option value="" label="בחר/י נקודת חלוקה" />
         {pickupLocations &&
           pickupLocations.map((location) => (
-            <option value={location.dispalyNmae} label={location.dispalyNmae} />
+            <option
+              value={location.dispalyNmae}
+              label={location.dispalyNmae}
+              key={location.dispalyNmae}
+            />
           ))}
       </select>
 
