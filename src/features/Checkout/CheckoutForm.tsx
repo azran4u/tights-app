@@ -5,13 +5,13 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { OptionalClassName } from "../../utils/classNameInterface";
 import { device } from "../../utils/device.sizes";
 import { selectPickupLocations } from "../Pickup/store/pickupSlice";
-import { checkoutService } from "./services/checkoutSrevice";
 import { checkoutActions, selectCheckout } from "./store/checkoutSlice";
 import Joi from "joi";
 import { isNil } from "lodash";
 import { useHistory } from "react-router";
 import { cartActions } from "../Cart/store/cartSlice";
 import { successfulOrderActions } from "../SuccessfulOrder/store/successfulOrderSlice";
+import { checkoutService } from "./services/checkoutSrevice";
 
 export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();
@@ -144,11 +144,14 @@ export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
         onClick={async () => {
           setShouldDisplayFormValidationError(true);
           if (isFormValid) {
-            const orderId = await checkoutService.createOrder();
-            if (isNil(orderId)) history.push("/error");
-            dispatch(cartActions.clear());
-            dispatch(successfulOrderActions.upsert({ orderId }));
-            history.push("/successful-order");
+            const orderId = await checkoutService.placeOrder();
+            if (isNil(orderId)) {
+              history.push("/error");
+            } else {
+              dispatch(cartActions.clear());
+              dispatch(successfulOrderActions.upsert({ orderId }));
+              history.push("/successful-order");
+            }
           }
         }}
         className={`submit-button ${

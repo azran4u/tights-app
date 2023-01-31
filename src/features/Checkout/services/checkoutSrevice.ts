@@ -1,26 +1,19 @@
+import { Order } from "../../../model/order/order";
+import { FirestoreService } from "../../../shared/services/firestoreService";
 import { store } from "../../../store/store";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  where,
-  query,
-  DocumentData,
-  QuerySnapshot,
-} from "firebase/firestore";
-import { db } from "../../../shared/services/firestore";
 import {
   selectCartProductsWithAmount,
   selectCartTotalCost,
   selectCartTotalCostAfterDiscount,
 } from "../../Cart/store/cartSlice";
-import { Order } from "../../../model/order/order";
 import { selectCheckout } from "../store/checkoutSlice";
 
-export class checkoutService {
-  private static ordersRef = collection(db, "orders");
+export class CheckoutService extends FirestoreService<Order> {
+  constructor() {
+    super("orders");
+  }
 
-  public static async createOrder(): Promise<string | undefined> {
+  public createOrder(): Order {
     const state = store.getState();
     const totalCostAfterDiscount = selectCartTotalCostAfterDiscount(state);
     const totalCost = selectCartTotalCost(state);
@@ -36,30 +29,14 @@ export class checkoutService {
       saleId: "1",
     };
 
-    try {
-      const docRef = await addDoc(this.ordersRef, order);
-      console.log(
-        `order created with ID: ${docRef.id} ${JSON.stringify(order, null, 4)}`
-      );
-      return docRef.id;
-    } catch (error) {
-      console.error("Error adding order: ", error);
-    }
+    return order;
   }
 
-  public static async getOrderByName(name: string) {
-    const q = query(this.ordersRef, where("name", "==", "eyal"));
-    const querySnapshot = await getDocs(q);
-    const data = this.querySnapshotToObject(querySnapshot);
-    console.log(data);
-  }
-
-  private static querySnapshotToObject(
-    querySnapshot: QuerySnapshot<DocumentData>
-  ) {
-    return querySnapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
+  public async placeOrder() {
+    const order = this.createOrder();
+    const id = await this.writeDoc(order);
+    return id;
   }
 }
+
+export const checkoutService = new CheckoutService();

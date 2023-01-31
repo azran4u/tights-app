@@ -11,7 +11,7 @@ export class DiscountConstants {
     kind: DiscountKind.COUNT_DISCOUNT,
     count: 3,
     pricePerCount: 60,
-    displayText: undefined,
+    displayText: "",
     group: "",
   };
 
