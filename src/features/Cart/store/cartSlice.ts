@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
-import { isNil } from "lodash";
+import { ceil, isNil } from "lodash";
 import { CartItem } from "../../../model/cart/CartItem";
 import { selectProductsMap } from "../../Product/store/productsSlice";
 import { DiscountKind } from "../../../model/discount/DiscountKind";
@@ -173,7 +173,7 @@ export const selectCartTotalCostAfterDiscount = createSelector(
   selectCartItemsArray,
   selectCartProducts,
   (cartItems, cartItemsProducts) => {
-    return cartItems.reduce((prev, curr) => {
+    const totalCostAfterDiscount = cartItems.reduce((prev, curr) => {
       const productInstace = cartItemsProducts.find((x) => x.sku === curr.sku);
 
       if (isNil(productInstace)) return prev;
@@ -204,6 +204,8 @@ export const selectCartTotalCostAfterDiscount = createSelector(
 
       return prev + productInstace.price * curr.amount;
     }, 0);
+
+    return ceil(totalCostAfterDiscount);
   }
 );
 

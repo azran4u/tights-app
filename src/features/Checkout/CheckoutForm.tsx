@@ -116,13 +116,14 @@ export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
           );
         }}
       >
-        <option value="" label="בחר/י נקודת חלוקה" />
+        <option disabled value="" label="בחר/י נקודת חלוקה" />
         {pickupLocations &&
           pickupLocations.map((location) => (
             <option
               value={location.dispalyNmae}
               label={location.dispalyNmae}
               key={location.dispalyNmae}
+              className="pickup-option"
             />
           ))}
       </select>
@@ -178,6 +179,10 @@ const Wrapper = styled.div`
 
   @media ${device.mobile} {
     margin: 0 10%;
+  }
+
+  .pickup-option {
+    color: red;
   }
 
   .submit-button {
