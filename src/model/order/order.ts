@@ -5,7 +5,7 @@ import { ProductWithAmount } from "../product/ProductWithAmount";
 export interface Order {
   checkoutDetails: CheckoutDetails;
   pickupLocation: PickupLocation;
-  saleId: string;
+  saleName: string;
   date: string;
   products: ProductWithAmount[];
   totalCost: number;

@@ -5,6 +5,8 @@ import productsReducer from "../features/Product/store/productsSlice";
 import checkoutReducer from "../features/Checkout/store/checkoutSlice";
 import pickupReducer from "../features/Pickup/store/pickupSlice";
 import successfulOrderReducer from "../features/SuccessfulOrder/store/successfulOrderSlice";
+import saleReducer from "../features/Sale/store/saleSlice";
+import saleListenerMiddleware from "../features/Sale/saleListenerMiddleware";
 
 export const store = configureStore({
   reducer: {
@@ -14,11 +16,12 @@ export const store = configureStore({
     checkout: checkoutReducer,
     pickup: pickupReducer,
     successfulOrder: successfulOrderReducer,
+    sale: saleReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).prepend(saleListenerMiddleware.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

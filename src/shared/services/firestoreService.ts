@@ -9,6 +9,7 @@ import {
   QueryFieldFilterConstraint,
   addDoc,
   WithFieldValue,
+  onSnapshot,
 } from "firebase/firestore";
 import { firestoreDatabase } from "./firestoreDatabase";
 
@@ -42,6 +43,15 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
     } catch (error) {
       debugger;
     }
+  }
+
+  public async liveQuery(cb: (arr: T[]) => void) {
+    const q = query(this.collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const res: T[] = this.querySnapshotToObject(querySnapshot);
+      cb(res);
+    });
+    return unsubscribe;
   }
 
   private querySnapshotToObject(querySnapshot: QuerySnapshot<DocumentData>) {
