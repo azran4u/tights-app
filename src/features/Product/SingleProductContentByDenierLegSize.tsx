@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { AddToCart, AmountButtons } from "../../shared";
 import styled from "styled-components";
 import ColorSelector from "./ColorSelector";
 import LegSelector from "./LegSelector";
@@ -22,6 +21,8 @@ import { useAppSelector } from "../../store/hooks";
 import { ProductDenierLegSize } from "../../model/product/ProductDenierLegSize";
 import { selectProductsBySlug } from "./store/productsSlice";
 import ProductImage from "./ProductImage";
+import ProductAmountButtons from "../../shared/ProductAmountButtons";
+import AddToCart from "../Cart/components/AddToCart";
 
 interface SingleProductContentByDenierLegSizeProps {
   slug: string;
@@ -167,7 +168,7 @@ const SingleProductContentByDenierLegSize: React.FC<
             }}
           />
           <hr />
-          <AmountButtons
+          <ProductAmountButtons
             className="center"
             amount={amount}
             increase={increaseAmount}

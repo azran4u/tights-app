@@ -1,5 +1,5 @@
-import { FeaturedProducts } from "../../shared";
 import Page from "../../shared/Page";
+import FeaturedProducts from "./FeaturedProducts/FeaturedProducts";
 import Title from "./Title";
 
 const HomePage = () => {

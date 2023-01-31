@@ -2,7 +2,7 @@ import React from "react";
 import NavbarForDesktop from "./NavbarForDesktop";
 import NavbarForMobile from "./NavbarForMobile";
 
-const Nav: React.FC = () => {
+const Navbar: React.FC = () => {
   return (
     <>
       <NavbarForMobile />
@@ -11,4 +11,4 @@ const Nav: React.FC = () => {
   );
 };
 
-export default Nav;
+export default Navbar;

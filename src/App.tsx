@@ -1,11 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Navbar, Sidebar, Footer, ScrollToTop } from "./shared";
-import { Home, Error, Shipping, Cart } from "./features";
 import SingleProductPage from "./features/Product/SingleProductPage";
 import CheckoutPage from "./features/Checkout/CheckoutPage";
 import ErrorPage from "./features/Error/ErrorPage";
 import SuccessfulOrder from "./features/SuccessfulOrder/SuccessfulOrderPage";
+import HomePage from "./features/Home/HomePage";
+import ShippingPage from "./features/Shipping/ShippingPage";
+import CartPage from "./features/Cart/components/CartPage";
+import ScrollToTop from "./shared/ScrollToTop";
+import Navbar from "./features/Layout/Navbar/Nav";
+import Sidebar from "./features/Layout/Sidebar/components/Sidebar";
+import Footer from "./features/Layout/Footer/Footer";
 
 function App() {
   return (
@@ -13,16 +18,16 @@ function App() {
       <Layout>
         <Switch>
           <Route exact path="/">
-            <Home />
+            <HomePage />
           </Route>
           <Route exact path="/shipping">
-            <Shipping />
+            <ShippingPage />
           </Route>
           <Route exact path="/cart">
-            <Cart />
+            <CartPage />
           </Route>
           <Route exact path="/products">
-            <Home />
+            <HomePage />
           </Route>
           <Route exact path="/error">
             <ErrorPage />
@@ -39,7 +44,7 @@ function App() {
             <SuccessfulOrder />
           </Route>
           <Route path="*">
-            <Error />
+            <ErrorPage />
           </Route>
         </Switch>
       </Layout>

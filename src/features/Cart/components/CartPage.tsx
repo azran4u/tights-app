@@ -1,9 +1,9 @@
 import React from "react";
-import { CartContent } from "../../../shared";
 import { useSelector } from "react-redux";
 import { selectCartItemsTotalAmount } from "../store/cartSlice";
 import EmptyCart from "./EmptyCart";
 import styled from "styled-components";
+import CartContent from "./CartContent";
 
 const CartPage: React.FC = () => {
   const itemsCount = useSelector(selectCartItemsTotalAmount);

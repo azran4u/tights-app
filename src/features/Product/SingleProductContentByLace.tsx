@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { AddToCart, AmountButtons } from "../../shared";
 import styled from "styled-components";
 import ColorSelector from "./ColorSelector";
 import Price from "./Price";
@@ -16,6 +15,8 @@ import { useAppSelector } from "../../store/hooks";
 import { selectProductsBySlug } from "./store/productsSlice";
 import { ProductLace } from "../../model/product/ProductLace";
 import ProductImage from "./ProductImage";
+import ProductAmountButtons from "../../shared/ProductAmountButtons";
+import AddToCart from "../Cart/components/AddToCart";
 
 interface SingleProductContentByLaceProps {
   slug: string;
@@ -95,7 +96,7 @@ const SingleProductContentByLace: React.FC<SingleProductContentByLaceProps> = (
             }}
           />
           <hr />
-          <AmountButtons
+          <ProductAmountButtons
             className="center"
             amount={amount}
             increase={increaseAmount}
