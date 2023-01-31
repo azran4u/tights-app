@@ -5,7 +5,7 @@ import { isNil } from "lodash";
 import { CartItem } from "../../../model/cart/CartItem";
 import { selectProductsMap } from "../../Product/store/productsSlice";
 import { DiscountKind } from "../../../model/discount/DiscountKind";
-import { ProductWithAmount } from "../../../model/order/order";
+import { ProductWithAmount } from "../../../model/product/ProductWithAmount";
 
 export type CartItemsMap = Map<string, CartItem>;
 export type UpdateCartItemAmountOperations = "increase-one" | "decrease-one";
@@ -161,9 +161,7 @@ export const selectCartTotalCost = createSelector(
   selectCartProducts,
   (cartItems, cartItemsProducts) => {
     const totalCost = cartItems.reduce((prev, curr) => {
-      const productInstace = cartItemsProducts.find(
-        (x) => x.sku === curr.sku
-      );
+      const productInstace = cartItemsProducts.find((x) => x.sku === curr.sku);
       if (isNil(productInstace)) return prev;
       return prev + productInstace.price * curr.amount;
     }, 0);
@@ -176,9 +174,7 @@ export const selectCartTotalCostAfterDiscount = createSelector(
   selectCartProducts,
   (cartItems, cartItemsProducts) => {
     return cartItems.reduce((prev, curr) => {
-      const productInstace = cartItemsProducts.find(
-        (x) => x.sku === curr.sku
-      );
+      const productInstace = cartItemsProducts.find((x) => x.sku === curr.sku);
 
       if (isNil(productInstace)) return prev;
 

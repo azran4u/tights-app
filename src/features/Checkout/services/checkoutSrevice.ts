@@ -6,6 +6,7 @@ import {
   selectCartTotalCost,
   selectCartTotalCostAfterDiscount,
 } from "../../Cart/store/cartSlice";
+import { selectPickupLocationByDispalyName } from "../../Pickup/store/pickupSlice";
 import { selectCheckout } from "../store/checkoutSlice";
 
 export class CheckoutService extends FirestoreService<Order> {
@@ -19,11 +20,15 @@ export class CheckoutService extends FirestoreService<Order> {
     const totalCost = selectCartTotalCost(state);
     const checkoutDetails = selectCheckout(state);
     const products = selectCartProductsWithAmount(state);
+    const pickupLocation = selectPickupLocationByDispalyName(
+      checkoutDetails.prefferedPickupLocation
+    )(state)!;
 
     const order: Order = {
       totalCost,
       totalCostAfterDiscount,
-      ...checkoutDetails,
+      checkoutDetails,
+      pickupLocation,
       date: new Date().toLocaleString(),
       products,
       saleId: "1",

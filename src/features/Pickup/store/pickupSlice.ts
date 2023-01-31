@@ -3,6 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
 import { PickupLocation } from "../../../model/pickup/pickupLocation";
 import { pickups } from "../../../utils/pickup-generator/pickupGenerator";
+import { isNil } from "lodash";
 
 export interface PickupState {
   locations: Map<string, PickupLocation>;
@@ -44,5 +45,14 @@ export const selectPickupLocations = createSelector(
   selectPickupLocationsMap,
   (locationsMap) => Array.from(locationsMap.values())
 );
+
+export const selectPickupLocationByDispalyName = (displayName: string) =>
+  createSelector(selectPickupLocations, (locations) => {
+    const location = locations.find((x) => x.dispalyNmae === displayName);
+    if (isNil(location)) {
+      console.error(`couldn't find location with displayName ${displayName}`);
+    }
+    return location;
+  });
 
 export default pickupSlice.reducer;

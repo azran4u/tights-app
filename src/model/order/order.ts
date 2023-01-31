@@ -1,9 +1,10 @@
-import { CartItem } from "../cart/CartItem";
 import { CheckoutDetails } from "../checkout/checkout";
-import { Product } from "../product/Product";
+import { PickupLocation } from "../pickup/pickupLocation";
+import { ProductWithAmount } from "../product/ProductWithAmount";
 
-export type ProductWithAmount = Product & CartItem;
-export interface Order extends CheckoutDetails {
+export interface Order {
+  checkoutDetails: CheckoutDetails;
+  pickupLocation: PickupLocation;
   saleId: string;
   date: string;
   products: ProductWithAmount[];
