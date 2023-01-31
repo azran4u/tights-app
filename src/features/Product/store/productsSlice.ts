@@ -4,8 +4,7 @@ import { Product } from "../../../model/product/Product";
 import { catalog } from "../../../utils/catalog-generator/catalog";
 import { FeaturedProduct } from "../../../model/featuredProduct/featuredProduct";
 import { FeatureProductsConstants } from "../../../utils/catalog-generator/constants/FeaturedProductsConstants";
-import { isEmpty, isNil } from "lodash";
-import { ProductSchema } from "../../../model/product/ProductSchema";
+import { isEmpty } from "lodash";
 
 export type ProductItemsMap = Map<string, Product>;
 
