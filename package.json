@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
+    "@tanstack/react-query": "^4.24.4",
     "firebase": "^9.16.0",
     "immer": "^9.0.16",
     "joi": "^17.7.0",

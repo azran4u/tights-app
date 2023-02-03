@@ -1,51 +1,47 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  cartActions,
-  decreaseAmount,
-  increaseAmount,
-  selectCartProductsWithAmount,
-  selectCartTotalCost,
-  selectCartTotalCostAfterDiscount,
-} from "../store/cartSlice";
 import { OptionalClassName } from "../../../utils/classNameInterface";
 import Button from "../../../shared/Button";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import Underline from "../../../shared/Underline";
 import ProductAmountButtons from "../../../shared/ProductAmountButtons";
 import { FaTrash } from "react-icons/fa";
 import { device } from "../../../utils/device.sizes";
 import CartItemDescription from "./CartItemDescription";
 import { useHistory } from "react-router";
+import { ProductWithAmount } from "../../../model/product/ProductWithAmount";
 
-interface CartContentProps extends OptionalClassName {}
+interface CartContentProps extends OptionalClassName {
+  cartProductsWithAmount: ProductWithAmount[];
+  totalCost: number;
+  totalCostAfterDiscount: number;
+  allowEdit?: boolean;
+  clearCart: () => void;
+  increaseAmount: (sku: string) => void;
+  decreaseAmount: (sku: string) => void;
+  removeItem: (sku: string) => void;
+  submitButtonClicked: () => void;
+}
 
 const CartContent: React.FC<CartContentProps> = (props) => {
-  const dispatch = useAppDispatch();
-
-  const cartProductsWithAmount = useAppSelector(selectCartProductsWithAmount);
-
-  const totalCost = useAppSelector(selectCartTotalCost);
-  const totalCostAfterDiscount = useAppSelector(
-    selectCartTotalCostAfterDiscount
-  );
-
+  const allowEdit = props?.allowEdit ?? true;
   const history = useHistory();
 
   return (
     <Wrapper className={props.className}>
-      <div className="top-buttons">
-        <Button
-          className="top-buttons-item"
-          text="להמשך קניות"
-          onClick={() => history.push("/")}
-        />
-        <Button
-          className="clear-cart"
-          text="רוקן עגלה"
-          onClick={() => dispatch(cartActions.clear())}
-        />
-      </div>
+      {allowEdit && (
+        <div className="top-buttons">
+          <Button
+            className="top-buttons-item"
+            text="להמשך קניות"
+            onClick={() => history.push("/")}
+          />
+          <Button
+            className="clear-cart"
+            text="רוקן עגלה"
+            onClick={props.clearCart}
+          />
+        </div>
+      )}
       <div className="cart-items-list">
         <table>
           <thead>
@@ -74,15 +70,17 @@ const CartContent: React.FC<CartContentProps> = (props) => {
                   <Underline className="underline" />
                 </div>
               </th>
-              <th>
-                <div key="header-trash"> </div>
-              </th>
+              {allowEdit && (
+                <th>
+                  <div key="header-trash"> </div>
+                </th>
+              )}
             </tr>
           </thead>
 
           <tbody>
-            {cartProductsWithAmount.length > 0 &&
-              cartProductsWithAmount.map((cartItem) => {
+            {props.cartProductsWithAmount.length > 0 &&
+              props.cartProductsWithAmount.map((cartItem) => {
                 return (
                   <tr key={cartItem.sku}>
                     <td>
@@ -94,13 +92,12 @@ const CartContent: React.FC<CartContentProps> = (props) => {
                       <h5 className="row-value">
                         <ProductAmountButtons
                           className="amount-buttons"
+                          allowEdit={allowEdit}
                           amount={cartItem.amount}
-                          increase={() =>
-                            dispatch(increaseAmount({ sku: cartItem.sku }))
-                          }
+                          increase={() => props.increaseAmount(cartItem.sku)}
                           decrease={() => {
                             if (cartItem.amount > 1)
-                              dispatch(decreaseAmount({ sku: cartItem.sku }));
+                              props.decreaseAmount(cartItem.sku);
                           }}
                         />
                       </h5>
@@ -113,17 +110,17 @@ const CartContent: React.FC<CartContentProps> = (props) => {
                         {cartItem.amount * cartItem.price}
                       </h5>
                     </td>
-                    <td>
-                      <div
-                        className="row-value change-mouse"
-                        onClick={() =>
-                          dispatch(cartActions.removeItem(cartItem.sku))
-                        }
-                        key={cartItem.sku + "trash"}
-                      >
-                        <FaTrash />
-                      </div>
-                    </td>
+                    {allowEdit && (
+                      <td>
+                        <div
+                          className="row-value change-mouse"
+                          onClick={() => props.removeItem(cartItem.sku)}
+                          key={cartItem.sku + "trash"}
+                        >
+                          <FaTrash />
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 );
               })}
@@ -132,18 +129,20 @@ const CartContent: React.FC<CartContentProps> = (props) => {
       </div>
 
       <div className="cart-summary">
-        <h5> סכום כולל: {totalCost} ש"ח</h5>
-        <h5>בקנייה זו חסכת: {totalCost - totalCostAfterDiscount} ש"ח</h5>
-        <h5 className="final-price">סכום סופי: {totalCostAfterDiscount} ש"ח</h5>
+        <h5> סכום כולל: {props.totalCost} ש"ח</h5>
+        <h5>
+          בקנייה זו חסכת: {props.totalCost - props.totalCostAfterDiscount} ש"ח
+        </h5>
+        <h5 className="final-price">
+          סכום סופי: {props.totalCostAfterDiscount} ש"ח
+        </h5>
       </div>
 
       <div className="place-order">
         <Button
           className="place-order-button"
-          text="ביצוע הזמנה"
-          onClick={() => {
-            history.push("/checkout");
-          }}
+          text={allowEdit ? "ביצוע הזמנה" : "עריכת הזמנה"}
+          onClick={props.submitButtonClicked}
         />
       </div>
     </Wrapper>

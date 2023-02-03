@@ -7,6 +7,7 @@ import pickupReducer from "../features/Pickup/store/pickupSlice";
 import successfulOrderReducer from "../features/SuccessfulOrder/store/successfulOrderSlice";
 import saleReducer from "../features/Sale/store/saleSlice";
 import saleListenerMiddleware from "../features/Sale/saleListenerMiddleware";
+import orderReducer from "../features/Order/store/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     pickup: pickupReducer,
     successfulOrder: successfulOrderReducer,
     sale: saleReducer,
+    order: orderReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

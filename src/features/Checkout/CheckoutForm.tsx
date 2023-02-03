@@ -11,7 +11,7 @@ import { isNil } from "lodash";
 import { useHistory } from "react-router";
 import { cartActions } from "../Cart/store/cartSlice";
 import { successfulOrderActions } from "../SuccessfulOrder/store/successfulOrderSlice";
-import { checkoutService } from "./services/checkoutSrevice";
+import { ordersService } from "../Order/services/ordersSrevice";
 
 export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();
@@ -148,7 +148,7 @@ export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
         onClick={async () => {
           setShouldDisplayFormValidationError(true);
           if (isFormValid) {
-            const orderId = await checkoutService.placeOrder();
+            const orderId = await ordersService.placeOrder();
             if (isNil(orderId)) {
               history.push("/error");
             } else {
@@ -179,10 +179,6 @@ const Wrapper = styled.div`
 
   @media ${device.mobile} {
     margin: 0 10%;
-  }
-
-  .pickup-option {
-    color: red;
   }
 
   .submit-button {

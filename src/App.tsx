@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { saleActions, selectSale } from "./features/Sale/store/saleSlice";
 import SaleClosed from "./features/Sale/SaleClosedPage";
 import Loading from "./shared/Loading";
+import OrderPage from "./features/Order/OrderPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -67,6 +68,7 @@ function App() {
           <Route exact path="/successful-order">
             <SuccessfulOrder />
           </Route>
+          <Route exact path="/order/:orderId" children={<OrderPage />} />
           <Route path="*">
             <ErrorPage />
           </Route>

@@ -4,12 +4,16 @@ import "./index.scss";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { enableMapSet } from "immer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 enableMapSet();
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </Provider>,
   document.getElementById("root")
 );

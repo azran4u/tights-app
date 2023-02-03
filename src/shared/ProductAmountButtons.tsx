@@ -7,22 +7,29 @@ interface ProductAmountButtonsProps {
   increase: () => void;
   decrease: () => void;
   className?: string;
+  allowEdit?: boolean;
 }
 const ProductAmountButtons: React.FC<ProductAmountButtonsProps> = ({
   amount,
   increase,
   decrease,
   className,
+  allowEdit,
 }) => {
+  allowEdit = allowEdit ?? true;
   return (
     <Wrapper className={`amount-btns ${className}`}>
-      <button type="button" className="amount-btn" onClick={increase}>
-        <FaPlus />{" "}
-      </button>
+      {allowEdit && (
+        <button type="button" className="amount-btn" onClick={increase}>
+          <FaPlus />{" "}
+        </button>
+      )}
       <h2 className="amount">{amount}</h2>
-      <button type="button" className="amount-btn" onClick={decrease}>
-        <FaMinus />{" "}
-      </button>
+      {allowEdit && (
+        <button type="button" className="amount-btn" onClick={decrease}>
+          <FaMinus />{" "}
+        </button>
+      )}
     </Wrapper>
   );
 };

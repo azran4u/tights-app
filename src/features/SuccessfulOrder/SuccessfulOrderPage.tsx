@@ -9,6 +9,7 @@ import { selectSuccessfulOrderId } from "./store/successfulOrderSlice";
 const SuccessfulOrder: React.FC = () => {
   const checkoutDetails = useAppSelector(selectCheckout);
   const orderId = useAppSelector(selectSuccessfulOrderId);
+
   const history = useHistory();
 
   if (isNil(orderId)) {
@@ -24,6 +25,8 @@ const SuccessfulOrder: React.FC = () => {
           {checkoutDetails.prefferedPickupLocation}
         </h5>
         <h5>תשלום יועבר בביט / פייבוקס בעת קבלת ההזמנה</h5>
+        <h5>ניתן לצפות בהזמנה בקישור הבא</h5>
+        <a href={`${window.location.origin}/order/${orderId}`}>link</a>
       </div>
     </Wrapper>
   );

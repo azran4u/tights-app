@@ -10,6 +10,10 @@ import {
   addDoc,
   WithFieldValue,
   onSnapshot,
+  doc,
+  updateDoc,
+  getDoc,
+  DocumentSnapshot,
 } from "firebase/firestore";
 import { firestoreDatabase } from "./firestoreDatabase";
 
@@ -27,6 +31,12 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
     return this.querySnapshotToObject(docs);
   }
 
+  public async getById(id: string) {
+    const docRef = doc(this.db, this.collectionName, id);
+    const docSnap = await getDoc(docRef);
+    return this.documentSnapshotToObject(docSnap);
+  }
+
   public async getByQuery(
     queryWhere: QueryFieldFilterConstraint
   ): Promise<T[]> {
@@ -36,13 +46,14 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
     return data;
   }
 
-  public async writeDoc(document: T) {
-    try {
-      const doc = await addDoc(this.collectionRef, document);
-      return doc.id;
-    } catch (error) {
-      debugger;
-    }
+  public async insert(document: T) {
+    const doc = await addDoc(this.collectionRef, document);
+    return doc.id;
+  }
+
+  public async update(id: string, document: T) {
+    const docRef = doc(this.db, this.collectionName, id);
+    await updateDoc(docRef, document);
   }
 
   public async liveQuery(cb: (arr: T[]) => void) {
@@ -55,9 +66,15 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
   }
 
   private querySnapshotToObject(querySnapshot: QuerySnapshot<DocumentData>) {
-    return querySnapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    })) as unknown as T[];
+    return querySnapshot.docs.map((doc) => this.documentSnapshotToObject(doc));
+  }
+
+  private documentSnapshotToObject(
+    documentSnapshot: DocumentSnapshot<DocumentData>
+  ) {
+    return {
+      ...documentSnapshot.data(),
+      id: documentSnapshot.id,
+    } as unknown as T;
   }
 }

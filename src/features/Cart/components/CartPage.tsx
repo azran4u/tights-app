@@ -1,19 +1,51 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectCartItemsTotalAmount } from "../store/cartSlice";
+import {
+  decreaseAmount,
+  increaseAmount,
+  removeItem,
+  selectCartItemsTotalAmount,
+  selectCartProductsWithAmount,
+  selectCartTotalCost,
+  selectCartTotalCostAfterDiscount,
+} from "../store/cartSlice";
 import EmptyCart from "./EmptyCart";
 import styled from "styled-components";
 import CartContent from "./CartContent";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { cartActions } from "../store/cartSlice";
+import { useHistory } from "react-router";
 
 const CartPage: React.FC = () => {
   const itemsCount = useSelector(selectCartItemsTotalAmount);
   const isCartEmpty = itemsCount === 0;
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const cartProductsWithAmount = useAppSelector(selectCartProductsWithAmount);
+
+  const totalCost = useAppSelector(selectCartTotalCost);
+  const totalCostAfterDiscount = useAppSelector(
+    selectCartTotalCostAfterDiscount
+  );
 
   return (
     <Wrapper>
       <h1 className="title">עגלה</h1>
       {isCartEmpty && <EmptyCart className="content" />}
-      {!isCartEmpty && <CartContent className="content" />}
+      {!isCartEmpty && (
+        <CartContent
+          cartProductsWithAmount={cartProductsWithAmount}
+          totalCost={totalCost}
+          totalCostAfterDiscount={totalCostAfterDiscount}
+          clearCart={() => dispatch(cartActions.clear())}
+          increaseAmount={(sku: string) => dispatch(increaseAmount({ sku }))}
+          decreaseAmount={(sku: string) => dispatch(decreaseAmount({ sku }))}
+          removeItem={(sku: string) => dispatch(removeItem(sku))}
+          submitButtonClicked={() => history.push("/checkout")}
+          className="content"
+        />
+      )}
     </Wrapper>
   );
 };
