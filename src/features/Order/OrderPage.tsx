@@ -3,6 +3,7 @@ import { isNil } from "lodash";
 import React from "react";
 import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
+import Button from "../../shared/Button";
 import Loading from "../../shared/Loading";
 import { useAppDispatch } from "../../store/hooks";
 import CartContent from "../Cart/components/CartContent";
@@ -70,6 +71,11 @@ const OrderPage: React.FC = () => {
                 removeItem={(sku: string) => {}}
                 submitButtonClicked={editOrder}
               />
+              <Button
+                text="ביטול הזמנה"
+                onClick={() => history.push(`/cancel-order/${orderNumber}`)}
+                className="cancel-order"
+              />
             </>
           )}
         </div>
@@ -94,6 +100,14 @@ const Wrapper = styled.div`
   .pickup-location {
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+
+  .cancel-order {
+    width: 6rem;
+    background-color: var(--clr-red-dark);
+    margin: 0 auto;
+    display: flex;
+    margin-top: 3rem;
   }
 `;
 export default OrderPage;

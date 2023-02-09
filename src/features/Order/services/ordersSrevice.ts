@@ -1,4 +1,4 @@
-import { isNil } from "lodash";
+import { isEmpty, isNil } from "lodash";
 import { Order, OrderInput } from "../../../model/order/order";
 import { FirestoreService } from "../../../shared/services/firestoreService";
 import { store } from "../../../store/store";
@@ -14,6 +14,12 @@ import { selectCheckout } from "../../Checkout/store/checkoutSlice";
 import { orderNumberService } from "./orderNumberService";
 import { where } from "firebase/firestore";
 import { OrderNumber } from "../../../model/orderNumber/orderNumber";
+
+export class OrderNotFound extends Error {
+  constructor(private orderNumber?: OrderNumber) {
+    super(`order number ${orderNumber} not found`);
+  }
+}
 
 export class OrdersService extends FirestoreService<Order> {
   constructor() {
@@ -35,8 +41,7 @@ export class OrdersService extends FirestoreService<Order> {
       orderNumber = await orderNumberService.nextOrderNumber();
     }
 
-    if (isNil(orderNumber))
-      throw new Error(`cannot get orderNumber ${orderNumber}`);
+    if (isNil(orderNumber)) throw new OrderNotFound();
 
     const order: OrderInput = {
       orderNumber,
@@ -72,20 +77,25 @@ export class OrdersService extends FirestoreService<Order> {
     return order.orderNumber;
   }
 
+  public async deleteOrderByOrderNumber(orderNumber: OrderNumber) {
+    const id = await this.getOrderIdByOrderNumber(orderNumber);
+    await this.deleteById(id);
+  }
+
   public async getOrderIdByOrderNumber(orderNumber: OrderNumber) {
-    const arr = await this.queryByOrderNumber(orderNumber);
-    return arr[0]?.id;
+    const order = await this.getOrderByOrderNumber(orderNumber);
+    return order?.id;
   }
 
   public async getOrderByOrderNumber(orderNumber: OrderNumber) {
     const arr = await this.queryByOrderNumber(orderNumber);
-    if (arr.length !== 1)
-      throw new Error(`order ${orderNumber} couldn't be found`);
     return arr[0];
   }
 
-  private queryByOrderNumber(orderNumber: OrderNumber) {
-    return this.getByQuery(where("orderNumber", "==", orderNumber));
+  private async queryByOrderNumber(orderNumber: OrderNumber) {
+    const arr = await this.getByQuery(where("orderNumber", "==", orderNumber));
+    if (isEmpty(arr)) throw new OrderNotFound(orderNumber);
+    return arr;
   }
 }
 

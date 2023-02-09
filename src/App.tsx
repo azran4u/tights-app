@@ -17,6 +17,7 @@ import SaleClosed from "./features/Sale/SaleClosedPage";
 import Loading from "./shared/Loading";
 import OrderPage from "./features/Order/OrderPage";
 import { isNil } from "lodash";
+import CancelOrder from "./features/CancelOrder/CancelOrderPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -69,6 +70,9 @@ function App() {
           </Route>
           <Route exact path="/successful-order/:orderNumber">
             <SuccessfulOrder />
+          </Route>
+          <Route exact path="/cancel-order/:orderNumber">
+            <CancelOrder />
           </Route>
           <Route exact path="/order/:orderNumber" children={<OrderPage />} />
           <Route path="*">

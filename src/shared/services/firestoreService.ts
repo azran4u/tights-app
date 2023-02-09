@@ -16,6 +16,7 @@ import {
   DocumentSnapshot,
   runTransaction,
   Transaction,
+  deleteDoc,
 } from "firebase/firestore";
 import { firestoreDatabase } from "./firestoreDatabase";
 
@@ -38,8 +39,7 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
   }
 
   public async getById(id: string) {
-    const docRef = doc(this.db, this.collectionName, id);
-    const docSnap = await getDoc(docRef);
+    const docSnap = await getDoc(this.docById(id));
     return this.documentSnapshotToObject(docSnap);
   }
 
@@ -58,8 +58,7 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
   }
 
   public async update(id: string, document: T) {
-    const docRef = doc(this.db, this.collectionName, id);
-    await updateDoc(docRef, document);
+    await updateDoc(this.docById(id), document);
   }
 
   public async liveQuery(cb: (arr: T[]) => void) {
@@ -71,8 +70,16 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
     return unsubscribe;
   }
 
+  public async deleteById(id: string) {
+    return deleteDoc(this.docById(id));
+  }
+
   public async transaction<T>(fn: (transaction: Transaction) => Promise<T>) {
     await runTransaction(this.db, fn);
+  }
+
+  protected docById(id: string) {
+    return doc(this.db, this.collectionName, id);
   }
 
   private querySnapshotToObject(querySnapshot: QuerySnapshot<DocumentData>) {
