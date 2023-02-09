@@ -16,6 +16,7 @@ import { saleActions, selectSale } from "./features/Sale/store/saleSlice";
 import SaleClosed from "./features/Sale/SaleClosedPage";
 import Loading from "./shared/Loading";
 import OrderPage from "./features/Order/OrderPage";
+import { isNil } from "lodash";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -24,16 +25,17 @@ function App() {
     dispatch(saleActions.fetchActiveSale());
   }, [dispatch]);
 
-  const { activeSale, isLoading } = useAppSelector(selectSale);
-  const [isSaleClosed, setIsSaleClosed] = useState(false);
+  const { currentSale, isLoading } = useAppSelector(selectSale);
+  const [isSaleClosed, setIsSaleClosed] = useState(true);
 
   useEffect(() => {
-    setIsSaleClosed(activeSale?.active ?? false);
-  }, [activeSale]);
+    if (isNil(currentSale?.active)) return;
+    setIsSaleClosed(!currentSale.active);
+  }, [currentSale]);
 
   if (isLoading) return <Loading />;
 
-  if (!isSaleClosed) return <SaleClosed />;
+  if (isSaleClosed) return <SaleClosed />;
 
   return (
     <Router>
@@ -65,10 +67,10 @@ function App() {
           <Route exact path="/checkout">
             <CheckoutPage />
           </Route>
-          <Route exact path="/successful-order">
+          <Route exact path="/successful-order/:orderNumber">
             <SuccessfulOrder />
           </Route>
-          <Route exact path="/order/:orderId" children={<OrderPage />} />
+          <Route exact path="/order/:orderNumber" children={<OrderPage />} />
           <Route path="*">
             <ErrorPage />
           </Route>

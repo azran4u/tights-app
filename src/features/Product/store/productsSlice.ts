@@ -21,13 +21,13 @@ const initialState: ProductsState = {
   featuredProducts: FeatureProductsConstants.featuredProducts,
 };
 
-export const cartSlice = createSlice({
+export const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {},
 });
 
-export const cartActions = cartSlice.actions;
+export const productsActions = productsSlice.actions;
 
 export const selectProductsState = (state: RootState) => state.products;
 
@@ -61,4 +61,4 @@ export const selectProductSchemaBySlug = (slug: string) =>
     return products[0].schema;
   });
 
-export default cartSlice.reducer;
+export default productsSlice.reducer;

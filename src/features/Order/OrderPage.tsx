@@ -1,19 +1,48 @@
 import { useQuery } from "@tanstack/react-query";
+import { isNil } from "lodash";
 import React from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../../shared/Loading";
+import { useAppDispatch } from "../../store/hooks";
 import CartContent from "../Cart/components/CartContent";
+import { cartActions } from "../Cart/store/cartSlice";
+import { checkoutActions } from "../Checkout/store/checkoutSlice";
 import { ordersService } from "./services/ordersSrevice";
+import { orderActions } from "./store/orderSlice";
 
 const OrderPage: React.FC = () => {
-  const { orderId } = useParams<{ orderId: string }>();
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const { orderNumber } = useParams<{ orderNumber: string }>();
+
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["order"],
-    queryFn: () => ordersService.getById(orderId),
+    queryKey: ["order", orderNumber],
+    queryFn: () => ordersService.getOrderByOrderNumber(orderNumber),
   });
 
-  // function loadOrder() {}
+  function editOrder() {
+    if (isNil(data)) return;
+
+    if (!isNil(data.products)) {
+      const cartItems = data.products.map((x) => ({
+        sku: x.sku,
+        amount: x.amount,
+      }));
+      dispatch(cartActions.clear());
+      dispatch(cartActions.upsertItems(cartItems));
+    }
+
+    if (!isNil(data.checkoutDetails)) {
+      dispatch(checkoutActions.clear());
+      dispatch(checkoutActions.upsert(data.checkoutDetails));
+    }
+
+    dispatch(orderActions.setOrder({ orderNumber, isExisitingOrder: true }));
+
+    history.push("/cart");
+  }
 
   return (
     <main>
@@ -39,7 +68,7 @@ const OrderPage: React.FC = () => {
                 increaseAmount={(sku: string) => {}}
                 decreaseAmount={(sku: string) => {}}
                 removeItem={(sku: string) => {}}
-                submitButtonClicked={() => {}}
+                submitButtonClicked={editOrder}
               />
             </>
           )}

@@ -1,5 +1,5 @@
 import Page from "../../shared/Page";
-import { emailSenderService } from "../EmailSender/services/emailSenderSrevice";
+import { orderNumberService } from "../Order/services/orderNumberService";
 import FeaturedProducts from "./FeaturedProducts/FeaturedProducts";
 import Title from "./Title";
 
@@ -8,11 +8,11 @@ const HomePage = () => {
     <Page>
       <button
         onClick={async () => {
-          const id = await emailSenderService.sendEmail();
-          console.log(`email send with id ${id}`);
+          const nextOrderNumber = await orderNumberService.nextOrderNumber();
+          console.log(`next order number ${nextOrderNumber}`);
         }}
       >
-        send email
+        next order number
       </button>
       <Title />
       <FeaturedProducts />

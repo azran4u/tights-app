@@ -1,23 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { selectCheckout } from "../Checkout/store/checkoutSlice";
 import { isNil } from "lodash";
-import { selectSuccessfulOrderId } from "./store/successfulOrderSlice";
 
 const SuccessfulOrder: React.FC = () => {
   const checkoutDetails = useAppSelector(selectCheckout);
-  const orderId = useAppSelector(selectSuccessfulOrderId);
+  const { orderNumber } = useParams<{ orderNumber: string }>();
 
   const history = useHistory();
 
-  if (isNil(orderId)) {
+  if (isNil(orderNumber)) {
     history.push("/products");
   }
   return (
     <Wrapper>
-      <h1 className="title">הזמנה בוצעה בהצלחה</h1>
+      <h1 className="title">הזמנה {orderNumber} בוצעה בהצלחה</h1>
       <div className="content">
         <h5>תודה {checkoutDetails.firstName} על רכישתך!</h5>
         <h5>ההזמנה עוברת לטיפול ונעדכן כאשר תגיע לנקודת החלוקה שבחרת </h5>
@@ -26,7 +25,7 @@ const SuccessfulOrder: React.FC = () => {
         </h5>
         <h5>תשלום יועבר בביט / פייבוקס בעת קבלת ההזמנה</h5>
         <h5>ניתן לצפות בהזמנה בקישור הבא</h5>
-        <a href={`${window.location.origin}/order/${orderId}`}>link</a>
+        <a href={`${window.location.origin}/order/${orderNumber}`}>link</a>
       </div>
     </Wrapper>
   );

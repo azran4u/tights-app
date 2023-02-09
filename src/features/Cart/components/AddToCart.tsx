@@ -3,7 +3,7 @@ import { CartItem } from "../../../model/cart/CartItem";
 import Button from "../../../shared/Button";
 import { useAppDispatch } from "../../../store/hooks";
 import { OptionalClassName } from "../../../utils/classNameInterface";
-import { upsertItem } from "../store/cartSlice";
+import { cartActions } from "../store/cartSlice";
 
 interface AddToCartProps extends OptionalClassName {
   item: CartItem;
@@ -15,7 +15,7 @@ const AddToCart: React.FC<AddToCartProps> = (props) => {
       className={props.className}
       text="הוסף לעגלה"
       onClick={() => {
-        dispatch(upsertItem(props.item));
+        dispatch(cartActions.upsertItems([props.item]));
       }}
     />
   );

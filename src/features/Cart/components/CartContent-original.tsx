@@ -2,9 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import {
   cartActions,
-  decreaseAmount,
-  increaseAmount,
-  selectCartItemsArray,
   selectCartProductsWithAmount,
   selectCartTotalCost,
   selectCartTotalCostAfterDiscount,
@@ -80,11 +77,11 @@ const CartContent1: React.FC<CartContentProps> = (props) => {
                     className="amount-buttons"
                     amount={cartItem.amount}
                     increase={() =>
-                      dispatch(increaseAmount({ sku: cartItem.sku }))
+                      dispatch(cartActions.increaseAmount({ sku: cartItem.sku }))
                     }
                     decrease={() => {
                       if (cartItem.amount > 1)
-                        dispatch(decreaseAmount({ sku: cartItem.sku }));
+                        dispatch(cartActions.decreaseAmount({ sku: cartItem.sku }));
                     }}
                   />
                 </h5>

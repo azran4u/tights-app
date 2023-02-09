@@ -22,24 +22,10 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    upsertItem: (state, action: PayloadAction<CartItem>) => {
-      const item = action.payload;
-      const { sku, amount } = item;
-
-      if (isNil(sku)) {
-        console.error(
-          `ADD_TO_CART: invalid payload ${JSON.stringify(action.payload)}`
-        );
-        return state;
-      }
-
-      const current = state.items.get(sku);
-
-      if (isNil(current)) {
-        state.items.set(sku, item);
-      } else {
-        state.items.set(sku, { ...current, amount: current.amount + amount });
-      }
+    upsertItems: (state, action: PayloadAction<CartItem[]>) => {
+      action.payload.forEach((cartItem) =>
+        addItemToCart(state.items, cartItem)
+      );
     },
     clear: (state) => {
       state.items.clear();
@@ -111,8 +97,6 @@ export const cartSlice = createSlice({
 });
 
 export const cartActions = cartSlice.actions;
-export const { upsertItem, removeItem, clear, increaseAmount, decreaseAmount } =
-  cartSlice.actions;
 
 export const selectCart = (state: RootState) => state.cart;
 
@@ -217,6 +201,25 @@ export const cartSelectors = {
 };
 
 export default cartSlice.reducer;
+
+// items is passed "by reference"
+function addItemToCart(items: CartItemsMap, item: CartItem) {
+  const { sku, amount } = item;
+
+  if (isNil(sku)) {
+    console.error(`ADD_TO_CART: invalid payload ${JSON.stringify(item)}`);
+    return items;
+  }
+
+  const current = items.get(sku);
+
+  if (isNil(current)) {
+    items.set(sku, item);
+  } else {
+    items.set(sku, { ...current, amount: current.amount + amount });
+  }
+  return items;
+}
 
 // function mapSerializer(map: CartItemsMap): string {
 //   return JSON.stringify(Array.from(map.entries()));

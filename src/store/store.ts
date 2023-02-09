@@ -4,7 +4,6 @@ import sidebarReducer from "../features/Layout/Sidebar/store/sidebarSlice";
 import productsReducer from "../features/Product/store/productsSlice";
 import checkoutReducer from "../features/Checkout/store/checkoutSlice";
 import pickupReducer from "../features/Pickup/store/pickupSlice";
-import successfulOrderReducer from "../features/SuccessfulOrder/store/successfulOrderSlice";
 import saleReducer from "../features/Sale/store/saleSlice";
 import saleListenerMiddleware from "../features/Sale/saleListenerMiddleware";
 import orderReducer from "../features/Order/store/orderSlice";
@@ -16,7 +15,6 @@ export const store = configureStore({
     products: productsReducer,
     checkout: checkoutReducer,
     pickup: pickupReducer,
-    successfulOrder: successfulOrderReducer,
     sale: saleReducer,
     order: orderReducer,
   },

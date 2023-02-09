@@ -14,14 +14,20 @@ import {
   updateDoc,
   getDoc,
   DocumentSnapshot,
+  runTransaction,
+  Transaction,
 } from "firebase/firestore";
 import { firestoreDatabase } from "./firestoreDatabase";
 
-export class FirestoreService<T extends WithFieldValue<DocumentData>> {
-  private db: Firestore;
-  private collectionRef: CollectionReference<DocumentData>;
+export interface FirebaseEntity extends Object {
+  id: string;
+}
 
-  constructor(private collectionName: string) {
+export class FirestoreService<T extends WithFieldValue<DocumentData>> {
+  protected db: Firestore;
+  protected collectionRef: CollectionReference<DocumentData>;
+
+  constructor(protected collectionName: string) {
     this.db = firestoreDatabase;
     this.collectionRef = collection(this.db, this.collectionName);
   }
@@ -46,7 +52,7 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
     return data;
   }
 
-  public async insert(document: T) {
+  public async insert(document: Omit<T, "id">) {
     const doc = await addDoc(this.collectionRef, document);
     return doc.id;
   }
@@ -63,6 +69,10 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
       cb(res);
     });
     return unsubscribe;
+  }
+
+  public async transaction<T>(fn: (transaction: Transaction) => Promise<T>) {
+    await runTransaction(this.db, fn);
   }
 
   private querySnapshotToObject(querySnapshot: QuerySnapshot<DocumentData>) {

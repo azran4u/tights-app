@@ -4,12 +4,12 @@ import type { RootState } from "../../../store/store";
 import { Sale } from "../../../model/sale/sale";
 
 export interface SaleState {
-  activeSale: Sale | undefined;
+  currentSale: Sale;
   isLoading: boolean;
 }
 
 const initialState: SaleState = {
-  activeSale: undefined,
+  currentSale: { name: "", active: false },
   isLoading: true,
 };
 
@@ -20,13 +20,13 @@ export const saleSlice = createSlice({
     fetchActiveSale: (state) => state,
     upsertActiveSale: (state, action: PayloadAction<Sale>) => {
       return {
-        activeSale: action.payload,
+        currentSale: action.payload,
         isLoading: false,
       };
     },
 
     clearActiveSale: (state) => {
-      state.activeSale = undefined;
+      state.currentSale = initialState.currentSale;
     },
   },
 });
@@ -37,7 +37,7 @@ export const selectSale = (state: RootState) => state.sale;
 
 export const selectSaleActive = createSelector(
   selectSale,
-  (state) => state.activeSale
+  (state) => state.currentSale
 );
 
 export default saleSlice.reducer;

@@ -1,9 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import {
-  decreaseAmount,
-  increaseAmount,
-  removeItem,
   selectCartItemsTotalAmount,
   selectCartProductsWithAmount,
   selectCartTotalCost,
@@ -39,9 +36,13 @@ const CartPage: React.FC = () => {
           totalCost={totalCost}
           totalCostAfterDiscount={totalCostAfterDiscount}
           clearCart={() => dispatch(cartActions.clear())}
-          increaseAmount={(sku: string) => dispatch(increaseAmount({ sku }))}
-          decreaseAmount={(sku: string) => dispatch(decreaseAmount({ sku }))}
-          removeItem={(sku: string) => dispatch(removeItem(sku))}
+          increaseAmount={(sku: string) =>
+            dispatch(cartActions.increaseAmount({ sku }))
+          }
+          decreaseAmount={(sku: string) =>
+            dispatch(cartActions.decreaseAmount({ sku }))
+          }
+          removeItem={(sku: string) => dispatch(cartActions.removeItem(sku))}
           submitButtonClicked={() => history.push("/checkout")}
           className="content"
         />
