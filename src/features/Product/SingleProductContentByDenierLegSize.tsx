@@ -138,6 +138,7 @@ const SingleProductContentByDenierLegSize: React.FC<
             )}
 
             <LegSelector
+              className="leg-selector"
               legs={availableLegs}
               initialLeg={selectedLeg}
               selectedLeg={(leg: Leg) => {
@@ -191,6 +192,10 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  .leg-selector {
+    margin: 1rem 0;
   }
 `;
 
