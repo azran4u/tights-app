@@ -14,6 +14,8 @@ import { selectCheckout } from "../../Checkout/store/checkoutSlice";
 import { orderNumberService } from "./orderNumberService";
 import { where } from "firebase/firestore";
 import { OrderNumber } from "../../../model/orderNumber/orderNumber";
+import { emailSenderService } from "../../EmailSender/services/emailSenderSrevice";
+import { Email } from "../../../model/email/email";
 
 export class OrderNotFound extends Error {
   constructor(private orderNumber?: OrderNumber) {
@@ -74,6 +76,9 @@ export class OrdersService extends FirestoreService<Order> {
     } else {
       await this.insert(order);
     }
+
+    await this.sendEmail(order);
+
     return order.orderNumber;
   }
 
@@ -90,6 +95,23 @@ export class OrdersService extends FirestoreService<Order> {
   public async getOrderByOrderNumber(orderNumber: OrderNumber) {
     const arr = await this.queryByOrderNumber(orderNumber);
     return arr[0];
+  }
+
+  private async sendEmail(order: OrderInput) {
+    const email = this.createEmail(order);
+    await emailSenderService.sendEmail(email);
+  }
+
+  private createEmail(order: OrderInput): Email {
+    const mail: Email = {
+      to: order.checkoutDetails.email,
+      message: {
+        subject: `${order.checkoutDetails.firstName} תודה על קנייתך בטייץ השומרון - הזמנה מספר ${order.orderNumber}`,
+        html: `<a href=${window.location.origin}/order/${order.orderNumber}>לצפייה בהזמנה לחץ/י כאן</a>`,
+      },
+    };
+
+    return mail;
   }
 
   private async queryByOrderNumber(orderNumber: OrderNumber) {

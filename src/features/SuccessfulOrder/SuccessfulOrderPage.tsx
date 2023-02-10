@@ -24,8 +24,9 @@ const SuccessfulOrder: React.FC = () => {
           {checkoutDetails.prefferedPickupLocation}
         </h5>
         <h5>תשלום יועבר בביט / פייבוקס בעת קבלת ההזמנה</h5>
-        <h5>ניתן לצפות בהזמנה בקישור הבא</h5>
-        <a href={`${window.location.origin}/order/${orderNumber}`}>link</a>
+        <a href={`${window.location.origin}/order/${orderNumber}`}>
+          לצפייה בהזמנה לחץ/י כאן
+        </a>
       </div>
     </Wrapper>
   );
@@ -57,5 +58,9 @@ const Wrapper = styled.div`
   .pickup-location {
     border-radius: --var(radius);
     background-color: var(--clr-grey-8);
+  }
+
+  a {
+    margin-top: 1rem;
   }
 `;

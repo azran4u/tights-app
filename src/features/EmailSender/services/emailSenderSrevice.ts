@@ -6,22 +6,7 @@ export class EmailSenderService extends FirestoreService<Email> {
     super("mail");
   }
 
-  public createEmail(): Email {
-    const mail: Email = {
-      to: "azran4u@gmail.com",
-      message: {
-        subject: "subject",
-        html: `<a href="https://www.google.com/">google</a>`,
-      },
-    };
-
-    return mail;
-  }
-
-  public async sendEmail() {
-    // const state = store.getState();
-    // const activeSale = selectSaleActive(state);
-    const email = this.createEmail();
+  public async sendEmail(email: Email) {
     const id = await this.insert(email);
     return id;
   }
