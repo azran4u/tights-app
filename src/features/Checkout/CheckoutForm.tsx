@@ -4,18 +4,26 @@ import Button from "../../shared/Button";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { OptionalClassName } from "../../utils/classNameInterface";
 import { device } from "../../utils/device.sizes";
-import { selectPickupLocations } from "../Pickup/store/pickupSlice";
+import {
+  selectPickupLocationByDispalyName,
+  selectPickupLocations,
+} from "../Pickup/store/pickupSlice";
 import { checkoutActions, selectCheckout } from "./store/checkoutSlice";
 import Joi from "joi";
 import { useHistory } from "react-router";
 import { cartActions } from "../Cart/store/cartSlice";
 import { ordersService } from "../Order/services/ordersSrevice";
 import { orderActions } from "../Order/store/orderSlice";
+import Select from "react-select";
+import { PickupLocation } from "../../model/pickup/pickupLocation";
 
 export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();
   const checkoutData = useAppSelector(selectCheckout);
   const pickupLocations = useAppSelector(selectPickupLocations);
+  const selectedPickupLocation = useAppSelector(
+    selectPickupLocationByDispalyName(checkoutData.prefferedPickupLocation)
+  );
 
   // show form errors only after first submit
   const [
@@ -103,30 +111,26 @@ export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
       />
 
       <h5 className="form-field">נקודת חלוקה:</h5>
-      <select
-        name="prefferedPickupLocation"
-        value={checkoutData.prefferedPickupLocation}
-        onChange={(e) => {
-          const prefferedPickupLocation = e.target.value;
-          if (prefferedPickupLocation === "") return;
+      <Select<PickupLocation>
+        className="basic-single"
+        classNamePrefix="select"
+        defaultValue={selectedPickupLocation ?? pickupLocations[0]}
+        isClearable={false}
+        getOptionLabel={(v) => v.dispalyName}
+        getOptionValue={(v) => v.dispalyName}
+        isRtl={true}
+        isSearchable={true}
+        name="preffered-pickup-location"
+        options={pickupLocations}
+        onChange={(value, actionMeta) => {
+          if (!value?.dispalyName || value?.dispalyName === "") return;
           dispatch(
             checkoutActions.upsert({
-              prefferedPickupLocation,
+              prefferedPickupLocation: value.dispalyName,
             })
           );
         }}
-      >
-        <option disabled value="" label="בחר/י נקודת חלוקה" />
-        {pickupLocations &&
-          pickupLocations.map((location) => (
-            <option
-              value={location.dispalyNmae}
-              label={location.dispalyNmae}
-              key={location.dispalyNmae}
-              className="pickup-option"
-            />
-          ))}
-      </select>
+      />
 
       <h5 className="form-field">הערות:</h5>
       <textarea

@@ -1,5 +1,5 @@
 export interface PickupLocation {
-  dispalyNmae: string;
+  dispalyName: string;
   city: string;
   address: string;
   operatorName: string;

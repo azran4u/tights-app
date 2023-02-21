@@ -2,7 +2,7 @@ import { PickupLocation } from "../../model/pickup/pickupLocation";
 
 export const pickups: PickupLocation[] = [
   {
-    dispalyNmae: "נקודת חלוקה 1",
+    dispalyName: "נקודת חלוקה 1",
     address: "",
     city: "",
     latitude: 0,
@@ -11,7 +11,7 @@ export const pickups: PickupLocation[] = [
     operatorPhoneNumber: "",
   },
   {
-    dispalyNmae: "נקודת חלוקה 2",
+    dispalyName: "נקודת חלוקה 2",
     address: "",
     city: "",
     latitude: 0,
@@ -20,7 +20,7 @@ export const pickups: PickupLocation[] = [
     operatorPhoneNumber: "",
   },
   {
-    dispalyNmae: "נקודת חלוקה 3",
+    dispalyName: "נקודת חלוקה 3",
     address: "",
     city: "",
     latitude: 0,

@@ -11,7 +11,7 @@ export interface PickupState {
 
 const initialState: PickupState = {
   locations: pickups.reduce((prev, curr) => {
-    prev.set(curr.dispalyNmae, curr);
+    prev.set(curr.dispalyName, curr);
     return prev;
   }, new Map<string, PickupLocation>()),
 };
@@ -22,7 +22,7 @@ export const pickupSlice = createSlice({
   reducers: {
     upsert: (state, action: PayloadAction<PickupLocation[]>) => {
       action.payload.forEach((location) =>
-        state.locations.set(location.dispalyNmae, location)
+        state.locations.set(location.dispalyName, location)
       );
     },
 
@@ -48,7 +48,7 @@ export const selectPickupLocations = createSelector(
 
 export const selectPickupLocationByDispalyName = (displayName: string) =>
   createSelector(selectPickupLocations, (locations) => {
-    const location = locations.find((x) => x.dispalyNmae === displayName);
+    const location = locations.find((x) => x.dispalyName === displayName);
     if (isNil(location)) {
       console.error(`couldn't find location with displayName ${displayName}`);
     }
