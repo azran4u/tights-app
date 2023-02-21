@@ -57,8 +57,8 @@ export class FirestoreService<T extends WithFieldValue<DocumentData>> {
     return doc.id;
   }
 
-  public async update(id: string, document: T) {
-    await updateDoc(this.docById(id), document);
+  public async update(id: string, document: Partial<T>) {
+    await updateDoc<DocumentData>(this.docById(id), document);
   }
 
   public async liveQuery(cb: (arr: T[]) => void) {

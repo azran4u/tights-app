@@ -1,5 +1,11 @@
 import { isEmpty, isNil } from "lodash";
-import { Order, OrderInput } from "../../../model/order/order";
+import {
+  Order,
+  OrderInput,
+  OrderStatus,
+  orderStatus,
+  orderStatusSubmitted,
+} from "../../../model/order/order";
 import { FirestoreService } from "../../../shared/services/firestoreService";
 import { store } from "../../../store/store";
 import {
@@ -54,6 +60,7 @@ export class OrdersService extends FirestoreService<Order> {
       date: new Date().toLocaleString(),
       products,
       saleName: activeSale?.name!,
+      status: orderStatusSubmitted,
     };
 
     return order;
@@ -95,6 +102,14 @@ export class OrdersService extends FirestoreService<Order> {
   public async getOrderByOrderNumber(orderNumber: OrderNumber) {
     const arr = await this.queryByOrderNumber(orderNumber);
     return arr[0];
+  }
+
+  public async changeOrderStatus(
+    orderNumber: OrderNumber,
+    status: OrderStatus
+  ) {
+    const id = await this.getOrderIdByOrderNumber(orderNumber);
+    await this.update(id, { status });
   }
 
   private async sendEmail(order: OrderInput) {

@@ -1,18 +1,34 @@
 import React from "react";
 import styled from "styled-components";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { reportService } from "./services/reportSrevice";
 import Loading from "../../shared/Loading";
 import Underline from "../../shared/Underline";
 import { device } from "../../utils/device.sizes";
 import { DateUtil } from "../../utils/DateUtil";
-import { Order } from "../../model/order/order";
+import {
+  Order,
+  orderStatus,
+  OrderStatus,
+  orderStatusSubmitted,
+} from "../../model/order/order";
+import { useHistory } from "react-router";
+import Select from "react-select";
+import { ordersService } from "../Order/services/ordersSrevice";
+import { selectByValue } from "../../utils/valueLabel/selectByValue";
 
 const Report: React.FC = () => {
+  const history = useHistory();
   const { data, isError, isLoading } = useQuery({
     queryKey: ["report"],
     queryFn: () => reportService.getReport(),
   });
+
+  const mutation = useMutation(
+    (input: { orderNumber: string; status: OrderStatus }) => {
+      return ordersService.changeOrderStatus(input.orderNumber, input.status);
+    }
+  );
 
   function orderFullName(order: Order) {
     return (
@@ -81,7 +97,74 @@ const Report: React.FC = () => {
               </tbody>
             </table>
 
-            <table>
+            {data.orders.length > 0 &&
+              data.orders
+                .sort((a, b) => {
+                  const firstSort =
+                    a.checkoutDetails.prefferedPickupLocation.localeCompare(
+                      b.checkoutDetails.prefferedPickupLocation
+                    );
+                  if (firstSort !== 0) return firstSort;
+                  const aName = orderFullName(a);
+                  const bName = orderFullName(b);
+                  return aName.localeCompare(bName);
+                })
+                .map((order) => {
+                  return (
+                    <div
+                      className="order-card"
+                      key={order.id}
+                      // onClick={() =>
+                      //   history.push(`/order/${order.orderNumber}`)
+                      // }
+                    >
+                      <h6 className="order-card-item first-item">
+                        <div className="name-and-order-number">
+                          <a
+                            href={`${window.location.origin}/order/${order.orderNumber}`}
+                          >
+                            {orderFullName(order)}
+                            <h6>מספר הזמנה: {order.orderNumber}</h6>
+                          </a>
+                        </div>
+
+                        <Select<OrderStatus>
+                          className="select-order-status"
+                          classNamePrefix="select_order_status"
+                          defaultValue={order.status ?? orderStatusSubmitted}
+                          isClearable={false}
+                          isRtl={true}
+                          isSearchable={false}
+                          name="order-status"
+                          options={orderStatus}
+                          onChange={(value, actionMeta) => {
+                            mutation.mutate({
+                              orderNumber: order.orderNumber,
+                              status: value!,
+                            });
+                          }}
+                        />
+                      </h6>
+
+                      <h6 className="order-card-item">
+                        {order.checkoutDetails.prefferedPickupLocation}
+                      </h6>
+
+                      <h6 className="order-card-item">
+                        סכום לתשלום: {order.totalCostAfterDiscount} ש"ח
+                      </h6>
+
+                      <h6 className="order-card-item">
+                        {DateUtil.format(DateUtil.fromString(order.date))}
+                      </h6>
+                      <h6 className="order-card-item">
+                        הערות: {order.checkoutDetails.comments}
+                      </h6>
+                    </div>
+                  );
+                })}
+
+            {/* <table>
               <thead>
                 <tr>
                   <th>
@@ -180,7 +263,7 @@ const Report: React.FC = () => {
                       );
                     })}
               </tbody>
-            </table>
+            </table> */}
           </>
         )}
       </div>
@@ -247,6 +330,29 @@ const Wrapper = styled.div`
 
     @media ${device.mobile} {
       width: 2rem;
+    }
+  }
+
+  .order-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 80%;
+    background-color: var(--clr-grey-9);
+    margin-bottom: 1rem;
+    border-radius: var(--radius);
+
+    .first-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .select-order-status {
+        width: 50%;
+      }
+    }
+    .order-card-item {
+      margin-right: 0.5rem;
     }
   }
 `;
