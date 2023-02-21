@@ -18,6 +18,7 @@ import Loading from "./shared/Loading";
 import OrderPage from "./features/Order/OrderPage";
 import { isNil } from "lodash";
 import CancelOrder from "./features/CancelOrder/CancelOrderPage";
+import ReportPage from "./features/Report/ReportPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -67,6 +68,9 @@ function App() {
           />
           <Route exact path="/checkout">
             <CheckoutPage />
+          </Route>
+          <Route exact path="/report">
+            <ReportPage />
           </Route>
           <Route exact path="/successful-order/:orderNumber">
             <SuccessfulOrder />
