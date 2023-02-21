@@ -5,12 +5,20 @@ import { reportService } from "./services/reportSrevice";
 import Loading from "../../shared/Loading";
 import Underline from "../../shared/Underline";
 import { device } from "../../utils/device.sizes";
+import { DateUtil } from "../../utils/DateUtil";
+import { Order } from "../../model/order/order";
 
 const Report: React.FC = () => {
   const { data, isError, isLoading } = useQuery({
     queryKey: ["report"],
     queryFn: () => reportService.getReport(),
   });
+
+  function orderFullName(order: Order) {
+    return (
+      order.checkoutDetails.firstName + " " + order.checkoutDetails.lastName
+    );
+  }
 
   return (
     <Wrapper>
@@ -49,23 +57,27 @@ const Report: React.FC = () => {
 
               <tbody>
                 {data.pickupHistogram.length > 0 &&
-                  data.pickupHistogram.map((entry) => {
-                    return (
-                      <tr key={entry.pickupDisplayName}>
-                        <td>
-                          <h5 className="row-value">
-                            {entry.pickupDisplayName}
-                          </h5>
-                        </td>
-                        <td>
-                          <h5 className="row-value">{entry.totalCost}</h5>
-                        </td>
-                        <td>
-                          <h5 className="row-value">{entry.commision}</h5>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  data.pickupHistogram
+                    .sort((a, b) =>
+                      a.pickupDisplayName.localeCompare(b.pickupDisplayName)
+                    )
+                    .map((entry) => {
+                      return (
+                        <tr key={entry.pickupDisplayName}>
+                          <td>
+                            <h5 className="row-value">
+                              {entry.pickupDisplayName}
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 className="row-value">{entry.totalCost}</h5>
+                          </td>
+                          <td>
+                            <h5 className="row-value">{entry.commision}</h5>
+                          </td>
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
 
@@ -115,47 +127,58 @@ const Report: React.FC = () => {
 
               <tbody>
                 {data.orders.length > 0 &&
-                  data.orders.map((order) => {
-                    return (
-                      <tr key={order.id}>
-                        <td>
-                          <h5 className="row-value">
-                            {order.checkoutDetails.prefferedPickupLocation}
-                          </h5>
-                        </td>
-                        <td>
-                          <h5 className="row-value">
-                            {order.checkoutDetails.firstName +
-                              " " +
-                              order.checkoutDetails.lastName}
-                          </h5>
-                        </td>
-                        <td>
-                          <h5 className="row-value">{order.date}</h5>
-                        </td>
+                  data.orders
+                    .sort((a, b) => {
+                      const firstSort =
+                        a.checkoutDetails.prefferedPickupLocation.localeCompare(
+                          b.checkoutDetails.prefferedPickupLocation
+                        );
+                      if (firstSort !== 0) return firstSort;
+                      const aName = orderFullName(a);
+                      const bName = orderFullName(b);
+                      return aName.localeCompare(bName);
+                    })
+                    .map((order) => {
+                      return (
+                        <tr key={order.id}>
+                          <td>
+                            <h5 className="row-value">
+                              {order.checkoutDetails.prefferedPickupLocation}
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 className="row-value">
+                              {orderFullName(order)}
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 className="row-value">
+                              {DateUtil.format(DateUtil.fromString(order.date))}
+                            </h5>
+                          </td>
 
-                        <td>
-                          <h5 className="row-value">
-                            {order.totalCostAfterDiscount}
-                          </h5>
-                        </td>
+                          <td>
+                            <h5 className="row-value">
+                              {order.totalCostAfterDiscount}
+                            </h5>
+                          </td>
 
-                        <td>
-                          <h5 className="row-value">
-                            {order.checkoutDetails.comments}
-                          </h5>
-                        </td>
+                          <td>
+                            <h5 className="row-value">
+                              {order.checkoutDetails.comments}
+                            </h5>
+                          </td>
 
-                        <td>
-                          <a
-                            href={`${window.location.origin}/order/${order.orderNumber}`}
-                          >
-                            <h5 className="row-value">{order.orderNumber}</h5>
-                          </a>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          <td>
+                            <a
+                              href={`${window.location.origin}/order/${order.orderNumber}`}
+                            >
+                              <h5 className="row-value">{order.orderNumber}</h5>
+                            </a>
+                          </td>
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
           </>
@@ -186,6 +209,10 @@ const Wrapper = styled.div`
 
   h5 {
     margin-top: 1rem;
+
+    @media ${device.mobile} {
+      font-size: 0.5rem;
+    }
   }
 
   table {

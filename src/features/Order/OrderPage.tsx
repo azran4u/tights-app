@@ -6,6 +6,8 @@ import styled from "styled-components";
 import Button from "../../shared/Button";
 import Loading from "../../shared/Loading";
 import { useAppDispatch } from "../../store/hooks";
+import { DateUtil } from "../../utils/DateUtil";
+import { device } from "../../utils/device.sizes";
 import CartContent from "../Cart/components/CartContent";
 import { cartActions } from "../Cart/store/cartSlice";
 import { checkoutActions } from "../Checkout/store/checkoutSlice";
@@ -56,9 +58,27 @@ const OrderPage: React.FC = () => {
           {isError && <h5>לא ניתן לטעון את ההזמנה</h5>}
           {!isLoading && data && (
             <>
-              <h5>תאריך הזמנה: {data.date}</h5>
-              <h5 className="pickup-location">
+              <h5>
+                שם:{" "}
+                {data.checkoutDetails.firstName +
+                  " " +
+                  data.checkoutDetails.lastName}
+              </h5>
+              <h5>
+                תאריך הזמנה: {DateUtil.format(DateUtil.fromString(data.date))}
+              </h5>
+              <h5>
                 נקודת חלוקה: {data.checkoutDetails.prefferedPickupLocation}
+              </h5>
+              <h5>
+                כמות פריטים:{" "}
+                {data.products.reduce(
+                  (total, product) => total + product.amount,
+                  0
+                )}
+              </h5>
+              <h5 className="last-item">
+                טלפון: {data.checkoutDetails.phoneNumber}
               </h5>
               <CartContent
                 allowEdit={false}
@@ -95,6 +115,16 @@ const Wrapper = styled.div`
 
   .content {
     min-height: 70vh;
+
+    > h5 {
+      @media ${device.mobile} {
+        font-size: 0.5rem;
+      }
+    }
+
+    .last-item {
+      margin-bottom: 1rem;
+    }
   }
 
   .pickup-location {
@@ -105,9 +135,8 @@ const Wrapper = styled.div`
   .cancel-order {
     width: 6rem;
     background-color: var(--clr-red-dark);
-    margin: 0 auto;
     display: flex;
-    margin-top: 3rem;
+    margin: 2rem auto;
   }
 `;
 export default OrderPage;

@@ -50,11 +50,15 @@ export class ReportService {
       histogram.push({
         pickupDisplayName: key,
         totalCost: value,
-        commision: 0.1 * value,
+        commision: this.calcCommition(value),
       });
     });
 
     return histogram;
+  }
+
+  private calcCommition(cost: number) {
+    return Math.floor(cost * 0.1);
   }
 
   private async getOrders() {
