@@ -3,7 +3,6 @@ import {
   Order,
   OrderInput,
   OrderStatus,
-  orderStatus,
   orderStatusSubmitted,
 } from "../../../model/order/order";
 import { FirestoreService } from "../../../shared/services/firestoreService";

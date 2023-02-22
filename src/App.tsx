@@ -19,6 +19,8 @@ import OrderPage from "./features/Order/OrderPage";
 import { isNil } from "lodash";
 import CancelOrder from "./features/CancelOrder/CancelOrderPage";
 import ReportPage from "./features/Report/ReportPage";
+import LoginPage from "./features/Login/LoginPage";
+import ProtectedRoute from "./shared/ProtectedRoute";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -69,8 +71,11 @@ function App() {
           <Route exact path="/checkout">
             <CheckoutPage />
           </Route>
-          <Route exact path="/report">
+          <ProtectedRoute exact path="/report">
             <ReportPage />
+          </ProtectedRoute>
+          <Route exact path="/login">
+            <LoginPage />
           </Route>
           <Route exact path="/successful-order/:orderNumber">
             <SuccessfulOrder />

@@ -12,13 +12,10 @@ import {
   OrderStatus,
   orderStatusSubmitted,
 } from "../../model/order/order";
-import { useHistory } from "react-router";
 import Select from "react-select";
 import { ordersService } from "../Order/services/ordersSrevice";
-import { selectByValue } from "../../utils/valueLabel/selectByValue";
 
 const Report: React.FC = () => {
-  const history = useHistory();
   const { data, isError, isLoading } = useQuery({
     queryKey: ["report"],
     queryFn: () => reportService.getReport(),

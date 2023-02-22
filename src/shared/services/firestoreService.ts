@@ -18,7 +18,7 @@ import {
   Transaction,
   deleteDoc,
 } from "firebase/firestore";
-import { firestoreDatabase } from "./firestoreDatabase";
+import { firestoreDatabase } from "./firebase-config";
 
 export interface FirebaseEntity extends Object {
   id: string;

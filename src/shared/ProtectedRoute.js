@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { selectSaleActive } from "../features/Sale/store/saleSlice";
-import { useAppSelector } from "../store/hooks";
+import { useIsAdmin } from "../features/Login/useIsAdmin";
 
 const ProtectedRoute = ({ children, ...rest }) => {
-  const activeSale = useAppSelector(selectSaleActive);
-  const [isAllowed, setIsAllowed] = useState(false);
-
-  useEffect(() => {
-    setIsAllowed(activeSale?.active ?? false);
-  }, [activeSale]);
-  const fallbackRoute = "/sale-closed";
+  const isAllowed = useIsAdmin();
+  const fallbackRoute = "/";
 
   return (
     <Route
