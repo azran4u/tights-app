@@ -1,6 +1,8 @@
 import { Order } from "../../../model/order/order";
 import { PickupHistogramEntry } from "../../../model/report/pickupHistogram";
 import { Report } from "../../../model/report/report";
+import { SupplierBom } from "../../../model/report/suppliersBom";
+import { Supplier } from "../../../model/supplier/Supplier";
 import {
   ordersService,
   OrdersService,
@@ -23,6 +25,7 @@ export class ReportService {
       totalCost: this.totalCost(),
       pickupHistogram: this.pickupCostHistogram(),
       orders: this.orders,
+      suppliersBom: this.suppliersBom(),
     };
   }
 
@@ -55,6 +58,44 @@ export class ReportService {
     });
 
     return histogram;
+  }
+
+  private suppliersBom(): SupplierBom[] {
+    const suppliersBom = new Map<Supplier, Map<string, number>>();
+
+    const bom: SupplierBom[] = [];
+
+    this.orders.forEach((order) => {
+      order.products.forEach((product) => {
+        const supplier = product.supplier;
+        const supplierBom = suppliersBom.get(supplier);
+        if (!supplierBom) {
+          const newSupplierBom = new Map<string, number>();
+          newSupplierBom.set(product.sku, product.amount);
+          suppliersBom.set(supplier, newSupplierBom);
+        } else {
+          const sku = product.sku;
+          const currentAmount = supplierBom.get(sku);
+          if (!currentAmount) {
+            supplierBom.set(sku, product.amount);
+          } else {
+            supplierBom.set(sku, currentAmount + product.amount);
+          }
+        }
+      });
+    });
+
+    suppliersBom.forEach((supplierBom, supplier) => {
+      supplierBom.forEach((amount, sku) => {
+        bom.push({
+          supplier,
+          sku,
+          amount,
+        });
+      });
+    });
+
+    return bom;
   }
 
   private calcCommition(cost: number) {

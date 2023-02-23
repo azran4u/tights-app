@@ -14,6 +14,7 @@ import {
 } from "../../model/order/order";
 import Select from "react-select";
 import { ordersService } from "../Order/services/ordersSrevice";
+import CartItemDescription from "../Cart/components/CartItemDescription";
 
 const Report: React.FC = () => {
   const { data, isError, isLoading } = useQuery({
@@ -42,7 +43,7 @@ const Report: React.FC = () => {
         {!isLoading && data && (
           <>
             <h5>כמות הזמנות: {data.totalOrderCount}</h5>
-            <h5>עלות כוללת: {data.totalCost}</h5>
+            <h5>סכום הזמנות: {data.totalCost} ש"ח</h5>
 
             <table>
               <thead>
@@ -161,44 +162,24 @@ const Report: React.FC = () => {
                   );
                 })}
 
-            {/* <table>
+            <table>
               <thead>
                 <tr>
                   <th>
                     <div className="header">
-                      <h5>נקודת חלוקה</h5>
+                      <h5>שם הספק</h5>
                       <Underline className="underline" />
                     </div>
                   </th>
                   <th>
                     <div className="header">
-                      <h5>שם הלקוח/ה</h5>
+                      <h5>מוצר</h5>
                       <Underline className="underline" />
                     </div>
                   </th>
                   <th>
                     <div className="header">
-                      <h5>תאריך</h5>
-                      <Underline className="underline" />
-                    </div>
-                  </th>
-                  <th>
-                    <div className="header">
-                      <h5>סכום</h5>
-                      <Underline className="underline" />
-                    </div>
-                  </th>
-
-                  <th>
-                    <div className="header">
-                      <h5>הערה</h5>
-                      <Underline className="underline" />
-                    </div>
-                  </th>
-
-                  <th>
-                    <div className="header">
-                      <h5>מספר הזמנה</h5>
+                      <h5>כמות</h5>
                       <Underline className="underline" />
                     </div>
                   </th>
@@ -206,61 +187,30 @@ const Report: React.FC = () => {
               </thead>
 
               <tbody>
-                {data.orders.length > 0 &&
-                  data.orders
+                {data.suppliersBom.length > 0 &&
+                  data.suppliersBom
                     .sort((a, b) => {
-                      const firstSort =
-                        a.checkoutDetails.prefferedPickupLocation.localeCompare(
-                          b.checkoutDetails.prefferedPickupLocation
-                        );
-                      if (firstSort !== 0) return firstSort;
-                      const aName = orderFullName(a);
-                      const bName = orderFullName(b);
-                      return aName.localeCompare(bName);
+                      return a.supplier.localeCompare(b.supplier);
                     })
-                    .map((order) => {
+                    .map((bom) => {
                       return (
-                        <tr key={order.id}>
+                        <tr key={bom.supplier + bom.sku}>
                           <td>
-                            <h5 className="row-value">
-                              {order.checkoutDetails.prefferedPickupLocation}
-                            </h5>
+                            <h5 className="row-value">{bom.supplier}</h5>
                           </td>
                           <td>
                             <h5 className="row-value">
-                              {orderFullName(order)}
+                              <CartItemDescription sku={bom.sku} />
                             </h5>
                           </td>
                           <td>
-                            <h5 className="row-value">
-                              {DateUtil.format(DateUtil.fromString(order.date))}
-                            </h5>
-                          </td>
-
-                          <td>
-                            <h5 className="row-value">
-                              {order.totalCostAfterDiscount}
-                            </h5>
-                          </td>
-
-                          <td>
-                            <h5 className="row-value">
-                              {order.checkoutDetails.comments}
-                            </h5>
-                          </td>
-
-                          <td>
-                            <a
-                              href={`${window.location.origin}/order/${order.orderNumber}`}
-                            >
-                              <h5 className="row-value">{order.orderNumber}</h5>
-                            </a>
+                            <h5 className="row-value">{bom.amount}</h5>
                           </td>
                         </tr>
                       );
                     })}
               </tbody>
-            </table> */}
+            </table>
           </>
         )}
       </div>
