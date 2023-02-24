@@ -21,6 +21,9 @@ import CancelOrder from "./features/CancelOrder/CancelOrderPage";
 import ReportPage from "./features/Report/ReportPage";
 import LoginPage from "./features/Login/LoginPage";
 import ProtectedRoute from "./shared/ProtectedRoute";
+import PickupHistogramPage from "./features/Report/pickupHistogramPage";
+import ListOfOredersPage from "./features/Report/ListOfOrdersPage";
+import SuppliersBomPage from "./features/Report/SuppliersBomPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -71,9 +74,21 @@ function App() {
           <Route exact path="/checkout">
             <CheckoutPage />
           </Route>
-          <ProtectedRoute exact path="/report">
+          <ProtectedRoute exact path="/admin">
             <ReportPage />
           </ProtectedRoute>
+          <ProtectedRoute exact path="/admin/pickup-histogram">
+            <PickupHistogramPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/admin/orders">
+            <ListOfOredersPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/admin/suppliers-bom">
+            <SuppliersBomPage />
+          </ProtectedRoute>
+
           <Route exact path="/login">
             <LoginPage />
           </Route>

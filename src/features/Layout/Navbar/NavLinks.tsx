@@ -109,8 +109,8 @@ export const links: {
   },
   {
     id: 6,
-    text: "דוחות",
-    url: "/report",
+    text: "ניהול אתר",
+    url: "/admin",
     protected: true,
   },
 ];
