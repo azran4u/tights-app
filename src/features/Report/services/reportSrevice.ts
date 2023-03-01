@@ -1,8 +1,8 @@
-import { Order } from "../../../model/order/order";
-import { PickupHistogramEntry } from "../../../model/report/pickupHistogram";
-import { Report } from "../../../model/report/report";
-import { SupplierBom } from "../../../model/report/suppliersBom";
-import { Supplier } from "../../../model/supplier/Supplier";
+import { Order } from "../../../domain/entities/order/order";
+import { PickupHistogramEntry } from "../../../domain/entities/report/pickupHistogram";
+import { Report } from "../../../domain/entities/report/report";
+import { SupplierBom } from "../../../domain/entities/report/suppliersBom";
+import { Supplier } from "../../../domain/entities/supplier/Supplier";
 import {
   ordersService,
   OrdersService,

@@ -1,4 +1,4 @@
-import { Product } from "../../model/product/Product";
+import { Product } from "../../domain/entities/product/Product";
 import { ImagesConstants } from "./constants/ImageConstants";
 import { ProductConstants } from "./constants/ProductConstants";
 

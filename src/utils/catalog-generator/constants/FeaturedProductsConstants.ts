@@ -1,4 +1,4 @@
-import { FeaturedProduct } from "../../../model/featuredProduct/featuredProduct";
+import { FeaturedProduct } from "../../../domain/entities/featuredProduct/featuredProduct";
 import { DescriptionConstants } from "./DescriptionConstants";
 import { ImagesConstants } from "./ImageConstants";
 import { SlugConstants } from "./SlugConstants";

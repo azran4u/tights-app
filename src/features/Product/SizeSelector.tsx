@@ -1,4 +1,4 @@
-import { Size } from "../../model/size/Size";
+import { Size } from "../../domain/entities/size/Size";
 import ValueLabelSelector from "../../shared/ValueLabelSelector";
 
 interface SizeSelectorProps {

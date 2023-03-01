@@ -1,4 +1,4 @@
-import { LaceOption } from "../../../model/lace/LaceOption";
+import { LaceOption } from "../../../domain/entities/lace/LaceOption";
 
 export class LaceConstants {
   public static fan: { lace: LaceOption } = { lace: "fan" };

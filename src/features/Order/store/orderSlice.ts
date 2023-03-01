@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { OrderNumber } from "../../../model/orderNumber/orderNumber";
+import { OrderNumber } from "../../../domain/entities/orderNumber/orderNumber";
 import { RootState } from "../../../store/store";
 
 export interface OrderState {

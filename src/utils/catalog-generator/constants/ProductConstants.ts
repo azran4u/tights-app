@@ -1,6 +1,6 @@
-import { ProductSchema } from "../../../model/product/ProductSchema";
-import { ProductDenierLegSize } from "../../../model/product/ProductDenierLegSize";
-import { ProductLace } from "../../../model/product/ProductLace";
+import { ProductDenierLegSize } from "../../../domain/entities/product/ProductDenierLegSize";
+import { ProductLace } from "../../../domain/entities/product/ProductLace";
+import { ProductSchema } from "../../../domain/entities/product/ProductSchema";
 import { DescriptionConstants } from "./DescriptionConstants";
 import { DiscountConstants } from "./DiscountConstants";
 import { ImagesConstants } from "./ImageConstants";

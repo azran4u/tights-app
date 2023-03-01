@@ -1,6 +1,6 @@
-import { CountDiscount } from "../../../model/discount/CountDiscount";
-import { DiscountKind } from "../../../model/discount/DiscountKind";
-import { NoDiscount } from "../../../model/discount/NoDiscount";
+import { CountDiscount } from "../../../domain/entities/discount/CountDiscount";
+import { DiscountKind } from "../../../domain/entities/discount/DiscountKind";
+import { NoDiscount } from "../../../domain/entities/discount/NoDiscount";
 
 export class DiscountConstants {
   public static noDiscount: NoDiscount = {

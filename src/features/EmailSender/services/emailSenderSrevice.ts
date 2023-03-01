@@ -1,4 +1,4 @@
-import { Email } from "../../../model/email/email";
+import { Email } from "../../../domain/entities/email/email";
 import { FirestoreService } from "../../../shared/services/firestoreService";
 
 export class EmailSenderService extends FirestoreService<Email> {

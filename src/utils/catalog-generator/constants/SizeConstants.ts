@@ -1,4 +1,4 @@
-import { SizeOption } from "../../../model/size/SizeOption";
+import { SizeOption } from "../../../domain/entities/size/SizeOption";
 
 export class SizeConstants {
   public static onesize: { size: SizeOption } = { size: "onesize" };

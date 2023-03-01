@@ -15,7 +15,7 @@ import { cartActions } from "../Cart/store/cartSlice";
 import { ordersService } from "../Order/services/ordersSrevice";
 import { orderActions } from "../Order/store/orderSlice";
 import Select from "react-select";
-import { PickupLocation } from "../../model/pickup/pickupLocation";
+import { PickupLocation } from "../../domain/entities/pickup/pickupLocation";
 
 export const CheckoutForm: React.FC<OptionalClassName> = (props) => {
   const dispatch = useAppDispatch();

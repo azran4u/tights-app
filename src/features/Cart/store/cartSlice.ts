@@ -2,10 +2,10 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
 import { ceil, isNil } from "lodash";
-import { CartItem } from "../../../model/cart/CartItem";
+import { CartItem } from "../../../domain/entities/cart/CartItem";
 import { selectProductsMap } from "../../Product/store/productsSlice";
-import { DiscountKind } from "../../../model/discount/DiscountKind";
-import { ProductWithAmount } from "../../../model/product/ProductWithAmount";
+import { ProductWithAmount } from "../../../domain/entities/product/ProductWithAmount";
+import { DiscountKind } from "../../../domain/entities/discount/DiscountKind";
 
 export type CartItemsMap = Map<string, CartItem>;
 export type UpdateCartItemAmountOperations = "increase-one" | "decrease-one";

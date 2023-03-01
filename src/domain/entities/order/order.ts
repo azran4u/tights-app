@@ -1,4 +1,4 @@
-import { ValueLabel } from "../../utils/valueLabel/ValueLabel";
+import { ValueLabel } from "../../../utils/valueLabel/ValueLabel";
 import { CheckoutDetails } from "../checkout/checkout";
 import { OrderNumber } from "../orderNumber/orderNumber";
 import { PickupLocation } from "../pickup/pickupLocation";
@@ -42,4 +42,3 @@ export const orderStatus: OrderStatus[] = [
 export const orderStatusSubmitted = orderStatus.find(
   (x) => x.value === "submitted"
 )!;
-

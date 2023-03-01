@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FeaturedProduct } from "../../../model/featuredProduct/featuredProduct";
+import { FeaturedProduct } from "../../../domain/entities/featuredProduct/featuredProduct";
 
 const FeaturedProducstItem: React.FC<{
   product: FeaturedProduct;

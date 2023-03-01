@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
-import { Sale } from "../../../model/sale/sale";
+import { Sale } from "../../../domain/entities/sale/sale";
 
 export interface SaleState {
   currentSale: Sale;

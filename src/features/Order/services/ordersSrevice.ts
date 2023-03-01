@@ -1,10 +1,4 @@
 import { isEmpty, isNil } from "lodash";
-import {
-  Order,
-  OrderInput,
-  OrderStatus,
-  orderStatusSubmitted,
-} from "../../../model/order/order";
 import { FirestoreService } from "../../../shared/services/firestoreService";
 import { store } from "../../../store/store";
 import {
@@ -18,9 +12,16 @@ import { selectSaleActive } from "../../Sale/store/saleSlice";
 import { selectCheckout } from "../../Checkout/store/checkoutSlice";
 import { orderNumberService } from "./orderNumberService";
 import { where } from "firebase/firestore";
-import { OrderNumber } from "../../../model/orderNumber/orderNumber";
 import { emailSenderService } from "../../EmailSender/services/emailSenderSrevice";
-import { Email } from "../../../model/email/email";
+import { OrderNumber } from "../../../domain/entities/orderNumber/orderNumber";
+import {
+  Order,
+  OrderInput,
+  OrderStatus,
+  orderStatusSubmitted,
+} from "../../../domain/entities/order/order";
+import { Email } from "../../../domain/entities/email/email";
+import { OrdersRepository } from "../../../domain/repositories/ordersRepository";
 
 export class OrderNotFound extends Error {
   constructor(private orderNumber?: OrderNumber) {
@@ -28,9 +29,16 @@ export class OrderNotFound extends Error {
   }
 }
 
-export class OrdersService extends FirestoreService<Order> {
+export class OrdersService
+  extends FirestoreService<Order>
+  implements OrdersRepository
+{
   constructor() {
     super("orders");
+  }
+
+  async cancelOrder(orderNumber: string): Promise<void> {
+    return this.deleteOrderByOrderNumber(orderNumber);
   }
 
   public async createOrder(): Promise<OrderInput> {

@@ -1,6 +1,6 @@
 import { FirestoreService } from "../../../shared/services/firestoreService";
 import { doc, runTransaction, where } from "firebase/firestore";
-import { OrderNumber } from "../../../model/orderNumber/orderNumber";
+import { OrderNumber } from "../../../domain/entities/orderNumber/orderNumber";
 
 export interface OrderNumberDto {
   id: string;

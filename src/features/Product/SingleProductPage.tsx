@@ -5,9 +5,9 @@ import SingleProductContentByDenierLegSize from "./SingleProductContentByDenierL
 import SingleProductContentByLace from "./SingleProductContentByLace";
 import { useParams } from "react-router-dom";
 import Page from "../../shared/Page";
-import { ProductSchema } from "../../model/product/ProductSchema";
 import { useAppSelector } from "../../store/hooks";
 import { selectProductSchemaBySlug } from "./store/productsSlice";
+import { ProductSchema } from "../../domain/entities/product/ProductSchema";
 
 const SingleProductPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();

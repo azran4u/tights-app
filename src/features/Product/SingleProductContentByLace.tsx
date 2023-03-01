@@ -5,18 +5,18 @@ import Price from "./Price";
 import ProductDescription from "./ProductDescription";
 import LaceSelector from "./LaceSelector";
 import ErrorMessage from "../Error/ErorrMessage";
-import { Lace } from "../../model/lace/Lace";
-import { Color } from "../../model/color/Color";
 import { uniq } from "lodash";
-import { selectLace } from "../../model/lace/selectLace";
-import { selectColor } from "../../model/color/selectColor";
-import { CartItem } from "../../model/cart/CartItem";
+import { CartItem } from "../../domain/entities/cart/CartItem";
 import { useAppSelector } from "../../store/hooks";
 import { selectProductsBySlug } from "./store/productsSlice";
-import { ProductLace } from "../../model/product/ProductLace";
 import ProductImage from "./ProductImage";
 import ProductAmountButtons from "../../shared/ProductAmountButtons";
 import AddToCart from "../Cart/components/AddToCart";
+import { ProductLace } from "../../domain/entities/product/ProductLace";
+import { selectLace } from "../../domain/entities/lace/selectLace";
+import { Lace } from "../../domain/entities/lace/Lace";
+import { selectColor } from "../../domain/entities/color/selectColor";
+import { Color } from "../../domain/entities/color/Color";
 
 interface SingleProductContentByLaceProps {
   slug: string;

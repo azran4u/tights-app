@@ -1,10 +1,10 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
-import { Product } from "../../../model/product/Product";
 import { catalog } from "../../../utils/catalog-generator/catalog";
-import { FeaturedProduct } from "../../../model/featuredProduct/featuredProduct";
 import { FeatureProductsConstants } from "../../../utils/catalog-generator/constants/FeaturedProductsConstants";
 import { isEmpty } from "lodash";
+import { Product } from "../../../domain/entities/product/Product";
+import { FeaturedProduct } from "../../../domain/entities/featuredProduct/featuredProduct";
 
 export type ProductItemsMap = Map<string, Product>;
 

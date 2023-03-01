@@ -1,12 +1,12 @@
 import { isNil } from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { selectColor } from "../../../model/color/selectColor";
-import { selectDenier } from "../../../model/denier/selectDenier";
-import { selectLace } from "../../../model/lace/selectLace";
-import { selectLeg } from "../../../model/leg/selectLeg";
-import { ProductSchema } from "../../../model/product/ProductSchema";
-import { selectSize } from "../../../model/size/selectSize";
+import { selectColor } from "../../../domain/entities/color/selectColor";
+import { selectDenier } from "../../../domain/entities/denier/selectDenier";
+import { selectLace } from "../../../domain/entities/lace/selectLace";
+import { selectLeg } from "../../../domain/entities/leg/selectLeg";
+import { ProductSchema } from "../../../domain/entities/product/ProductSchema";
+import { selectSize } from "../../../domain/entities/size/selectSize";
 import { useAppSelector } from "../../../store/hooks";
 import { OptionalClassName } from "../../../utils/classNameInterface";
 import { device } from "../../../utils/device.sizes";

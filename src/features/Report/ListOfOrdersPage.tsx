@@ -3,15 +3,10 @@ import styled from "styled-components";
 import { useMutation } from "@tanstack/react-query";
 import Loading from "../../shared/Loading";
 import { DateUtil } from "../../utils/DateUtil";
-import {
-  Order,
-  orderStatus,
-  OrderStatus,
-  orderStatusSubmitted,
-} from "../../model/order/order";
 import Select from "react-select";
 import { ordersService } from "../Order/services/ordersSrevice";
 import { useReport } from "./hooks/useReport";
+import { Order, orderStatus, OrderStatus, orderStatusSubmitted } from "../../domain/entities/order/order";
 
 const ListOfOredersPage: React.FC = () => {
   const { data, isError, isLoading } = useReport();

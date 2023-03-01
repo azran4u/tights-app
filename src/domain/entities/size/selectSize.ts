@@ -1,4 +1,4 @@
-import { selectByValue } from "../../utils/valueLabel/selectByValue";
+import { selectByValue } from "../../../utils/valueLabel/selectByValue";
 import { Size } from "./Size";
 import { SizeOption } from "./SizeOption";
 import { sizes } from "./sizes";

@@ -1,4 +1,4 @@
-import { LegOption } from "../../../model/leg/LegOption";
+import { LegOption } from "../../../domain/entities/leg/LegOption";
 
 export class LegConstants {
   public static withLeg: { leg: LegOption } = { leg: "with-leg" };

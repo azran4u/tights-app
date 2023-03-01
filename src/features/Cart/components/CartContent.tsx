@@ -8,7 +8,7 @@ import { FaTrash } from "react-icons/fa";
 import { device } from "../../../utils/device.sizes";
 import CartItemDescription from "./CartItemDescription";
 import { useHistory } from "react-router";
-import { ProductWithAmount } from "../../../model/product/ProductWithAmount";
+import { ProductWithAmount } from "../../../domain/entities/product/ProductWithAmount";
 
 interface CartContentProps extends OptionalClassName {
   cartProductsWithAmount: ProductWithAmount[];

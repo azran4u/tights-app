@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
-import { CheckoutDetails } from "../../../model/checkout/checkout";
 import { isNil } from "lodash";
+import { CheckoutDetails } from "../../../domain/entities/checkout/checkout";
 
 export interface CheckoutState extends CheckoutDetails {}
 

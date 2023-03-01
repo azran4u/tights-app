@@ -1,9 +1,9 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../store/store";
-import { PickupLocation } from "../../../model/pickup/pickupLocation";
 import { pickups } from "../../../utils/pickup-generator/pickupGenerator";
 import { isNil } from "lodash";
+import { PickupLocation } from "../../../domain/entities/pickup/pickupLocation";
 
 export interface PickupState {
   locations: Map<string, PickupLocation>;

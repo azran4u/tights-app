@@ -1,4 +1,4 @@
-import { PickupLocation } from "../../model/pickup/pickupLocation";
+import { PickupLocation } from "../../domain/entities/pickup/pickupLocation";
 
 export const pickups: PickupLocation[] = [
   {

@@ -1,4 +1,4 @@
-import { Denier } from "../../model/denier/Denier";
+import { Denier } from "../../domain/entities/denier/Denier";
 import ValueLabelSelector from "../../shared/ValueLabelSelector";
 
 interface DenierSelectorProps {

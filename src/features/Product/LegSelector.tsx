@@ -1,4 +1,4 @@
-import { Leg } from "../../model/leg/Leg";
+import { Leg } from "../../domain/entities/leg/Leg";
 import ValueLabelSelector from "../../shared/ValueLabelSelector";
 import { OptionalClassName } from "../../utils/classNameInterface";
 

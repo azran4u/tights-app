@@ -1,5 +1,5 @@
 import { isNil } from "lodash";
-import { Sale } from "../../../model/sale/sale";
+import { Sale } from "../../../domain/entities/sale/sale";
 import { FirestoreService } from "../../../shared/services/firestoreService";
 
 export class SaleService extends FirestoreService<Sale> {
