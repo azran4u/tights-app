@@ -12,22 +12,27 @@
       "webRoot": "${workspaceFolder}"
     },
     {
-      "name": "SWA: Run cutebuddy",
+      "name": "Debug Tests Single Run",
+      "type": "node",
       "request": "launch",
-      "type": "chrome",
-      "url": "http://localhost:4280",
-      "preLaunchTask": "swa: start cutebuddy",
-      "webRoot": "${workspaceFolder}/cutebuddy",
-      "timeout": 30000
+      "env": { "CI": "true" },
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
+      "args": ["test", "--runInBand", "--no-cache"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "SWA: Run typescript-e-commerce",
+      "name": "Debug tests watch mode",
+      "type": "node",
       "request": "launch",
-      "type": "chrome",
-      "url": "http://localhost:4280",
-      "preLaunchTask": "swa: start typescript-e-commerce",
-      "webRoot": "${workspaceFolder}/",
-      "timeout": 30000
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
+      "args": ["test", "--runInBand", "--no-cache", "--watchAll"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }

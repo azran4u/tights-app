@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import Underline from "../../../shared/Underline";
 import ProductAmountButtons from "../../../shared/ProductAmountButtons";
 import { FaTrash } from "react-icons/fa";
-import { device } from "../../../utils/device.sizes";
+import { ResponsiveUi, device } from "../../../utils/device.sizes";
 import CartItemDescription from "./CartItemDescription";
 import { useHistory } from "react-router";
 
@@ -77,11 +77,15 @@ const CartContent1: React.FC<CartContentProps> = (props) => {
                     className="amount-buttons"
                     amount={cartItem.amount}
                     increase={() =>
-                      dispatch(cartActions.increaseAmount({ sku: cartItem.sku }))
+                      dispatch(
+                        cartActions.increaseAmount({ sku: cartItem.sku })
+                      )
                     }
                     decrease={() => {
                       if (cartItem.amount > 1)
-                        dispatch(cartActions.decreaseAmount({ sku: cartItem.sku }));
+                        dispatch(
+                          cartActions.decreaseAmount({ sku: cartItem.sku })
+                        );
                     }}
                   />
                 </h5>
@@ -136,7 +140,7 @@ const Wrapper = styled.section`
     h5 {
       margin-bottom: 0.5rem;
       text-align: center;
-      @media ${device.mobile} {
+      @media ${ResponsiveUi.mobile} {
         font-size: 0.75rem;
       }
     }

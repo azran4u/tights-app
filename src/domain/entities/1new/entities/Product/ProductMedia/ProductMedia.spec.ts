@@ -1,0 +1,3 @@
+describe("ProductMedia", () => {
+  test("basic", () => {});
+});

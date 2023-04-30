@@ -21,7 +21,7 @@ import {
   orderStatusSubmitted,
 } from "../../../domain/entities/order/order";
 import { Email } from "../../../domain/entities/email/email";
-import { OrdersRepository } from "../../../domain/repositories/ordersRepository";
+import { OrdersRepository } from "../../../domain/repository-interface/OrdersRepository";
 
 export class OrderNotFound extends Error {
   constructor(private orderNumber?: OrderNumber) {
