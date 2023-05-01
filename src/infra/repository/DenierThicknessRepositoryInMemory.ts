@@ -1,5 +1,5 @@
 import { Fail, Ok, IResult, Result } from "types-ddd";
-import { DenierThickness } from "../../domain/entities/1new/TO_BE_DELETED/DenierThickness/DenierThickness";
+import { DenierThickness } from "../../domain/entities/ddd/TO_BE_DELETED/DenierThickness/DenierThickness";
 import { DenierThicknessRepository } from "../../domain/repository-interface/DenierThicknessRepository";
 
 export class DenierThicknessRepositoryInMemory

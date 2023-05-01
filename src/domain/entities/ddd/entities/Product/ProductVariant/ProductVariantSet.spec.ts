@@ -3,10 +3,12 @@ import { ProductVariantSet } from "./ProductVariantSet";
 
 describe("ProductVariantSet", () => {
   const variant1 = ProductVariant.create({
+    kind: "kind",
     value: "value1",
     displayName: "display1",
   }).value();
   const variant2 = ProductVariant.create({
+    kind: "kind",
     value: "value2",
     displayName: "display2",
   }).value();

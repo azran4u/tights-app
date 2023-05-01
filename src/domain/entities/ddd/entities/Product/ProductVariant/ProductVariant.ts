@@ -2,6 +2,7 @@ import { Fail, IResult, Result, ValueObject, Ok } from "types-ddd";
 import { Guard } from "../../../../../../utils/Guard/Guard";
 
 export interface ProductVariantProps {
+  kind: string;
   value: string;
   displayName: string;
   displayOrder?: number;
@@ -21,10 +22,15 @@ export class ProductVariant extends ValueObject<ProductVariantProps> {
   protected static validateProps(props: ProductVariantProps): IResult<any> {
     return Result.combine([
       Guard.againstNullOrUndefinedBulk([
+        { argument: props?.kind, argumentName: "kind" },
         { argument: props?.value, argumentName: "value" },
         { argument: props?.displayName, argumentName: "displayName" },
       ]),
     ]);
+  }
+
+  getKind(): string {
+    return this.get("kind");
   }
 
   getValue(): string {

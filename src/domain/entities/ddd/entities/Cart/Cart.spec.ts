@@ -1,5 +1,5 @@
 import { Amount } from "../../ValueObjects/Amount/Amount";
-import { CartItem } from "../../ValueObjects/CartItem/CartItem";
+import { CartItem } from "./CartItem/CartItem";
 import { Cart, CartProps } from "./Cart";
 
 describe("Cart", () => {

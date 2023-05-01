@@ -1,6 +1,6 @@
 import { Ok, Fail, IResult, Result, Entity, UID } from "types-ddd";
 import { Guard } from "../../../../../utils/Guard/Guard";
-import { CartItem } from "../../ValueObjects/CartItem/CartItem";
+import { CartItem } from "./CartItem/CartItem";
 import { Amount } from "../../ValueObjects/Amount/Amount";
 import { isNil } from "lodash";
 import { ProductSku } from "../Product/ProductSku/ProductSku";

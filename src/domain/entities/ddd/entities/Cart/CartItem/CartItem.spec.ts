@@ -1,4 +1,4 @@
-import { Amount } from "../Amount/Amount";
+import { Amount } from "../../../ValueObjects/Amount/Amount";
 import { CartItem, CartItemProps } from "./CartItem";
 
 describe("CartItem", () => {

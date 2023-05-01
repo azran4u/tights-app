@@ -1,7 +1,7 @@
 import { Ok, Fail, IResult, ValueObject, Result } from "types-ddd";
-import { Guard } from "../../../../../utils/Guard/Guard";
-import { Amount } from "../Amount/Amount";
-import { ProductSku } from "../../entities/Product/ProductSku/ProductSku";
+import { Guard } from "../../../../../../utils/Guard/Guard";
+import { Amount } from "../../../ValueObjects/Amount/Amount";
+import { ProductSku } from "../../Product/ProductSku/ProductSku";
 
 export interface CartItemProps {
   sku: ProductSku;

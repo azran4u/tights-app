@@ -23,10 +23,22 @@ export class ProductVariantSet extends ValueObject<ProductVariantSetProps> {
   }
 
   protected static validateProps(props: ProductVariantSetProps): IResult<any> {
+    const guardUndefined = Guard.againstNullOrUndefined(
+      props?.variants,
+      "variants"
+    );
+    if (guardUndefined.isFail()) return Fail(guardUndefined.error());
+
+    const guardIsArray = Guard.isArray(props?.variants, "variants");
+    if (guardIsArray.isFail()) return Fail(guardIsArray.error());
+
     return Result.combine([
-      Guard.againstNullOrUndefinedBulk([
-        { argument: props?.variants, argumentName: "variants" },
-      ]),
+      Guard.againstNullOrUndefinedBulk(
+        props?.variants?.map((variant) => ({
+          argument: variant,
+          argumentName: "variant",
+        })) ?? []
+      ),
       this.guardAgainstDuplicateVariants(props?.variants),
     ]);
   }
@@ -55,7 +67,13 @@ export class ProductVariantSet extends ValueObject<ProductVariantSetProps> {
     variants: ProductVariant[]
   ): Map<string, ProductVariant> {
     const map = new Map<string, ProductVariant>();
-    variants.forEach((variant) => map.set(variant.getValue(), variant));
+    variants.forEach((variant) => {
+      if (variant === undefined) {
+        debugger;
+        return;
+      }
+      map.set(variant.getValue(), variant);
+    });
     return map;
   }
 }
