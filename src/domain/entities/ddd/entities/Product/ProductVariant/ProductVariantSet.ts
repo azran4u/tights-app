@@ -32,15 +32,17 @@ export class ProductVariantSet extends ValueObject<ProductVariantSetProps> {
     const guardIsArray = Guard.isArray(props?.variants, "variants");
     if (guardIsArray.isFail()) return Fail(guardIsArray.error());
 
-    return Result.combine([
+    const someVariantsAreUndefined = Result.combine([
       Guard.againstNullOrUndefinedBulk(
         props?.variants?.map((variant) => ({
           argument: variant,
           argumentName: "variant",
         })) ?? []
       ),
-      this.guardAgainstDuplicateVariants(props?.variants),
     ]);
+    if (someVariantsAreUndefined.isFail())
+      return Fail(someVariantsAreUndefined.error());
+    return this.guardAgainstDuplicateVariants(props?.variants);
   }
 
   getAll(): ProductVariant[] {
@@ -67,13 +69,7 @@ export class ProductVariantSet extends ValueObject<ProductVariantSetProps> {
     variants: ProductVariant[]
   ): Map<string, ProductVariant> {
     const map = new Map<string, ProductVariant>();
-    variants.forEach((variant) => {
-      if (variant === undefined) {
-        debugger;
-        return;
-      }
-      map.set(variant.getValue(), variant);
-    });
+    variants.forEach((variant) => map.set(variant.getValue(), variant));
     return map;
   }
 }

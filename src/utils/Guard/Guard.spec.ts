@@ -73,4 +73,14 @@ describe("Guard", () => {
       expect(guard.isFail()).toBeTruthy;
     });
   });
+
+  describe("validator", () => {
+    test("string", () => {
+      const name = "eyal";
+      const guard = Guard.validator({ name }, [
+        { argumentName: "name", guard: Guard.isRequiered },
+      ]);
+      expect(guard.isOk()).toBeTruthy;
+    });
+  });
 });

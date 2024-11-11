@@ -1,4 +1,4 @@
-import { isArray, isNumber } from "lodash";
+import { isArray, isNil, isNumber, isString } from "lodash";
 import { Fail, IResult, Ok } from "types-ddd";
 
 export type GuardResponse = boolean;
@@ -153,4 +153,26 @@ export class Guard {
     }
     return Ok(true);
   }
+
+ 
+
+  public static isRequiered(value: any): IResult<GuardResponse> {
+    if (isNil(value)) return Fail(``);
+    return Ok(true);
+  }
+
+  public static validator<T extends Record<string, any>>(
+    props: T,
+    propsDefinitions: {
+      argumentName: string;
+      guard: (value: any) => IResult<GuardResponse>;
+    }[]
+  ): IResult<GuardResponse> {
+    return Guard.combine(
+      propsDefinitions.map(({ argumentName, guard }) =>
+        guard(props[argumentName])
+      )
+    );
+  }
 }
+

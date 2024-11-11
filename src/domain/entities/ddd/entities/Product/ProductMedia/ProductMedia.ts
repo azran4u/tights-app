@@ -1,7 +1,5 @@
 import { Ok, Fail, IResult, ValueObject, Result } from "types-ddd";
 import { Guard } from "../../../../../../utils/Guard/Guard";
-import { Amount } from "../../../ValueObjects/Amount/Amount";
-import { ProductSku } from "../ProductSku/ProductSku";
 import { ImagePath } from "../../../ValueObjects/ImagePath/ImagePath";
 
 export interface ProductMediaProps {
